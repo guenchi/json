@@ -1,26 +1,22 @@
 # json
 a simple, portable JSON librairy for Scheme
 
-```
-{key1: value1, key2: value2}
-```
-
-will parse to
+1.
 
 ```
-((key1 . value2)(key2 . value2))
+{key1: value1, key2: value2}     =>     ((key1 . value2)(key2 . value2))
+
+[value1, value2, value3]         =>     #(value1 value2 value3)
 ```
 
-and
-
+2.
 ```
-[value1, value2, value3]
-```
-
-will parse to
-
-```
-#(value1 value2 value3)
+> TRUE     =>  #t
+> FALSE    =>  #f
+> NULL     =>  ()
+> true     =>  #t
+> false    =>  #f
+> null     =>  ()
 ```
 
 ***json->list***
