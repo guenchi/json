@@ -1,17 +1,25 @@
 # json
 JSON librairy for Scheme
 
-
-`{key1:value1,key2:value2}`
+```
+{key1:value1,key2:value2}
+```
 
 will parse to
 
-`((key1 . value2)(key2 . value2))`
+```
+((key1 . value2)(key2 . value2))
+```
 
-`[value1,value2,value3]`
+```
+[value1,value2,value3]
+```
+
 will parse to
-`#(value1 value2 value3)`
 
+```
+#(value1 value2 value3)
+```
 
 ***json->list***
 
@@ -50,7 +58,8 @@ will parse to
       3.3 3.4 3.5))
   ("four" . "4"))
   ```
-  
+
+
 > (display token3)
 
 
