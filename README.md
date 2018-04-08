@@ -15,22 +15,22 @@ will parse to
 
 ***json->list***
 
-```
+
 > (display token1)
-
+```
 {"first":"1","second":"2","third":[3.1,[3.1,3.2,3.3,3.4,3.5],3.3,3.4,3.5],"four":"4"}
-
+```
 > (json->list token1)
-
+```
 (("first" . "1")
   ("second" . "2")
   ("third" . #(3.1 #(3.1 3.2 3.3 3.4 3.5) 3.3 3.4 3.5))
-  ("four" . "4"))
-  
+  ("four" . "4"))
+```  
 > (display token2)
-
+```
 {"first":1,2:"2","third":[3.1,{"first":1,"second":"2","third":[3.31,3.32,3.33,3.34,3.35],"four":"4"},3.3,3.4,3.5],"four":"4"}
-
+```
 > (json->list token2)
 
 (("first" . 1)
