@@ -2,6 +2,19 @@
 JSON librairy for Scheme
 
 
+`{key1:value1,key2:value2}`
+
+will parse to
+
+`((key1 . value2)(key2 . value2))`
+
+`[value1,value2,value3]`
+will parse to
+`#(value1 value2 value3)`
+
+
+***json->list***
+
 ```
 > (define token
       "{\"first\":\"1\",\"second\":\"2\",\"third\":[3.1,[3.1,3.2,3.3,3.4,3.5],3.
