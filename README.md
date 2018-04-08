@@ -158,22 +158,19 @@ will parse to
 3.1
 ```
 
-> (json-ref (json-ref (json-ref (json-ref (json->list token) 2) "third") 1) "fir
-st")
+> (json-ref (json-ref (json-ref (json-ref (json->list token) 2) "third") 1) "first")
 
 ```
 1
 ```
 
-> (json-ref (json-ref (json-ref (json-ref (json-ref (json->list token) 2) "third
-") 1) "third") 0)
+> (json-ref (json-ref (json-ref (json-ref (json-ref (json->list token) 2) "third") 1) "third") 0)
 
 ```
 3.31
 ```
 
-> (json-ref (json-ref (json-ref (json-ref (json-ref (json->list token) 2) "third
-") 1) "third") 4)
+> (json-ref (json-ref (json-ref (json-ref (json-ref (json->list token) 2) "third") 1) "third") 4)
 
 ```
 3.35
