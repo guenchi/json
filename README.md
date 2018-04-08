@@ -49,7 +49,7 @@ will parse to
 
 [0.1,0.2,{"first":"1","second":"2","third":[3.1,{"first":1,"second":"2","third":[3.31,3.32,3.33,3.34,3.35],"four":"4"},3.3,3.4,3.5],"four":"4"},0.3]
 
-> (json->list token)
+> (json->list token3)
 
 #(0.1 0.2
   (("first" . "1")
@@ -65,6 +65,8 @@ will parse to
     ("four" . "4"))
   0.3)
 ```
+
+***list->json***
 
 ```
 > (display token1)
@@ -91,3 +93,5 @@ will parse to
 
 [0.1,0.2,{"first":"1","second":"2","third":[3.1,{"first":1,"second":"2","third":[3.31,3.32,3.33,3.34,3.35],"four":"4"},3.3,3.4,3.5],"four":"4"},0.3]
 ```
+
+***json-ref***
