@@ -16,7 +16,7 @@ will parse to
 ***json->list***
 
 
->> (display token1)
+> (display token1)
 
 ```
 {"first":"1","second":"2","third":[3.1,[3.1,3.2,3.3,3.4,3.5],3.3,3.4,3.5],"four":"4"}
