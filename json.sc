@@ -107,7 +107,17 @@
                                 (string-append x (f (caar lst)) ":" (l (cdar lst) "{") ",")
                                 (if (vector? (cdar lst))
                                     (string-append x (f (caar lst)) ":" (l (cdar lst) "[") ",")
-                                    (string-append x (f (caar lst)) ":" (f (cdar lst)) ",")))))))))                                
-                                
+                                    (string-append x (f (caar lst)) ":" (f (cdar lst)) ",")))))))))
+                   
+    (define json-ref
+        (lambda (x k)
+            (if (vector? x)
+                (vector-ref x k)
+                (let l ((x x)(k k))
+                    (if (null? x)
+                        '()
+                        (if (equal? (caar x) k)
+                            (cdar x)
+                            (l (cdr x) k)))))))                                  
                                 
 )
