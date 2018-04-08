@@ -96,7 +96,7 @@
                                         (l (vector-ref lst n) (string-append y (c n) "{"))))
                                 (string-append y "]"))))
                     (if (null? (cdr lst))
-                        (string-append x (f (caar lst)) ":"
+                        (string-append x "\"" (caar lst) "\":"
                             (if (list? (cdar lst))
                                 (l (cdar lst) (q (cdar lst)))
                                 (if (vector? (cdar lst))
@@ -104,10 +104,10 @@
                                     (f (cdar lst)))) "}")
                         (l (cdr lst)
                             (if (list? (cdar lst))
-                                (string-append x (f (caar lst)) ":" (l (cdar lst) "{") ",")
+                                (string-append x "\"" (caar lst) "\":" (l (cdar lst) "{") ",")
                                 (if (vector? (cdar lst))
-                                    (string-append x (f (caar lst)) ":" (l (cdar lst) "[") ",")
-                                    (string-append x (f (caar lst)) ":" (f (cdar lst)) ",")))))))))
+                                    (string-append x "\"" (caar lst) "\":" (l (cdar lst) "[") ",")
+                                    (string-append x "\"" (caar lst) "\":" (f (cdar lst)) ",")))))))))
                    
     (define json-ref
         (lambda (x k)
