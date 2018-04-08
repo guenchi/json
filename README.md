@@ -18,6 +18,7 @@ will parse to
 ```
 > (display token1)
 {"first":"1","second":"2","third":[3.1,[3.1,3.2,3.3,3.4,3.5],3.3,3.4,3.5],"four":"4"}
+
 > (json->list token)
 (("first" . "1")
   ("second" . "2")
