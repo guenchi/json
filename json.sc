@@ -14,3 +14,9 @@
      (scheme)
   )
  
+    (define TRUE #t)
+    (define FALSE #f)
+    (define NULL '())
+    (define true #t)
+    (define false #f)
+    (define null '())
