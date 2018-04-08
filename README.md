@@ -2,7 +2,7 @@
 a simple, portable JSON librairy for Scheme
 
 ```
-{key1:value1,key2:value2}
+{key1: value1, key2: value2}
 ```
 
 will parse to
@@ -14,7 +14,7 @@ will parse to
 and
 
 ```
-[value1,value2,value3]
+[value1, value2, value3]
 ```
 
 will parse to
