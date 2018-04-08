@@ -127,3 +127,55 @@ will parse to
 ```
 
 ***json-ref***
+
+> (display token3)
+
+```
+[0.1,0.2,{"first":"1","second":"2","third":[3.1,{"first":1,"second":"2","third":[3.31,3.32,3.33,3.34,3.35],"four":"4"},3.3,3.4,3.5],"four":"4"},0.3]
+```
+
+> (json-ref (json->list token) 0)
+
+```
+0.1
+```
+
+> (json-ref (json->list token) 1)
+
+```
+0.2
+```
+
+> (json-ref (json-ref (json->list token) 2) "first")
+
+```
+"1"
+```
+
+> (json-ref (json-ref (json-ref (json->list token) 2) "third") 0)
+
+```
+3.1
+```
+
+> (json-ref (json-ref (json-ref (json-ref (json->list token) 2) "third") 1) "fir
+st")
+
+```
+1
+```
+
+> (json-ref (json-ref (json-ref (json-ref (json-ref (json->list token) 2) "third
+") 1) "third") 0)
+
+```
+3.31
+```
+
+> (json-ref (json-ref (json-ref (json-ref (json-ref (json->list token) 2) "third
+") 1) "third") 4)
+
+```
+3.35
+```
+
