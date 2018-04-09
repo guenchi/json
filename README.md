@@ -80,6 +80,8 @@ when it accept plural keys:
 
 (json-set list key1 key2 key3 ... value)
 
+use to modify a value of specified location of list.
+
 when it accept plural keys:
 
 ```
@@ -88,6 +90,53 @@ when it accept plural keys:
 (json-set list (json-set (json-ref list key1) (json-set (json-ref (json-ref list key1) key2) key3 value)))))
 ```
 
+***json-oper***
+
+(json-oper list key procedure)
+
+(json-oper list key1 key2 key3 ... procedure)
+
+use to passe a procedure to specified location of list to modify it's value.
+
+when it accept plural keys:
+
+```
+(json-oper list key1 key2 key3 procedure)
+= 
+(json-set list (json-set (json-ref list key1) (json-oper (json-ref (json-ref list key1) key2) key3 procedure)))))
+```
+
+***json-push***
+
+(json-push list key value)
+
+(json-push list key1 key2 key3 ... value)
+
+use to add a key-value pair to list.
+
+when it accept plural keys:
+
+```
+(json-push list key1 key2 key3 value)
+= 
+(json-set list (json-set (json-ref list key1) (json-push (json-ref (json-ref list key1) key2) key3 value)))))
+```
+
+***json-drop***
+
+(json-drop list key value)
+
+(json-drop list key1 key2 key3 ... value)
+
+use to delete a key-value pair from list.
+
+when it accept plural keys:
+
+```
+(json-drop list key1 key2 key3 value)
+= 
+(json-set list (json-set (json-ref list key1) (json-drop (json-ref (json-ref list key1) key2) key3 value)))))
+```
 
 
 ***exemple***
