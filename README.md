@@ -7,7 +7,9 @@ a simple, portable JSON librairy for Scheme
 
 ***Easy and Powerful functions***
 
-parse rules: (infinite multi-level nesting)
+a LIST in here, may declare a STRUCT made be list or vector or these infinite multi-level nesting.
+
+parse rules: 
 
 ***json->list***
 
