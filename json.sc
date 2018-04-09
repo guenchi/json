@@ -109,7 +109,7 @@
                                     (string-append x "\"" (caar lst) "\":" (l (cdar lst) "[") ",")
                                     (string-append x "\"" (caar lst) "\":" (f (cdar lst)) ",")))))))))
                    
-    (define json-ref
+    (define ref
         (lambda (x k)
             (if (vector? x)
                 (vector-ref x k)
@@ -118,6 +118,14 @@
                         '()
                         (if (equal? (caar x) k)
                             (cdar x)
-                            (l (cdr x) k)))))))                                  
+                            (l (cdr x) k)))))))
+
+    
+    (define-syntax json-ref
+        (lambda (x)
+            (syntax-case x ()
+                ((_ e e1) #'(ref e e1))
+                ((_ e e1 e2) #'(json-ref (json-ref e e1) e2))
+                ((_ e e1 e2 e3 ...) #'(json-ref (json-ref e e1 e2) e3 ...)))))                               
                                 
 )
