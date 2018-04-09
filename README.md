@@ -1,5 +1,5 @@
 # json
-a simple, portable JSON librairy for Scheme
+a simple, portable JSON library for Scheme
 
 ***The shortest code JSON Parser in history***
 
@@ -7,7 +7,21 @@ a simple, portable JSON librairy for Scheme
 
 ***Easy and Powerful functions***
 
-a LIST in here, may declare a STRUCT may be a list or a vector or these infinite multi-level nesting.
+
+a LIST in here, may declare a struct may be a list or a vector or these infinite multi-level nesting.
+
+In this library, we use this struct in level of scheme, to easily operating it.
+
+When we get a json string, parse it to this struct first before operate. (use json->list).
+
+Only when we need to pass it to front-end we parse it to json's string. (use list->json).
+
+The procedures json-ref, json-set, json-oper, json-push, json-drop is used to the struct, not to a json string.
+
+When they accept plural keys it can jump nesting layers to directly get aim.
+
+Except json-ref, they return a new list with modify specified and has no side effect to old one.
+
 
 parse rules: 
 
