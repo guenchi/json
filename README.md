@@ -10,7 +10,7 @@ a simple, portable JSON librairy for Scheme
 ```
 
 
-***json->list***
+***(json->list JSON)***
 
 
 > (display token1)
@@ -74,7 +74,7 @@ a simple, portable JSON librairy for Scheme
   0.3)
 ```
 
-***list->json***
+***(list->json LIST)***
 
 
 > (display token1)
@@ -113,7 +113,7 @@ a simple, portable JSON librairy for Scheme
 [0.1,0.2,{"first":"1","second":"2","third":[3.1,{"first":1,"second":"2","third":[3.31,3.32,3.33,3.34,3.35],"fourth":"4"},3.3,3.4,3.5],"fourth":"4"},0.3]
 ```
 
-***json-ref***
+***(json-ref LIST KEY ...)***
 
 > (display token3)
 
