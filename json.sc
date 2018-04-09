@@ -180,6 +180,41 @@
                 ((_ l k1 k2 k3 v ...) #'(json-set l k1 (json-set (ref l k1) k2 k3 v ...))))))
                    
                    
+                   
+   
+    (define oper
+        (lambda (x k p)
+            (if (vector? x)
+                (list->vector
+                    (let l ((x (vector->array x))(k k)(p p))
+                        (if (null? x)
+                            '()
+                            (if (equal? (caar x) k)
+                                (cons (p (cdar x)) (l (cdr x) k p))
+                                (cons (cdar x) (l (cdr x) k p))))))
+                (let l ((x x)(k k)(p p))
+                    (if (null? x)
+                        '()
+                        (if (equal? (caar x) k)
+                            (cons (cons k (p (cdar x)))(l (cdr x) k p))
+                            (cons (cons (caar x) (cdar x)) (l (cdr x) k p))))))))
+
+
+                   
+                   
+
+    (define-syntax json-oper
+        (lambda (x)
+            (syntax-case x ()
+                ((_ l k1 p) #'(oper l k1 p))
+                ((_ l k1 k2 p) #'(json-oper l k1 (json-oper (ref l k1) k2 p)))
+                ((_ l k1 k2 k3 p ...) #'(json-oper l k1 (json-oper (ref l k1) k2 k3 p ...))))))
+                
+                   
+                   
+                   
+                   
+                   
 
     (define push
         (lambda (x k v)
