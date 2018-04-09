@@ -2,6 +2,8 @@
   (export
     json->list
     list->json
+    vector->array
+    array->vector
     json-ref
     json-set
     json-push
@@ -100,6 +102,27 @@
                                     (string-append x "\"" (caar lst) "\":" (l (cdar lst) "[") ",")
                                     (string-append x "\"" (caar lst) "\":" (f (cdar lst)) ",")))))))))
                    
+    
+                   
+   (define vector->array
+        (lambda (x)
+            (let l ((x (vector->list x))(n 0))
+                (cons (cons n (car x)) 
+                    (if (null? (cdr x))
+                        '()
+                        (l (cdr x) (+ n 1)))))))
+
+
+    (define array->vector
+        (lambda (x)
+            (list->vector         
+                (let l ((x x)(n 0))
+                    (cons (cdar x)
+                        (if (null? (cdr x))
+                            '()
+                            (l (cdr x) (+ n 1))))))))               
+                              
+                   
     (define ref
         (lambda (x k)
             (define return
@@ -130,14 +153,22 @@
                    
                    
                    
-     (define set
+    (define set
         (lambda (x k v)
-            (let l ((x x)(k k)(v v))
-                (if (null? x)
-                    '()
-                    (if (equal? (caar x) k)
-                        (cons (cons (caar x) v)(l (cdr x) k v))
-                        (cons (cons (caar x) (cdar x)) (l (cdr x) k v)))))))
+            (define s
+                (lambda (x k v)
+                    (let l ((x x)(k k)(v v))
+                        (if (null? x)
+                            '()
+                            (if (equal? (caar x) k)
+                                (cons (cons (caar x) v)(l (cdr x) k v))
+                                (cons (cons (caar x) (cdar x)) (l (cdr x) k v)))))))
+            (if (vector? x)
+                (array->vector
+                    (s (vector->array x) k v))
+                (s x k v))))
+                   
+                   
 
     (define-syntax json-set
         (lambda (x)
