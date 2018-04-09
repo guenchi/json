@@ -3,13 +3,13 @@ a simple, portable JSON librairy for Scheme
 
 ***The shortest code JSON Parser in history***
 
-
+rule is simple:
 ```
 {key1: value1, key2: value2}     =>     ((key1 . value2)(key2 . value2))
 
 [value1, value2, value3]         =>     #(value1 value2 value3)
 ```
-
+when value is             json-ref return
 ```
 TRUE  true  True     =>   #t
 FALSE false False    =>   #f
