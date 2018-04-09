@@ -8,7 +8,7 @@ a simple, portable JSON library for Scheme
 ***Easy and Powerful tool functions***
 
 
-a LIST in here, may declare a struct may be a list or a vector or these infinite multi-level nesting.
+a LIST in here, is declare a struct may be a list or a vector or these infinite multi-level nesting.
 
 In this library, we use this struct in scheme code level, to easily operating it.
 
