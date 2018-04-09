@@ -39,8 +39,6 @@ parse rules:
 
 (list->json list)
 
-(list->json vector)
-
 ```
 ((key1 . value2)(key2 . value2)(key3 . value3) ...)    =>    {key1: value1, key2: value2, key3: value3 ...}
 
