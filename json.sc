@@ -1,13 +1,5 @@
 (library (json json)
   (export
-    TRUE
-    FALSE
-    NULL
-    true
-    false
-    null
-    true?
-    exist?
     json->list
     list->json
     json-ref
@@ -16,23 +8,6 @@
      (scheme)
   )
  
-    (define TRUE #t)
-    (define FALSE #f)
-    (define NULL '())
-    (define true #t)
-    (define false #f)
-    (define null '())
- 
-    (define true? 
-        (lambda (x)
-            (if (equal? x #t)
-                #t
-                (if (equal? x #f)
-                    #f))))
-
-    (define exist?
-        (lambda (x)
-            (not (equal? x '()))))
 
  
   (define json->list
@@ -124,13 +99,22 @@
                    
     (define ref
         (lambda (x k)
+            (define return
+                (lambda (x)
+                    (if (symbol? x)
+                        (cond
+                            ((memq x '(TRUE true True)) #t)
+                            ((memq x '(FALSE false False)) #f)
+                            ((memq x '(NULL null Null)) '())
+                            (else x))
+                        x)))
             (if (vector? x)
-                (vector-ref x k)
+                (return (vector-ref x k))
                 (let l ((x x)(k k))
                     (if (null? x)
                         '()
                         (if (equal? (caar x) k)
-                            (cdar x)
+                            (return (cdar x))
                             (l (cdr x) k)))))))
 
     
