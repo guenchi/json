@@ -5,7 +5,9 @@ a simple, portable JSON librairy for Scheme
 
 parse rules:
 
-json->list
+***json->list***
+
+(json->list json) 
 
 ```
 {key1: value1, key2: value2}       =>     ((key1 . value2)(key2 . value2))
@@ -13,13 +15,25 @@ json->list
 [value1, value2, value3]           =>     #(value1 value2 value3)
 ```
 
-list->json
+***list->json***
+
+(list->json list)
+
+(list->json vector)
 
 ```
 ((key1 . value2)(key2 . value2))   =>     {key1: value1, key2: value2}
 
 #(value1 value2 value3)            =>     [value1, value2, value3]
 ```
+
+if you want more libert to vector, use:
+
+***vector->array***
+
+(vector->array vector)
+
+***array->vector***
 
 key must be string.
 value may be string, number or symbols: true, false or null.
