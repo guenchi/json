@@ -147,9 +147,9 @@
     (define-syntax json-ref
         (lambda (x)
             (syntax-case x ()
-                ((_ e e1) #'(ref e e1))
-                ((_ e e1 e2) #'(json-ref (json-ref e e1) e2))
-                ((_ e e1 e2 e3 ...) #'(json-ref (json-ref e e1 e2) e3 ...)))))      
+                ((_ l k1) #'(ref l e1))
+                ((_ l k1 k2) #'(json-ref (json-ref l k1) k2))
+                ((_ l k1 k2 k3 ...) #'(json-ref (json-ref l k1 k2) k3 ...)))))   
                    
                    
                    
@@ -175,9 +175,11 @@
     (define-syntax json-set
         (lambda (x)
             (syntax-case x ()
-                ((_ e k1 v) #'(set e k1 v))
-                ((_ e k1 k2 v) #'(json-set e k1 (json-set (ref e k1) k2 v)))
-                ((_ e k1 k2 k3 v ...) #'(json-set e k1 (json-set (ref e k1) k2 k3 v ...))))))
+                ((_ l k1 v) #'(set l k1 v))
+                ((_ l k1 k2 v) #'(json-set l k1 (json-set (ref l k1) k2 v)))
+                ((_ l k1 k2 k3 v ...) #'(json-set l k1 (json-set (ref l k1) k2 k3 v ...))))))
+                   
+                   
 
     (define push
         (lambda (x k v)
@@ -192,12 +194,15 @@
                 (cons (cons k v) x))))
 
 
+                   
     (define-syntax json-push
         (lambda (x)
             (syntax-case x ()
-                ((_ e k1 v) #'(push e k1 v))
-                ((_ e k1 k2 v) #'(json-set e k1 (json-push (ref e k1) k2 v)))
-                ((_ e k1 k2 k3 v ...) #'(json-set e k1 (json-push (ref e k1) k2 k3 v ...))))))
+                ((_ l k1 v) #'(push l k1 v))
+                ((_ l k1 k2 v) #'(json-set l k1 (json-push (ref l k1) k2 v)))
+                ((_ l k1 k2 k3 v ...) #'(json-set l k1 (json-push (ref l k1) k2 k3 v ...))))))
+                   
+                   
 
     (define drop
         (lambda (x k)
@@ -216,13 +221,13 @@
                             (l (cdr x) k)
                             (cons (cons (caar x) (cdar x)) (l (cdr x) k))))))))
 
+                   
     (define-syntax json-drop
         (lambda (x)
             (syntax-case x ()
-                ((_ e k1) #'(drop e k1))
-                ((_ e k1 k2) #'(json-set e k1 (json-drop (ref e k1) k2)))
-                ((_ e k1 k2 k3 ...) #'(json-set e k1 (json-drop (ref e k1) k2 k3 ...))))))
-
+                ((_ l k1) #'(drop l k1))
+                ((_ l k1 k2) #'(json-set l k1 (json-drop (ref l k1) k2)))
+                ((_ l k1 k2 k3 ...) #'(json-set l k1 (json-drop (ref l k1) k2 k3 ...))))))
                    
                                 
 )
