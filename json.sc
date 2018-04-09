@@ -155,18 +155,20 @@
                    
     (define set
         (lambda (x k v)
-            (define s
-                (lambda (x k v)
-                    (let l ((x x)(k k)(v v))
+            (if (vector? x)
+                (list->vector
+                    (let l ((x (vector->array x))(k k)(v v))
                         (if (null? x)
                             '()
                             (if (equal? (caar x) k)
-                                (cons (cons (caar x) v)(l (cdr x) k v))
-                                (cons (cons (caar x) (cdar x)) (l (cdr x) k v)))))))
-            (if (vector? x)
-                (array->vector
-                    (s (vector->array x) k v))
-                (s x k v))))
+                                (cons v (l (cdr x) k v))
+                                (cons (cdar x) (l (cdr x) k v))))))
+                (let l ((x x)(k k)(v v))
+                    (if (null? x)
+                        '()
+                        (if (equal? (caar x) k)
+                            (cons (cons k v)(l (cdr x) k v))
+                            (cons (cons (caar x) (cdar x)) (l (cdr x) k v))))))))
                    
                    
 
