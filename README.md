@@ -3,17 +3,28 @@ a simple, portable JSON librairy for Scheme
 
 ***The shortest code JSON Parser in history***
 
-rule is simple:
 ```
-{key1: value1, key2: value2}     =>     ((key1 . value2)(key2 . value2))
+parse rules:
 
-[value1, value2, value3]         =>     #(value1 value2 value3)
-```
-when value is             json-ref return
-```
-TRUE  true  True     =>   #t
-FALSE false False    =>   #f
-NULL  null  Null     =>   '()
+json->list
+
+{key1: value1, key2: value2}       =>     ((key1 . value2)(key2 . value2))
+
+[value1, value2, value3]           =>     #(value1 value2 value3)
+
+list->json
+
+((key1 . value2)(key2 . value2))   =>     {key1: value1, key2: value2}
+
+#(value1 value2 value3)            =>     [value1, value2, value3]
+
+key must be string.
+value may be string, number or following symbols:
+
+when value is:            json-ref return:
+TRUE  true  True     =>      #t
+FALSE false False    =>      #f
+NULL  null  Null     =>      '()
 ```
 
 ***json->list***
