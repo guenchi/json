@@ -50,7 +50,7 @@ if you want more libert to operate vector, use:
 
 
 key must be string.
-value may be string, number or symbols: true, false or null.
+value may be string, number or following symbols: true, false or null.
 
 ***json-ref***
 
