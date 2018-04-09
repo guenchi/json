@@ -207,8 +207,8 @@
         (lambda (x)
             (syntax-case x ()
                 ((_ l k1 p) #'(oper l k1 p))
-                ((_ l k1 k2 p) #'(json-oper l k1 (json-oper (ref l k1) k2 p)))
-                ((_ l k1 k2 k3 p ...) #'(json-oper l k1 (json-oper (ref l k1) k2 k3 p ...))))))
+                ((_ l k1 k2 p) #'(json-set l k1 (json-oper (ref l k1) k2 p)))
+                ((_ l k1 k2 k3 p ...) #'(json-set l k1 (json-oper (ref l k1) k2 k3 p ...))))))
                 
                    
                    
