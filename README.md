@@ -10,9 +10,9 @@ parse rules:
 (json->list json) 
 
 ```
-{key1: value1, key2: value2}       =>     ((key1 . value2)(key2 . value2))
+{key1: value1, key2: value2, key3: value3 ...}      =>     ((key1 . value2)(key2 . value2)(key3 . value3) ...)
 
-[value1, value2, value3]           =>     #(value1 value2 value3)
+[value1, value2, value3 ...]                        =>     #(value1 value2 value3 ...)
 ```
 
 ***list->json***
@@ -22,9 +22,9 @@ parse rules:
 (list->json vector)
 
 ```
-((key1 . value2)(key2 . value2))   =>     {key1: value1, key2: value2}
+((key1 . value2)(key2 . value2)(key3 . value3) ...)    =>    {key1: value1, key2: value2, key3: value3 ...}
 
-#(value1 value2 value3)            =>     [value1, value2, value3]
+#(value1 value2 value3 ...)                            =>    [value1, value2, value3 ...]
 ```
 
 if you want more libert to vector, use:
@@ -32,6 +32,11 @@ if you want more libert to vector, use:
 ***vector->array***
 
 (vector->array vector)
+
+
+```
+#(value1 value2 value3 ...)        =>     ((0 . value2)(1 . value2)(2 . value2) ...) 
+```
 
 ***array->vector***
 
