@@ -103,9 +103,9 @@
                 (lambda (x)
                     (if (symbol? x)
                         (cond
-                            ((memq x '(TRUE true True)) #t)
-                            ((memq x '(FALSE false False)) #f)
-                            ((memq x '(NULL null Null)) '())
+                            ((symbol=? x 'true) #t)
+                            ((symbol=? x 'false) #f)
+                            ((symbol=? x 'null) '())
                             (else x))
                         x)))
             (if (vector? x)
