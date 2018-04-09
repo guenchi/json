@@ -1,5 +1,4 @@
 # json
-a simple, portable JSON library for Scheme
 
 ***The shortest code JSON Parser in history***
 
