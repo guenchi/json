@@ -3,9 +3,9 @@ a simple, portable JSON library for Scheme
 
 ***The shortest code JSON Parser in history***
 
-***All of procedures are full PURE function***
+***All of procedures are full PURE functions***
 
-***Easy and Powerful functions***
+***Easy and Powerful tool functions***
 
 
 a LIST in here, may declare a struct may be a list or a vector or these infinite multi-level nesting.
