@@ -2,13 +2,21 @@
 a simple, portable JSON librairy for Scheme
 
 
-
+1.
 ```
 {key1: value1, key2: value2}     =>     ((key1 . value2)(key2 . value2))
 
 [value1, value2, value3]         =>     #(value1 value2 value3)
 ```
-
+2.
+```
+ > TRUE     =>  #t
+ > FALSE    =>  #f
+ > NULL     =>  ()
+ > true     =>  #t
+ > false    =>  #f
+ > null     =>  ()
+```
 
 ***json->list***
 
