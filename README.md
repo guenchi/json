@@ -31,7 +31,7 @@ parse rules: (infinite multi-level nesting)
 #(value1 value2 value3 ...)                            =>    [value1, value2, value3 ...]
 ```
 
-if you want more libert to vector, use:
+if you want more libert to operate vector, use:
 
 ***vector->array***
 
