@@ -10,12 +10,9 @@ a simple, portable JSON librairy for Scheme
 ```
 2.
 ```
- > TRUE     =>  #t
- > FALSE    =>  #f
- > NULL     =>  ()
- > true     =>  #t
- > false    =>  #f
- > null     =>  ()
+TRUE  true  True     =>   #t
+FALSE false False    =>   #f
+NULL  null  Null     =>   '()
 ```
 
 ***json->list***
