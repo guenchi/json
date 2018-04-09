@@ -181,7 +181,15 @@
 
     (define push
         (lambda (x k v)
-            (cons (cons k v) x)))
+            (if (vector? x)
+                (list->vector    
+                    (let l ((x (vector->array x))(k k)(v v)(b #f))
+                        (if (null? x)
+                            (if b '() (cons v '()))
+                            (if (equal? (caar x) k)
+                                (cons v (cons  (cdar x) (l (cdr x) k v #t)))
+                                (cons (cdar x) (l (cdr x) k v b))))))
+                (cons (cons k v) x))))
 
 
     (define-syntax json-push
