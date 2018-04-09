@@ -159,6 +159,17 @@ when it accept plural keys:
 ```
 
 
+***Portable***
+
+this library should run in any scheme implementation，at least can be easily transplanted.
+
+there is some possible probleme:
+
+1. if aim implementation don't have procedure 1+, add `(define 1+ (lambda (x) (+ 1 x)))` to code.
+
+2. if aim implementation don't have syntax-case, rewrite json-ref, json-set, json-oper, json-push and json-drop use syntax-rules. it's simple like replace "syntax-case" with "syntax-rules" and remove #' in the code.
+
+
 ***exemple***
 
 ***json->list***
