@@ -110,7 +110,7 @@ when it accept plural keys:
 
 (json-oper list key1 key2 key3 ... procedure)
 
-use to passe a procedure to specified location of list to modify it's value.
+use to passe a procedure to specified location of list to modify it's value. the procedure must accept one argument (old value of key) and return a new value to replace.
 
 when it accept plural keys:
 
