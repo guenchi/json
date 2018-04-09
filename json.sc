@@ -3,6 +3,9 @@
     json->list
     list->json
     json-ref
+    json-set
+    json-push
+    json-drop
   )
   (import
      (scheme)
@@ -123,6 +126,54 @@
             (syntax-case x ()
                 ((_ e e1) #'(ref e e1))
                 ((_ e e1 e2) #'(json-ref (json-ref e e1) e2))
-                ((_ e e1 e2 e3 ...) #'(json-ref (json-ref e e1 e2) e3 ...)))))                               
+                ((_ e e1 e2 e3 ...) #'(json-ref (json-ref e e1 e2) e3 ...)))))      
+                   
+                   
+                   
+     (define set
+        (lambda (x k v)
+            (let l ((x x)(k k)(v v))
+                (if (null? x)
+                    '()
+                    (if (equal? (caar x) k)
+                        (cons (cons (caar x) v)(l (cdr x) k v))
+                        (cons (cons (caar x) (cdar x)) (l (cdr x) k v)))))))
+
+    (define-syntax json-set
+        (lambda (x)
+            (syntax-case x ()
+                ((_ e k1 v) #'(set e k1 v))
+                ((_ e k1 k2 v) #'(json-set e k1 (json-set (ref e k1) k2 v)))
+                ((_ e k1 k2 k3 v ...) #'(json-set e k1 (json-set (ref e k1) k2 k3 v ...))))))
+
+    (define push
+        (lambda (x k v)
+            (cons (cons k v) x)))
+
+
+    (define-syntax json-push
+        (lambda (x)
+            (syntax-case x ()
+                ((_ e k1) #'(push e k1))
+                ((_ e k1 k2) #'(json-set e k1 (json-push (ref e k1) k2)))
+                ((_ e k1 k2 k3 ...) #'(json-set e k1 (json-push (ref e k1) k2 k3 ...))))))
+
+    (define drop
+        (lambda (x k)
+            (let l ((x x)(k k))
+                (if (null? x)
+                    '()
+                    (if (equal? (caar x) k)
+                        (l (cdr x) k)
+                        (cons (cons (caar x) (cdar x)) (l (cdr x) k)))))))
+
+    (define-syntax json-drop
+        (lambda (x)
+            (syntax-case x ()
+                ((_ e k1) #'(drop e k1))
+                ((_ e k1 k2) #'(json-set e k1 (json-drop (ref e k1) k2)))
+                ((_ e k1 k2 k3 ...) #'(json-set e k1 (json-drop (ref e k1) k2 k3 ...))))))
+
+                   
                                 
 )
