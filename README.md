@@ -26,7 +26,7 @@ parse rules:
 
 ***json->list***
 
-(json->list json) 
+`(json->list json)` 
 
 ```
 {key1: value1, key2: value2, key3: value3 ...}      =>     ((key1 . value2)(key2 . value2)(key3 . value3) ...)
@@ -36,7 +36,7 @@ parse rules:
 
 ***list->json***
 
-(list->json list)
+`(list->json list)`
 
 ```
 ((key1 . value2)(key2 . value2)(key3 . value3) ...)    =>    {key1: value1, key2: value2, key3: value3 ...}
@@ -48,7 +48,7 @@ if you want more libert to operate vector, use:
 
 ***vector->array***
 
-(vector->array vector)
+`(vector->array vector)`
 
 
 ```
@@ -57,7 +57,7 @@ if you want more libert to operate vector, use:
 
 ***array->vector***
 
-(vector->array list)
+`(vector->array list)`
 
 ```
 ((0 . value2)(1 . value2)(2 . value2) ...)      =>     #(value1 value2 value3 ...)
@@ -69,9 +69,9 @@ value may be string, number or following symbols: true, false or null.
 
 ***json-ref***
 
-(json-ref list key)
+`(json-ref list key)`
 
-(json-ref list key1 key2 key3 ...)
+`(json-ref list key1 key2 key3 ...)`
 
 use to return a value of specified location of list.
 
@@ -91,9 +91,9 @@ when it accept plural keys:
 
 ***json-set***
 
-(json-set list key value)
+`(json-set list key value)`
 
-(json-set list key1 key2 key3 ... value)
+`(json-set list key1 key2 key3 ... value)`
 
 use to modify a value of specified location of list.
 
@@ -109,9 +109,9 @@ when it accept plural keys:
 
 ***json-oper***
 
-(json-oper list key procedure)
+`(json-oper list key procedure)`
 
-(json-oper list key1 key2 key3 ... procedure)
+`(json-oper list key1 key2 key3 ... procedure)`
 
 use to passe a procedure to specified location of list to modify it's value. 
 
@@ -127,9 +127,9 @@ when it accept plural keys:
 
 ***json-push***
 
-(json-push list key value)
+`(json-push list key value)`
 
-(json-push list key1 key2 key3 ... value)
+`(json-push list key1 key2 key3 ... value)`
 
 use to add a key-value pair to list.
 
@@ -143,9 +143,9 @@ when it accept plural keys:
 
 ***json-drop***
 
-(json-drop list key value)
+`(json-drop list key value)`
 
-(json-drop list key1 key2 key3 ... value)
+`(json-drop list key1 key2 key3 ... value)`
 
 use to delete a key-value pair from list.
 
