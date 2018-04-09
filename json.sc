@@ -6,6 +6,8 @@
     true
     false
     null
+    true?
+    exist?
     json->list
     list->json
     json-ref
@@ -21,6 +23,17 @@
     (define false #f)
     (define null '())
  
+    (define true? 
+        (lambda (x)
+            (if (equal? x #t)
+                #t
+                (if (equal? x #f)
+                    #f))))
+
+    (define exist?
+        (lambda (x)
+            (not (equal? x '()))))
+
  
   (define json->list
         (lambda (s)
