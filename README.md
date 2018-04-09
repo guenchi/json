@@ -85,8 +85,7 @@ null          =>      '()
 when it accept plural keys:
 
 ```
-(json-ref list key1 key2 key3)
-= 
+(json-ref list key1 key2 key3) = 
 (json-ref (json-ref (json-ref list key1) key2) key3)))
 ```
 
@@ -101,8 +100,7 @@ use to modify a value of specified location of list.
 when it accept plural keys:
 
 ```
-(json-set list key1 key2 key3 value)
-= 
+(json-set list key1 key2 key3 value) = 
 (json-set list (json-set (json-ref list key1) (json-set (json-ref (json-ref list key1) key2) key3 value)))))
 ```
 
@@ -117,8 +115,7 @@ use to passe a procedure to specified location of list to modify it's value.
 when it accept plural keys:
 
 ```
-(json-oper list key1 key2 key3 procedure)
-= 
+(json-oper list key1 key2 key3 procedure) = 
 (json-set list (json-set (json-ref list key1) (json-oper (json-ref (json-ref list key1) key2) key3 procedure)))))
 ```
 
@@ -133,8 +130,7 @@ use to add a key-value pair to list.
 when it accept plural keys:
 
 ```
-(json-push list key1 key2 key3 value)
-= 
+(json-push list key1 key2 key3 value) = 
 (json-set list (json-set (json-ref list key1) (json-push (json-ref (json-ref list key1) key2) key3 value)))))
 ```
 
