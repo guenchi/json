@@ -22,13 +22,13 @@ list->json
 ```
 
 key must be string.
-value may be string, number or following symbols:
+value may be string, number or symbols: true, false or null.
 
 ```
-when value is:               json-ref return:
-TRUE  true  True     =>      #t
-FALSE false False    =>      #f
-NULL  null  Null     =>      '()
+when value is:     json-ref return:
+true          =>      #t
+false         =>      #f
+null          =>      '()
 ```
 
 ***json->list***
