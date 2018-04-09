@@ -3,7 +3,11 @@ a simple, portable JSON librairy for Scheme
 
 ***The shortest code JSON Parser in history***
 
-parse rules:
+***All of procedures are full PURE function***
+
+***Easy and Powerful functions***
+
+parse rules: (infinite multi-level nesting)
 
 ***json->list***
 
@@ -35,13 +39,26 @@ if you want more libert to vector, use:
 
 
 ```
-#(value1 value2 value3 ...)        =>     ((0 . value2)(1 . value2)(2 . value2) ...) 
+#(value1 value2 value3 ...)                    =>     ((0 . value2)(1 . value2)(2 . value2) ...) 
 ```
 
 ***array->vector***
 
+```
+((0 . value2)(1 . value2)(2 . value2) ...)      =>     #(value1 value2 value3 ...)
+```
+
+
 key must be string.
 value may be string, number or symbols: true, false or null.
+
+***json-ref***
+
+(json-ref list key)
+
+(json-ref list key1 key2 key3 ...)
+
+use to return a value of specified location of list.
 
 ```
 when value is:     json-ref return:
@@ -49,6 +66,31 @@ true          =>      #t
 false         =>      #f
 null          =>      '()
 ```
+when it accept plural keys:
+
+```
+(json-ref list key1 key2 key3)
+= 
+(json-ref (json-ref (json-ref list key1) key2) key3)))
+```
+
+***json-set***
+
+(json-set list key value)
+
+(json-set list key1 key2 key3 ... value)
+
+when it accept plural keys:
+
+```
+(json-set list key1 key2 key3 value)
+= 
+(json-set list (json-set (json-ref list key1) (json-set (json-ref (json-ref list key1) key2) key3 value)))))
+```
+
+
+
+***exemple***
 
 ***json->list***
 
