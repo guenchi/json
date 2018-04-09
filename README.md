@@ -7,7 +7,7 @@ a simple, portable JSON librairy for Scheme
 
 ***Easy and Powerful functions***
 
-a LIST in here, may declare a STRUCT made be list or vector or these infinite multi-level nesting.
+a LIST in here, may declare a STRUCT may be a list or a vector or these infinite multi-level nesting.
 
 parse rules: 
 
