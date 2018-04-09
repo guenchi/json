@@ -201,12 +201,20 @@
 
     (define drop
         (lambda (x k)
-            (let l ((x x)(k k))
-                (if (null? x)
-                    '()
-                    (if (equal? (caar x) k)
-                        (l (cdr x) k)
-                        (cons (cons (caar x) (cdar x)) (l (cdr x) k)))))))
+            (if (vector? x)
+                (list->vector
+                    (let l ((x (vector->array x))(k k))
+                        (if (null? x)
+                            '()
+                            (if (equal? (caar x) k)
+                                (l (cdr x) k)
+                                (cons (cdar x) (l (cdr x) k))))))
+                (let l ((x x)(k k))
+                    (if (null? x)
+                        '()
+                        (if (equal? (caar x) k)
+                            (l (cdr x) k)
+                            (cons (cons (caar x) (cdar x)) (l (cdr x) k))))))))
 
     (define-syntax json-drop
         (lambda (x)
