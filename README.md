@@ -1,14 +1,15 @@
 # json
 a simple, portable JSON librairy for Scheme
 
+***The shortest code JSON Parser in history :) ***
 
-1.
+
 ```
 {key1: value1, key2: value2}     =>     ((key1 . value2)(key2 . value2))
 
 [value1, value2, value3]         =>     #(value1 value2 value3)
 ```
-2.
+
 ```
 TRUE  true  True     =>   #t
 FALSE false False    =>   #f
