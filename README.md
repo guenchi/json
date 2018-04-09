@@ -60,6 +60,8 @@ if you want more libert to operate vector, use:
 
 ***array->vector***
 
+(vector->array list)
+
 ```
 ((0 . value2)(1 . value2)(2 . value2) ...)      =>     #(value1 value2 value3 ...)
 ```
