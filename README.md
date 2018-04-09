@@ -10,9 +10,9 @@ a simple, portable JSON library for Scheme
 
 a LIST in here, may declare a struct may be a list or a vector or these infinite multi-level nesting.
 
-In this library, we use this struct in level of scheme, to easily operating it.
+In this library, we use this struct in scheme code level, to easily operating it.
 
-When we get a json string, parse it to this struct first before operate. (use json->list).
+When we get a json string form front-end, parse it to this struct first before operate. (use json->list).
 
 Only when we need to pass it to front-end we parse it to json's string. (use list->json).
 
