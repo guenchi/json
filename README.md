@@ -25,7 +25,7 @@ key must be string.
 value may be string, number or following symbols:
 
 ```
-when value is:            json-ref return:
+when value is:               json-ref return:
 TRUE  true  True     =>      #t
 FALSE false False    =>      #f
 NULL  null  Null     =>      '()
