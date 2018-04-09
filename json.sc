@@ -151,12 +151,12 @@
             (cons (cons k v) x)))
 
 
-    (define-syntax json-push
+(define-syntax json-push
         (lambda (x)
             (syntax-case x ()
-                ((_ e k1) #'(push e k1))
-                ((_ e k1 k2) #'(json-set e k1 (json-push (ref e k1) k2)))
-                ((_ e k1 k2 k3 ...) #'(json-set e k1 (json-push (ref e k1) k2 k3 ...))))))
+                ((_ e k1 v) #'(push e k1 v))
+                ((_ e k1 k2 v) #'(json-set e k1 (json-push (ref e k1) k2 v)))
+                ((_ e k1 k2 k3 v ...) #'(json-set e k1 (json-push (ref e k1) k2 k3 v ...))))))
 
     (define drop
         (lambda (x k)
