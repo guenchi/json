@@ -74,19 +74,32 @@ a simple, portable JSON librairy for Scheme
   0.3)
 ```
 
-***(list->json list/vector)***
+***(list->json list)***
 
 
-> (display token1)
-
-```
-{"first":"1","second":"2","third":[3.1,[3.1,3.2,3.3,3.4,3.5],3.3,3.4,3.5],"fourth":"4"}
-```
-
-> (display (list->json (json->list token1)))
+> (json->list token1)
 
 ```
-{"first":"1","second":"2","third":[3.1,[3.1,3.2,3.3,3.4,3.5],3.3,3.4,3.5],"fourth":"4"}
+(("first" . "1")
+  ("second" . "2")
+  ("third" . #(3.1 #(3.1 3.2 3.3 3.4 3.5) 3.3 3.4 3.5))
+  ("fourth" . "4"))
+```
+
+> (json->list token2)
+
+```
+(("first" . 1)
+  ("second" . "2")
+  ("third"
+    .
+    #(3.1
+      (("first" . 1)
+        ("second" . "2")
+        ("third" . #(3.31 3.32 3.33 3.34 3.35))
+        ("fourth" . "4"))
+      3.3 3.4 3.5))
+  ("fourth" . "4"))
 ```
 
 > (display token2)
@@ -101,10 +114,23 @@ a simple, portable JSON librairy for Scheme
 {"first":1,"second":"2","third":[3.1,{"first":1,"second":"2","third":[3.31,3.32,3.33,3.34,3.35],"fourth":"4"},3.3,3.4,3.5],"fourth":"4"}
 ```
 
-> (display token3)
+> (json->list token3)
+
 
 ```
-[0.1,0.2,{"first":"1","second":"2","third":[3.1,{"first":1,"second":"2","third":[3.31,3.32,3.33,3.34,3.35],"fourth":"4"},3.3,3.4,3.5],"fourth":"4"},0.3]
+#(0.1 0.2
+  (("first" . "1")
+    ("second" . "2")
+    ("third"
+      .
+      #(3.1
+        (("first" . 1)
+          ("second" . "2")
+          ("third" . #(3.31 3.32 3.33 3.34 3.35))
+          ("fourth" . "4"))
+        3.3 3.4 3.5))
+    ("fourth" . "4"))
+  0.3)
 ```
 
 > (display (list->json (json->list token3)))
@@ -113,7 +139,7 @@ a simple, portable JSON librairy for Scheme
 [0.1,0.2,{"first":"1","second":"2","third":[3.1,{"first":1,"second":"2","third":[3.31,3.32,3.33,3.34,3.35],"fourth":"4"},3.3,3.4,3.5],"fourth":"4"},0.3]
 ```
 
-***(json-ref list/vector key ...)***
+***(json-ref list key ...)***
 
 > (display token3)
 
@@ -121,13 +147,13 @@ a simple, portable JSON librairy for Scheme
 [0.1,0.2,{"first":"1","second":"2","third":[3.1,{"first":1,"second":"2","third":[3.31,3.32,3.33,3.34,3.35],"fourth":"4"},3.3,3.4,3.5],"fourth":"4"},0.3]
 ```
 
-> (json-ref (json->list token) 0)
+> (json-ref (json->list token3) 0)
 
 ```
 0.1
 ```
 
-> (json-ref (json->list token) 1)
+> (json-ref (json->list token3) 1)
 
 ```
 0.2
