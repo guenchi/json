@@ -29,7 +29,7 @@
 
 > When they accept plural keys they can jump nesting layers to directly get aim.
 
-> Except json-ref, they return a new json with specified modify and has no side effect to old one.
+> they return a new JSON struct (a value for json-ref) with specified modify and has no side effect to old one.
 
 
 ### Parse rules: 
