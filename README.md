@@ -9,7 +9,7 @@
 ***No external dependencies and Good portability***
 
 
-> a JSON struct in here may be a list (for map) or a vector (for array) or these infinite multi-level nesting.
+> a JSON struct in here may be a list (for dict) or a vector (for array) or these infinite multi-level nesting.
 
 > it may easily builded without tool functions, just using scheme native procedures list, cons and vector. 
 
