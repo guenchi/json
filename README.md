@@ -169,7 +169,7 @@ when it accept plural keys:
 
 ***Portable***
 
-this library should run in any scheme implementation，at least can be easily ported.
+this library should easily port to any scheme implementation.
 
 there is some possible probleme:
 
