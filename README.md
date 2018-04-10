@@ -6,10 +6,12 @@
 
 ***Easy and Powerful tool functions***
 
+***No external dependencies and Good portability***
 
-> a JSON struct in here may be a list or a vector or these infinite multi-level nesting.
 
-> it may easily builded without tool functions, just using cons, list (for maps) and vector (for array). 
+> a JSON struct in here may be a list (for map) or a vector (for array) or these infinite multi-level nesting.
+
+> it may easily builded without tool functions, just using scheme native procedures cons, list and vector. 
 
 > as: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3)))`
 
