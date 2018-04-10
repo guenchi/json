@@ -98,7 +98,7 @@ when it accept plural keys:
 
 use to modify a value of specified location of list.
 
-Do NOT set #t, #f and '() to values, use true, false and null.
+Do NOT set #t, #f and '() to values, use 'true, 'false and 'null.
 
 when it accept plural keys:
 
