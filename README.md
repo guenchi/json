@@ -23,9 +23,9 @@
 
 > The procedures json-ref, json-set, json-oper, json-push, json-drop is used to the struct, not to a json string.
 
-> When they accept plural keys it can jump nesting layers to directly get aim.
+> When they accept plural keys they can jump nesting layers to directly get aim.
 
-> Except json-ref, they return a new json with modify specified and has no side effect to old one.
+> Except json-ref, they return a new json with specified modify and has no side effect to old one.
 
 
 
