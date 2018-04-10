@@ -40,7 +40,7 @@ there is some possible probleme:
 
 2. if aim implementation don't have syntax-case, rewrite json-ref, json-set, json-oper, json-push and json-drop using syntax-rules. it's simple like replace "syntax-case" with "syntax-rules" and remove #' in the code.
 
-### parse rules: 
+### Parse rules: 
 
 ***string->json***
 
@@ -82,7 +82,7 @@ if you want more libert to operate vector, use:
 ```
 
 
-
+### Tool procedures
 
 ***json-ref***
 
