@@ -2,7 +2,7 @@
 
 ***The shortest code JSON Parser in history***
 
-***All of procedures are full PURE functions***
+***All of procedures are full PURE functional***
 
 ***Easy and Powerful tool functions***
 
