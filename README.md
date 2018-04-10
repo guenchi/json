@@ -30,16 +30,6 @@
 > Except json-ref, they return a new json with specified modify and has no side effect to old one.
 
 
-***Portable***
-
-this library should easily port to any scheme implementation.
-
-there is some possible probleme:
-
-1. if aim implementation don't have procedure 1+, add `(define 1+ (lambda (x) (+ 1 x)))` to code.
-
-2. if aim implementation don't have syntax-case, rewrite json-ref, json-set, json-oper, json-push and json-drop using syntax-rules. it's simple like replace "syntax-case" with "syntax-rules" and remove #' in the code.
-
 ### Parse rules: 
 
 ***string->json***
@@ -82,7 +72,7 @@ if you want more libert to operate vector, use:
 ```
 
 
-### Tool procedures
+### Tools
 
 ***json-ref***
 
