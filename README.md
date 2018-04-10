@@ -2,16 +2,16 @@
 
 ***The shortest code JSON Parser in history***
 
-***All of procedures are full PURE functional***
+***All of procedures are pure functional***
 
-***Easy and Powerful tool functions***
+***Easily and powerful features***
 
-***No external dependencies and Good portability***
+***No external dependencies, good portability***
 
 
 > A JSON-struct in here may be a list (for dict) or a vector (for array) or these infinite multi-level nesting.
 
-> It may easily builded without tool functions, just using scheme native procedures list, cons and vector. 
+> It can easily builded without tool functions, just using scheme native procedures list, cons and vector. 
 
 > As: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3))) = {"foo": "bar", "baz": [1, 2, 3]}`
 
