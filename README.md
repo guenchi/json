@@ -9,7 +9,11 @@
 
 > a JSON struct in here may be a list or a vector or these infinite multi-level nesting.
 
-> In this library, we use this struct in scheme code level, to easily operating it.
+> it may easily builded without tool function, just using cons, list (for maps) and vector (for array). 
+
+> as: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3)))`
+
+> In this library, we use this JSON struct in scheme code level, to easily operating it.
 
 > When we get a JSON string form front-end, parse it to this struct first before operate. (use string->json).
 
@@ -20,10 +24,6 @@
 > When they accept plural keys it can jump nesting layers to directly get aim.
 
 > Except json-ref, they return a new json with modify specified and has no side effect to old one.
-
-> JSON struct may easily builded using cons, list (for maps) and vector (for array). 
-
-> as: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3)))`
 
 > keys must be strings. values may be  strings, numbers or following symbols: 'true, 'false or 'null.
 
