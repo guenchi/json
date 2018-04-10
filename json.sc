@@ -16,7 +16,7 @@
  
 
  
-  (define string->json
+    (define string->json
         (lambda (s)
             (read (open-input-string
                 (let l
@@ -25,44 +25,45 @@
                         ((= end len)
                             (apply string-append (reverse rst)))
                         ((and quts? (not (char=? (string-ref s end) #\")))
-                            (l s bgn (1+ end) rst len quts? lst))
+                            (l s bgn (+ 1 end) rst len quts? lst))
                         (else
                           (case (string-ref s end)
                             (#\{
-                                (l s (1+ end) (1+ end) 
+                                (l s (+ 1 end) (+ 1 end) 
                                     (cons 
                                         (string-append 
                                             (substring s bgn end) "((" ) rst) len quts? (cons #t lst)))
                             (#\}
-                                (l s (1+ end) (1+ end) 
+                                (l s (+ 1 end) (+ 1 end) 
                                     (cons 
                                         (string-append 
                                             (substring s bgn end) "))") rst) len quts? (cdr lst)))
                             (#\[
-                                (l s (1+ end) (1+ end) 
+                                (l s (+ 1 end) (+ 1 end) 
                                     (cons
                                         (string-append 
                                             (substring s bgn end) "#(") rst) len quts? (cons #f lst)))
                             (#\]
-                                (l s (1+ end) (1+ end) 
+                                (l s (+ 1 end) (+ 1 end) 
                                     (cons 
                                         (string-append 
                                             (substring s bgn end) ")") rst) len quts? (cdr lst)))
                             (#\:
-                                (l s (1+ end) (1+ end) 
+                                (l s (+ 1 end) (+ 1 end) 
                                     (cons 
                                         (string-append 
                                             (substring s bgn end) " . ") rst) len quts? lst))
                             (#\,
-                                (l s (1+ end) (1+ end) 
+                                (l s (+ 1 end) (+ 1 end) 
                                     (cons 
                                         (string-append 
                                             (substring s bgn end) 
                                             (if (car lst) ")(" " ")) rst) len quts? lst))
                             (#\"
-                                (l s bgn (1+ end) rst len (not quts?) lst))
+                                (l s bgn (+ 1 end) rst len (not quts?) lst))
                             (else
-                                (l s bgn (1+ end) rst len quts? lst))))))))))
+                                (l s bgn (+ 1 end) rst len quts? lst))))))))))
+
                                 
     (define json->string
         (lambda (lst)
