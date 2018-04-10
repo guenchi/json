@@ -309,41 +309,11 @@ there is some possible probleme:
 ```
 
 ***json-ref***
-
-> (display token3)
-
-```
-[0.1,0.2,{"first":"1","second":"2","third":[3.1,{"first":1,"second":"2","third":[3.31,3.32,3.33,3.34,3.35],"fourth":"4"},3.3,3.4,3.5],"fourth":"4"},0.3]
-```
-
+  
 > (json-ref (string->json token3) 0)
 
 ```
 0.1
-```
-
-> (json-ref (string->json token3) 1)
-
-```
-0.2
-```
-
-> (json-ref (string->json token3) 2 "first")
-
-```
-"1"
-```
-
-> (json-ref (string->json token3) 2 "third" 0)
-
-```
-3.1
-```
-
-> (json-ref (string->json token3) 2 "third" 1 "first")
-
-```
-1
 ```
 
 > (json-ref (string->json token3) 2 "third" 1 "third" 0)
@@ -352,9 +322,133 @@ there is some possible probleme:
 3.31
 ```
 
-> (json-ref (string->json token3) 2 "third" 1 "third" 4)
+***json-set***
+
+> (json-set (string->json token3) 2 0.2)
 
 ```
-3.35
+#(0.1 0.2 0.2 0.3)
 ```
+
+> (json-set (string->json token3) 2 "third" 1 "third" 0  'true)
+
+```
+#(0.1 0.2
+  (("first" . "1")
+    ("second" . "2")
+    ("third"
+      .
+      #(3.1
+        (("first" . 1)
+          ("second" . "2")
+          ("third" . #(true 3.32 3.33 3.34 3.35))
+          ("fourth" . "4"))
+        3.3 3.4 3.5))
+    ("fourth" . "4"))
+  0.3)
+  ```
+
+***json-oper***
+
+> (json-oper (string->json token3) 2 "third" 1 "first" (lambda (x)(+ x 1)))
+
+```
+#(0.1 0.2
+  (("first" . "1")
+    ("second" . "2")
+    ("third"
+      .
+      #(3.1
+        (("first" . 2)
+          ("second" . "2")
+          ("third" . #(3.31 3.32 3.33 3.34 3.35))
+          ("fourth" . "4"))
+        3.3 3.4 3.5))
+    ("fourth" . "4"))
+  0.3)
+```
+
+> (json-oper (string->json token3) 2 "third" 1 "third" 0 (lambda (x)(* x x)))
+
+```
+#(0.1 0.2
+  (("first" . "1")
+    ("second" . "2")
+    ("third"
+      .
+      #(3.1
+        (("first" . 1)
+          ("second" . "2")
+          ("third" . #(10.956100000000001 3.32 3.33 3.34 3.35))
+          ("fourth" . "4"))
+        3.3 3.4 3.5))
+    ("fourth" . "4"))
+  0.3)
+  ```
+
+***json-push***
+
+> (json-push (string->json token3) 2 'true)
+
+```
+#(0.1 0.2 true
+  (("first" . "1")
+    ("second" . "2")
+    ("third"
+      .
+      #(3.1
+        (("first" . 1)
+          ("second" . "2")
+          ("third" . #(3.31 3.32 3.33 3.34 3.35))
+          ("fourth" . "4"))
+        3.3 3.4 3.5))
+    ("fourth" . "4"))
+  0.3)
+  ```
+  
+> (json-push (string->json token3) 2 "third" 1 "third" 0 'true)
+
+```
+#(0.1 0.2
+  (("first" . "1")
+    ("second" . "2")
+    ("third"
+      .
+      #(3.1
+        (("first" . 1)
+          ("second" . "2")
+          ("third" . #(true 3.31 3.32 3.33 3.34 3.35))
+          ("fourth" . "4"))
+        3.3 3.4 3.5))
+    ("fourth" . "4"))
+  0.3)
+  ```
+  
+***json-drop***
+  
+> (json-drop (string->json token3) 2)
+
+```
+#(0.1 0.2 0.3)
+```
+
+> (json-drop (string->json token3) 2 "third" 1 "third" 0)
+
+```
+#(0.1 0.2
+  (("first" . "1")
+    ("second" . "2")
+    ("third"
+      .
+      #(3.1
+        (("first" . 1)
+          ("second" . "2")
+          ("third" . #(3.32 3.33 3.34 3.35))
+          ("fourth" . "4"))
+        3.3 3.4 3.5))
+    ("fourth" . "4"))
+  0.3)
+  ```
+
+
 
