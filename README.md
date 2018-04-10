@@ -9,27 +9,27 @@
 ***No external dependencies and Good portability***
 
 
-> a JSON struct in here may be a list (for dict) or a vector (for array) or these infinite multi-level nesting.
+> A JSON-struct in here may be a list (for dict) or a vector (for array) or these infinite multi-level nesting.
 
-> it may easily builded without tool functions, just using scheme native procedures list, cons and vector. 
+> It may easily builded without tool functions, just using scheme native procedures list, cons and vector. 
 
-> as: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3))) = {"foo": "bar", "baz": [1, 2, 3]}`
+> As: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3))) = {"foo": "bar", "baz": [1, 2, 3]}`
 
 > KEY must be a string for dict. For a array, the key is a number index begin with 0. 
 
 > VALUE may be a string, a number, a following symbol: 'true, 'false or 'null, or an other JSON struct.
 
-> In this library, we use this JSON struct in scheme code level, to easily operating it.
+> In this library, we use this JSON-struct in scheme code level, for easily operating.
 
-> When we get a JSON string form front-end, parse it to this struct first before operate. (use string->json).
+> When we get a JSON-string form front-end, parse it to JSON-struct first before operate. (use string->json).
 
-> Only when we need to pass it to front-end we parse it to JSON string. (use json->string).
+> Only when we need to pass it to front-end we parse it to JSON-string. (use json->string).
 
 > The procedures json-ref, json-set, json-oper, json-push, json-drop is used to the struct, not to a json string.
 
 > When they accept plural keys they can jump nesting layers to directly get aim.
 
-> they return a new JSON struct (a value for json-ref) with specified modify and has no side effect to old one.
+> They return a new JSON-struct (a value for json-ref) with specified modify and has no side effect to old one.
 
 
 ### Parse rules: 
