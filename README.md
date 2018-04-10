@@ -86,6 +86,7 @@ when it accept plural keys:
 
 ```
 (json-ref list key1 key2 key3) = 
+
 (json-ref (json-ref (json-ref list key1) key2) key3)))
 ```
 
