@@ -21,11 +21,10 @@ When they accept plural keys it can jump nesting layers to directly get aim.
 
 Except json-ref, they return a new list with modify specified and has no side effect to old one.
 
-Your can build the struct using cons, list and vector. 
+Your can build the struct easily using cons, list and vector. as: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3)))`
 
 keys must be strings. values may be  strings, numbers or following symbols: 'true, 'false or 'null.
 
-as: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3)))`
 
 
 parse rules: 
