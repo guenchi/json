@@ -17,7 +17,7 @@
 
 > KEY must be a string for dict, must be a number for array. 
 
-> VALUE may be a string, a number, a following symbols: 'true, 'false or 'null or an other JSON struct.
+> VALUE may be a string, a number, a following symbol: 'true, 'false or 'null, or an other JSON struct.
 
 > In this library, we use this JSON struct in scheme code level, to easily operating it.
 
