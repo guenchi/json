@@ -384,7 +384,7 @@ there is some possible probleme:
         3.3 3.4 3.5))
     ("fourth" . "4"))
   0.3)
-  ```
+```
 
 ***json-push***
 
@@ -404,7 +404,7 @@ there is some possible probleme:
         3.3 3.4 3.5))
     ("fourth" . "4"))
   0.3)
-  ```
+```
   
 > (json-push (string->json token3) 2 "third" 1 "third" 0 'true)
 
@@ -422,7 +422,7 @@ there is some possible probleme:
         3.3 3.4 3.5))
     ("fourth" . "4"))
   0.3)
-  ```
+```
   
 ***json-drop***
   
