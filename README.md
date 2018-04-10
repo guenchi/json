@@ -7,23 +7,23 @@
 ***Easy and Powerful tool functions***
 
 
-a LIST in here, is declare a struct may be a list or a vector or these infinite multi-level nesting.
+> a LIST in here, is a json struct may be a list or a vector or these infinite multi-level nesting.
 
-In this library, we use this struct in scheme code level, to easily operating it.
+> In this library, we use this struct in scheme code level, to easily operating it.
 
-When we get a json string form front-end, parse it to this struct first before operate. (use json->list).
+> When we get a json string form front-end, parse it to this struct first before operate. (use json->list).
 
-Only when we need to pass it to front-end we parse it to json's string. (use list->json).
+> Only when we need to pass it to front-end we parse it to json's string. (use list->json).
 
-The procedures json-ref, json-set, json-oper, json-push, json-drop is used to the struct, not to a json string.
+> The procedures json-ref, json-set, json-oper, json-push, json-drop is used to the struct, not to a json string.
 
-When they accept plural keys it can jump nesting layers to directly get aim.
+> When they accept plural keys it can jump nesting layers to directly get aim.
 
-Except json-ref, they return a new list with modify specified and has no side effect to old one.
+> Except json-ref, they return a new list with modify specified and has no side effect to old one.
 
-Your can build the struct easily using cons, list and vector. as: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3)))`
+> Your can build the json struct easily using cons, list and vector. as: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3)))`
 
-keys must be strings. values may be  strings, numbers or following symbols: 'true, 'false or 'null.
+> keys must be strings. values may be  strings, numbers or following symbols: 'true, 'false or 'null.
 
 
 
