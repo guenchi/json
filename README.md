@@ -21,7 +21,7 @@
 
 > Except json-ref, they return a new list with modify specified and has no side effect to old one.
 
-> Your can build the json struct easily using cons, list and vector. as: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3)))`
+> JSON struct may easily builded using cons, list and vector. as: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3)))`
 
 > keys must be strings. values may be  strings, numbers or following symbols: 'true, 'false or 'null.
 
