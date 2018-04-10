@@ -13,7 +13,7 @@
 
 > it may easily builded without tool functions, just using scheme native procedures list, cons and vector. 
 
-> as: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3)))`
+> as: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3))) = {"foo": "bar", "baz": [1, 2, 3]}`
 
 > KEY must be a string for dict, must be a number for array. 
 
