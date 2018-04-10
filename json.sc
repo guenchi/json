@@ -1,7 +1,7 @@
 (library (json json)
   (export
-    json->list
-    list->json
+    string->json
+    json->string
     vector->array
     array->vector
     json-ref
@@ -16,7 +16,7 @@
  
 
  
-  (define json->list
+  (define string->json
         (lambda (s)
             (read (open-input-string
                 (let l
@@ -64,7 +64,7 @@
                             (else
                                 (l s bgn (1+ end) rst len quts? lst))))))))))
                                 
-    (define list->json
+    (define json->string
         (lambda (lst)
             (define f
                 (lambda (x)
@@ -148,9 +148,9 @@
     (define-syntax json-ref
         (lambda (x)
             (syntax-case x ()
-                ((_ l k1) #'(ref l k1))
-                ((_ l k1 k2) #'(json-ref (json-ref l k1) k2))
-                ((_ l k1 k2 k3 ...) #'(json-ref (json-ref l k1 k2) k3 ...)))))   
+                ((_ j k1) #'(ref j k1))
+                ((_ j k1 k2) #'(json-ref (json-ref j k1) k2))
+                ((_ j k1 k2 k3 ...) #'(json-ref (json-ref j k1 k2) k3 ...))))) 
                    
                    
                    
@@ -176,9 +176,9 @@
     (define-syntax json-set
         (lambda (x)
             (syntax-case x ()
-                ((_ l k1 v) #'(set l k1 v))
-                ((_ l k1 k2 v) #'(json-set l k1 (json-set (ref l k1) k2 v)))
-                ((_ l k1 k2 k3 v ...) #'(json-set l k1 (json-set (ref l k1) k2 k3 v ...))))))
+                ((_ j k1 v) #'(set j k1 v))
+                ((_ j k1 k2 v) #'(json-set j k1 (json-set (ref j k1) k2 v)))
+                ((_ j k1 k2 k3 v ...) #'(json-set j k1 (json-set (ref j k1) k2 k3 v ...))))))
                    
                    
                    
@@ -207,9 +207,9 @@
     (define-syntax json-oper
         (lambda (x)
             (syntax-case x ()
-                ((_ l k1 p) #'(oper l k1 p))
-                ((_ l k1 k2 p) #'(json-set l k1 (json-oper (ref l k1) k2 p)))
-                ((_ l k1 k2 k3 p ...) #'(json-set l k1 (json-oper (ref l k1) k2 k3 p ...))))))
+                ((_ j k1 p) #'(oper j k1 p))
+                ((_ j k1 k2 p) #'(json-set j k1 (json-oper (ref j k1) k2 p)))
+                ((_ j k1 k2 k3 p ...) #'(json-set j k1 (json-oper (ref j k1) k2 k3 p ...))))))
                 
                    
                    
@@ -234,9 +234,9 @@
     (define-syntax json-push
         (lambda (x)
             (syntax-case x ()
-                ((_ l k1 v) #'(push l k1 v))
-                ((_ l k1 k2 v) #'(json-set l k1 (json-push (ref l k1) k2 v)))
-                ((_ l k1 k2 k3 v ...) #'(json-set l k1 (json-push (ref l k1) k2 k3 v ...))))))
+                ((_ j k1 v) #'(push j k1 v))
+                ((_ j k1 k2 v) #'(json-set j k1 (json-push (ref j k1) k2 v)))
+                ((_ j k1 k2 k3 v ...) #'(json-set j k1 (json-push (ref j k1) k2 k3 v ...))))))
                    
                    
 
@@ -261,9 +261,9 @@
     (define-syntax json-drop
         (lambda (x)
             (syntax-case x ()
-                ((_ l k1) #'(drop l k1))
-                ((_ l k1 k2) #'(json-set l k1 (json-drop (ref l k1) k2)))
-                ((_ l k1 k2 k3 ...) #'(json-set l k1 (json-drop (ref l k1) k2 k3 ...))))))
+                ((_ j k1) #'(drop j k1))
+                ((_ j k1 k2) #'(json-set j k1 (json-drop (ref j k1) k2)))
+                ((_ j k1 k2 k3 ...) #'(json-set j k1 (json-drop (ref j k1) k2 k3 ...))))))
                    
                                 
 )
