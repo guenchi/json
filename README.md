@@ -42,7 +42,7 @@ json-set, json-push and json-drop is rewrite with higher-order function map as j
 
 *What have to be noticed is old json-set and json-oper was removed because feature overlap with json-map and less efficient and powerful than the latter. For raison of naming conventions and in principal of change less, json-map renamed to json-set.*
 
-
+For the same raison, json-map-reduce named json-reduce.
 
 ### Parse rules: 
 
