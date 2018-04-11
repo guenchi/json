@@ -25,7 +25,7 @@
 
 > Only when we need to pass it to front-end we parse it to JSON-string. (use json->string).
 
-> The procedures json-ref, json-set, json-oper, json-push, json-drop is used to the struct, not to a JSON-string.
+> The procedures json-ref, json-set, json-push, json-drop json-map is used to the struct, not to a JSON-string.
 
 > When they accept plural keys they can jump nesting layers to directly get aim.
 
@@ -117,24 +117,6 @@ when it accept plural keys:
 (json-set json (json-set (json-ref json key1) (json-set (json-ref (json-ref json key1) key2) key3 value)))))
 ```
 
-***json-oper***
-
-`(json-oper json key procedure)`
-
-`(json-oper json key1 key2 key3 ... procedure)`
-
-use to passe a procedure to specified location of json to modify the value of a key. 
-
-the procedure must accept one argument (old value of key) and return a new value to replace.
-
-when it accept plural keys:
-
-```
-(json-oper json key1 key2 key3 procedure) = 
-
-(json-set json (json-set (json-ref json key1) (json-oper (json-ref (json-ref json key1) key2) key3 procedure)))))
-```
-
 ***json-push***
 
 `(json-push json key value)`
@@ -166,6 +148,19 @@ when it accept plural keys:
 
 (json-set json (json-set (json-ref json key1) (json-drop (json-ref (json-ref json key1) key2) key3 value)))))
 ```
+
+***json-map***
+
+`(json-map json verify procedure)`
+
+`(json-map json verify1 verify2 verify3 ... procedure)`
+
+use to passe a procedure to specified location of json to modify the value of a key. 
+
+the procedure must accept one argument (old value of key) and return a new value to replace.
+
+when it accept plural keys:
+
 
 
 
