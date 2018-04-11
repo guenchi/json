@@ -62,7 +62,7 @@ if you want more libert to operate vector, use:
 
 
 ```
-#(value1 value2 value3 ...)                    =>     ((0 . value2)(1 . value2)(2 . value2) ...) 
+#(value1 value2 value3 ...)                    =>     ((0 . value1)(1 . value2)(2 . value3) ...) 
 ```
 
 ***array->vector***
@@ -70,7 +70,7 @@ if you want more libert to operate vector, use:
 `(vector->array list)`
 
 ```
-((0 . value2)(1 . value2)(2 . value2) ...)      =>     #(value1 value2 value3 ...)
+((0 . value1)(1 . value2)(2 . value3) ...)     =>     #(value1 value2 value3 ...)
 ```
 
 
