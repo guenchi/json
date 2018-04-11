@@ -6,9 +6,9 @@
     array->vector
     json-ref
     json-set
-    json-oper
     json-push
     json-drop
+    json-map
   )
   (import
      (scheme)
