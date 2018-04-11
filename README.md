@@ -21,7 +21,7 @@
 
 > In this library, we use this JSON-struct in scheme code level, for easily operating.
 
-> When we get a JSON-string form front-end, parse it to JSON-struct first before operate. (use string->json).
+> When we get a JSON-string from front-end, parse it to JSON-struct first before operate. (use string->json).
 
 > Only when we need to pass it to front-end we parse it to JSON-string. (use json->string).
 
