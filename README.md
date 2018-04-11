@@ -399,7 +399,7 @@ when it accept plural keys:
   0.3)
 ```
   
-> (json-push (string->json token3) 2 "third" 1 "third" 0 'true)
+> (json-push (string->json token3) 2 "third" 1 "third" 3 'true)
 
 ```
 #(0.1 0.2
@@ -410,7 +410,7 @@ when it accept plural keys:
       #(3.1
         (("first" . 1)
           ("second" . "2")
-          ("third" . #(true 3.31 3.32 3.33 3.34 3.35))
+          ("third" . #(3.31 3.32 3.33 true 3.34 3.35))
           ("fourth" . "4"))
         3.3 3.4 3.5))
     ("fourth" . "4"))
