@@ -155,11 +155,17 @@ when it accept plural keys:
 
 `(json-map json verify1 verify2 verify3 ... procedure)`
 
+"verify" may be a key, a boolean #t or a procedure.
+
+when it's a key, it specife the path throw this layer.
+
+when it's a #t, it means all of keys of this layer.
+
+when it's a procedure, it match all of keys with this procedure in this layer.
+
 use to passe a procedure to specified location of json to modify the value of a key. 
 
 the procedure must accept one argument (old value of key) and return a new value to replace.
-
-when it accept plural keys:
 
 
 
@@ -336,43 +342,6 @@ when it accept plural keys:
   0.3)
 ```
 
-***json-oper***
-
-> (json-oper (string->json token3) 2 "third" 1 "first" (lambda (x)(+ x 1)))
-
-```
-#(0.1 0.2
-  (("first" . "1")
-    ("second" . "2")
-    ("third"
-      .
-      #(3.1
-        (("first" . 2)
-          ("second" . "2")
-          ("third" . #(3.31 3.32 3.33 3.34 3.35))
-          ("fourth" . "4"))
-        3.3 3.4 3.5))
-    ("fourth" . "4"))
-  0.3)
-```
-
-> (json-oper (string->json token3) 2 "third" 1 "third" 0 (lambda (x)(* x x)))
-
-```
-#(0.1 0.2
-  (("first" . "1")
-    ("second" . "2")
-    ("third"
-      .
-      #(3.1
-        (("first" . 1)
-          ("second" . "2")
-          ("third" . #(10.956100000000001 3.32 3.33 3.34 3.35))
-          ("fourth" . "4"))
-        3.3 3.4 3.5))
-    ("fourth" . "4"))
-  0.3)
-```
 
 ***json-push***
 
@@ -438,5 +407,41 @@ when it accept plural keys:
   0.3)
 ```
 
+***json-map***
 
+> (json-map (string->json token3) 2 "third" 1 "first" (lambda (x)(+ x 1)))
+
+```
+#(0.1 0.2
+  (("first" . "1")
+    ("second" . "2")
+    ("third"
+      .
+      #(3.1
+        (("first" . 2)
+          ("second" . "2")
+          ("third" . #(3.31 3.32 3.33 3.34 3.35))
+          ("fourth" . "4"))
+        3.3 3.4 3.5))
+    ("fourth" . "4"))
+  0.3)
+```
+
+> (json-map (string->json token3) 2 "third" 1 "third" 0 (lambda (x)(* x x)))
+
+```
+#(0.1 0.2
+  (("first" . "1")
+    ("second" . "2")
+    ("third"
+      .
+      #(3.1
+        (("first" . 1)
+          ("second" . "2")
+          ("third" . #(10.956100000000001 3.32 3.33 3.34 3.35))
+          ("fourth" . "4"))
+        3.3 3.4 3.5))
+    ("fourth" . "4"))
+  0.3)
+```
 
