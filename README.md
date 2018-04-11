@@ -91,13 +91,9 @@ true          =>      #t
 false         =>      #f
 null          =>      '()
 ```
-when it accept plural keys:
 
-```
-(json-ref json key1 key2 key3) = 
+when it accept plural keys, each key will match each layer.
 
-(json-ref (json-ref (json-ref json key1) key2) key3)))
-```
 
 ***json-set***
 
@@ -109,13 +105,8 @@ use to modify the value of a key in specified location of JSON.
 
 Do NOT set #t, #f and '() to values, use 'true, 'false and 'null.
 
-when it accept plural keys:
+when it accept plural keys, each key will match each layer.
 
-```
-(json-set json key1 key2 key3 value) = 
-
-(json-set json (json-set (json-ref json key1) (json-set (json-ref (json-ref json key1) key2) key3 value)))))
-```
 
 ***json-push***
 
@@ -125,13 +116,8 @@ when it accept plural keys:
 
 use to add a key-value pair to json.
 
-when it accept plural keys:
+when it accept plural keys, each key will match each layer.
 
-```
-(json-push json key1 key2 key3 value) = 
-
-(json-set json (json-set (json-ref json key1) (json-push (json-ref (json-ref json key1) key2) key3 value)))))
-```
 
 ***json-drop***
 
@@ -141,13 +127,8 @@ when it accept plural keys:
 
 use to delete a key-value pair from list.
 
-when it accept plural keys:
+when it accept plural keys, each key will match each layer.
 
-```
-(json-drop json key1 key2 key3 value) =
-
-(json-set json (json-set (json-ref json key1) (json-drop (json-ref (json-ref json key1) key2) key3 value)))))
-```
 
 ***json-map***
 
@@ -155,7 +136,7 @@ when it accept plural keys:
 
 `(json-map json verify1 verify2 verify3 ... value)`
 
-use to a key or keys in any location of JSON-struct. 
+use to modify a key or keys in any location of JSON-struct. 
 
 "verify" may be a key, a boolean #t or a procedure.
 
@@ -164,6 +145,8 @@ when it's a key, it specife the path throw this layer.
 when it's a #t, it means all of keys of this layer.
 
 when it's a procedure, it match all of keys with this procedure in this layer.
+
+when it accept plural keys, each key will match each layer.
 
 the procedure must accept one argument (key) and return boolean.
 
