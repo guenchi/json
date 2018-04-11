@@ -151,9 +151,11 @@ when it accept plural keys:
 
 ***json-map***
 
-`(json-map json verify procedure)`
+`(json-map json verify value)`
 
-`(json-map json verify1 verify2 verify3 ... procedure)`
+`(json-map json verify1 verify2 verify3 ... value)`
+
+use to a key or keys in any location of JSON-struct. 
 
 "verify" may be a key, a boolean #t or a procedure.
 
@@ -163,9 +165,13 @@ when it's a #t, it means all of keys of this layer.
 
 when it's a procedure, it match all of keys with this procedure in this layer.
 
-use to passe a procedure to specified location of json to modify the value of a key. 
+the procedure must accept one argument (key) and return boolean.
 
-the procedure must accept one argument (old value of key) and return a new value to replace.
+"value" may be a value or a procedure.
+
+when it's a value, it will directly replace the old one's.
+
+when it's a procedure, it must accept one argument (old value of key) and return a new value to replace.
 
 
 
