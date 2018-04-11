@@ -8,7 +8,6 @@
     json-set
     json-push
     json-drop
-    json-map
   )
   (import
      (scheme)
