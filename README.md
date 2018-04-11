@@ -170,6 +170,16 @@ use to delete a key-value pair from list.
 it has to have a key value pair in arguments.
 
 
+***json-reduce***
+
+`(json-set json verify procedure)`
+
+`(json-set json verify1 verify2 verify3 ... procedure)`
+
+It likes json-set, the diffrent is it accept a procedure rather than a value.
+
+And the procedure have to accept two arguments (key and old value) and return a new value.
+
 
 ### Exemples
 
