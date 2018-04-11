@@ -359,9 +359,7 @@ it has to have a key value pair in arguments.
     ("fourth" . "4"))
   0.3)
 ```
-
 > (json-set (string->json token3) 2 "third" 1 "third" 0 (lambda (x)(* x x)))
-
 ```
 #(0.1 0.2
   (("first" . "1")
@@ -394,6 +392,7 @@ it has to have a key value pair in arguments.
         (("1" . #(1 2 3 4 5))("2" . #(1 2 3 4 5))("3" . #(1 2 3 4 5)))
         (("1" . #(1 2 3 4 5))("2" . #(1 2 3 4 5))("3" . #(1 2 3 4 5))))))
 ```
+
 > (json-set x #t #t #t 2 0)
 
 ```
@@ -408,10 +407,9 @@ it has to have a key value pair in arguments.
   ("3" .
        #((("1" . #(1 2 0 4 5))("2" . #(1 2 0 4 5))("3" . #(1 2 0 4 5)))
          (("1" . #(1 2 0 4 5))("2" . #(1 2 0 4 5))("3" . #(1 2 0 4 5)))
-         (("1" . #(1 2 0 4 5))("2" . #(1 2 0 4 5))("3" . #(1 2 0 4 5))))))
-     
+         (("1" . #(1 2 0 4 5))("2" . #(1 2 0 4 5))("3" . #(1 2 0 4 5))))))
 ```
-           
+
 > (json-set x #t (lambda (x)(> x 1)) #t 3 (lambda (x)(* x x)))
 
 ```
