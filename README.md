@@ -114,19 +114,20 @@ when it accept plural keys:
 
 ***following procedure is embedded high-order function map***
 
-they can operate multiple layer and multiple branches at the same time.
+> They can operate multiple layer and multiple branches at the same time.
 
-"verify" may be a key, a boolean #t or a procedure.
+> "Verify" may be a key, a boolean #t or a procedure.
 
-when it's a key, it specife the branch to throw this layer.
+> When it's a key, it specife the branch to throw this layer.
 
-when it's a #t, it means operate all of branch of this layer.
+> When it's a #t, it means operate all of branch of this layer.
 
-when it's a procedure, it match all of keys with this procedure in this layer.
+> When it's a procedure, it match all of keys with this procedure in this layer.
 
-when it accept plural verifys, each key will match each layer.
+> The procedure must accept one argument (key) and return boolean.
 
-the procedure must accept one argument (key) and return boolean.
+> When it accept plural verifys, each key will match each layer.
+
 
 
 ***json-set***
