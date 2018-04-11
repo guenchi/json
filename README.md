@@ -32,6 +32,17 @@
 > They return a new JSON-struct (a value for json-ref) with specified modify and has no side effect to old one.
 
 
+### 1.2.0 -> 2.0.0 Pacth update
+
+
+json-set, json-push and json-drop is rewrite as json-map-set, json-map-push, json-map-drop for convienient multi-operating in one time.
+
+*But their names remain the same: json-set, json-push and json-drop.*
+
+json-map has been deleted, its features move to json-set.
+
+
+
 ### Parse rules: 
 
 ***string->json***
