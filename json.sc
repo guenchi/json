@@ -230,8 +230,8 @@
         (lambda (x)
             (syntax-case x ()
                 ((_ j k1 v) #'(push j k1 v))
-                ((_ j k1 k2 v) #'(json-set j k1 (json-push (ref j k1) k2 v)))
-                ((_ j k1 k2 k3 v ...) #'(json-set j k1 (json-push (ref j k1) k2 k3 v ...))))))
+                ((_ j k1 k2 v) #'(json-set j k1 (lambda (x) (json-push x k2 v))))
+                ((_ j k1 k2 k3 v ...) #'(json-set j k1 (lambda (x) (json-push x k2 k3 v ...)))))))
                    
                    
 
@@ -257,8 +257,8 @@
         (lambda (x)
             (syntax-case x ()
                 ((_ j k1) #'(drop j k1))
-                ((_ j k1 k2) #'(json-set j k1 (json-drop (ref j k1) k2)))
-                ((_ j k1 k2 k3 ...) #'(json-set j k1 (json-drop (ref j k1) k2 k3 ...))))))
+                ((_ j k1 k2) #'(json-set j k1 (lambda (x) (json-drop x k2))))
+                ((_ j k1 k2 k3 ...) #'(json-set j k1 (lambda (x) (json-drop x k2 k3 ...)))))))
                    
                    
                                 
