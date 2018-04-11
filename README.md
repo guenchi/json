@@ -34,11 +34,11 @@
 
 ### Important pacth update
 
-> When writting json-map, I relized that it's more efficient and powerful than old procedure json-set and features overlap, so I decided to replace the latter with it. Then I found il will be useful if I rewrite all the tool procedures with base of json-map.
+> When writting json-map, I relized that it's more efficient and powerful than old procedure json-set and have features overlap, so I decided to replace the latter with it. Then I found il will be useful if I rewrite all the tool procedures with base of json-map.
 
 json-set, json-push and json-drop is rewrite with higher-order function map as json-map-set, json-map-push, json-map-drop for convienient multi-operating in one time.
 
-*But their names remain the same: json-set, json-push and json-drop so old style call will not be affected.*
+*But their names remain the same: json-set, json-push and json-drop, so old style call will not be affected.*
 
 *What have to be noticed is old json-set and json-oper was removed because feature overlap with json-map and less efficient and powerful than the latter. For raison of naming conventions and in principal of change less, json-map renamed to json-set.*
 
