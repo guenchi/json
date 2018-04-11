@@ -122,7 +122,7 @@ when it accept plural keys:
 
 > When it's a #t, it means operate all of branch of this layer.
 
-> When it's a procedure, it match all of keys with this procedure in this layer.
+> When it's a procedure, it match all of keys with in this layer.
 
 > The procedure must accept one argument (key) and return boolean.
 
