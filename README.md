@@ -104,63 +104,38 @@ false         =>      #f
 null          =>      '()
 ```
 
-when it accept plural keys, each key will match each layer.
+when it accept plural keys:
+
+```
+(json-ref json key1 key2 key3) = 
+
+(json-ref (json-ref (json-ref json key1) key2) key3)))
+```
+
+***following procedure is embedded high-order function map***
+
+they can operate multiple layer and multiple branches at the same time.
+
+"verify" may be a key, a boolean #t or a procedure.
+
+when it's a key, it specife the branch to throw this layer.
+
+when it's a #t, it means operate all of branch of this layer.
+
+when it's a procedure, it match all of keys with this procedure in this layer.
+
+when it accept plural verifys, each key will match each layer.
+
+the procedure must accept one argument (key) and return boolean.
 
 
 ***json-set***
 
-`(json-set json key value)`
+`(json-set json verify value)`
 
-`(json-set json key1 key2 key3 ... value)`
+`(json-set json verify1 verify2 verify3 ... value)`
 
-use to modify the value of a key in specified location of JSON.
-
-Do NOT set #t, #f and '() to values, use 'true, 'false and 'null.
-
-when it accept plural keys, each key will match each layer.
-
-
-***json-push***
-
-`(json-push json key value)`
-
-`(json-push json key1 key2 key3 ... value)`
-
-use to add a key-value pair to json.
-
-when it accept plural keys, each key will match each layer.
-
-
-***json-drop***
-
-`(json-drop json key value)`
-
-`(json-drop json key1 key2 key3 ... value)`
-
-use to delete a key-value pair from list.
-
-when it accept plural keys, each key will match each layer.
-
-
-***json-map***
-
-`(json-map json verify value)`
-
-`(json-map json verify1 verify2 verify3 ... value)`
-
-use to modify a key or keys in any location of JSON-struct. 
-
-"verify" may be a key, a boolean #t or a procedure.
-
-when it's a key, it specife the path throw this layer.
-
-when it's a #t, it means all of keys of this layer.
-
-when it's a procedure, it match all of keys with this procedure in this layer.
-
-when it accept plural keys, each key will match each layer.
-
-the procedure must accept one argument (key) and return boolean.
+use to modify a value or values in specified location of JSON.
 
 "value" may be a value or a procedure.
 
@@ -168,6 +143,30 @@ when it's a value, it will directly replace the old one's.
 
 when it's a procedure, it must accept one argument (old value of key) and return a new value to replace.
 
+Do NOT set #t, #f and '() to values, use 'true, 'false and 'null.
+
+
+
+***json-push***
+
+`(json-push json key value)`
+
+`(json-push json verify1 verify2 verify3 ... key value)`
+
+use to add a key-value pair to json.
+
+it has to have a key value pair in arguments.
+
+
+***json-drop***
+
+`(json-drop json key value)`
+
+`(json-drop json verify1 verify2 verify3 ... key value)`
+
+use to delete a key-value pair from list.
+
+it has to have a key value pair in arguments.
 
 
 
