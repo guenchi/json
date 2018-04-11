@@ -156,30 +156,60 @@
                    
                    
     (define set
-        (lambda (x k v)
-            (if (vector? x)
-                (list->vector
-                    (let l ((x (vector->array x))(k k)(v v))
-                        (if (null? x)
-                            '()
-                            (if (equal? (caar x) k)
-                                (cons v (l (cdr x) k v))
-                                (cons (cdar x) (l (cdr x) k v))))))
-                (let l ((x x)(k k)(v v))
-                    (if (null? x)
-                        '()
-                        (if (equal? (caar x) k)
-                            (cons (cons k v)(l (cdr x) k v))
-                            (cons (cons (caar x) (cdar x)) (l (cdr x) k v))))))))
-                   
-                   
+        (lambda (x v p)
+            (let ((x x)(v v)(p (if (procedure? p) p (lambda (x) p))))
+                (if (vector? x)
+                    (list->vector
+                        (cond 
+                            ((boolean? v)
+                                (if v
+                                    (let l ((x (vector->array x))(p p))
+                                        (if (null? x)
+                                            '()
+                                            (cons (p (cdar x)) (l (cdr x) p))))))
+                            ((procedure? v)
+                                (let l ((x (vector->array x))(v v)(p p))
+                                    (if (null? x)
+                                        '()
+                                        (if (v (caar x))
+                                            (cons (p (cdar x)) (l (cdr x) v p))
+                                            (cons (cdar x) (l (cdr x) v p))))))
+                            (else
+                                (let l ((x (vector->array x))(v v)(p p))
+                                    (if (null? x)
+                                        '()
+                                        (if (equal? (caar x) v)
+                                            (cons (p (cdar x)) (l (cdr x) v p))
+                                            (cons (cdar x) (l (cdr x) v p))))))))
+                    (cond
+                        ((boolean? v)
+                            (if v
+                                (let l ((x x)(p p))
+                                    (if (null? x)
+                                        '()
+                                        (cons (cons (caar x) (p (cdar x)))(l (cdr x) p))))))
+                        ((procedure? v)
+                            (let l ((x x)(v v)(p p))
+                                (if (null? x)
+                                    '()
+                                    (if (v (caar x))
+                                        (cons (cons (caar x) (p (cdar x)))(l (cdr x) v p))
+                                        (cons (cons (caar x) (cdar x)) (l (cdr x) v p))))))
+                        (else
+                            (let l ((x x)(v v)(p p))
+                                (if (null? x)
+                                    '()
+                                    (if (equal? (caar x) v)
+                                        (cons (cons v (p (cdar x)))(l (cdr x) v p))
+                                        (cons (cons (caar x) (cdar x)) (l (cdr x) v p)))))))))))
+
 
     (define-syntax json-set
         (lambda (x)
             (syntax-case x ()
-                ((_ j k1 v) #'(set j k1 v))
-                ((_ j k1 k2 v) #'(json-set j k1 (json-set (ref j k1) k2 v)))
-                ((_ j k1 k2 k3 v ...) #'(json-set j k1 (json-set (ref j k1) k2 k3 v ...))))))               
+                ((_ j v1 p) #'(set j v1 p))
+                ((_ j v1 v2 p) #'(json-set j v1 (lambda (x) (json-set x v2 p))))
+                ((_ j v1 v2 v3 p ...) #'(json-set j v1 (lambda (x) (json-set x v2 v3 p ...)))))))               
                    
                    
 
@@ -231,63 +261,6 @@
                 ((_ j k1 k2) #'(json-set j k1 (json-drop (ref j k1) k2)))
                 ((_ j k1 k2 k3 ...) #'(json-set j k1 (json-drop (ref j k1) k2 k3 ...))))))
                    
-                   
-                   
-    (define map
-        (lambda (x v p)
-            (let ((x x)(v v)(p (if (procedure? p) p (lambda (x) p))))
-                (if (vector? x)
-                    (list->vector
-                        (cond 
-                            ((boolean? v)
-                                (if v
-                                    (let l ((x (vector->array x))(p p))
-                                        (if (null? x)
-                                            '()
-                                            (cons (p (cdar x)) (l (cdr x) p))))))
-                            ((procedure? v)
-                                (let l ((x (vector->array x))(v v)(p p))
-                                    (if (null? x)
-                                        '()
-                                        (if (v (caar x))
-                                            (cons (p (cdar x)) (l (cdr x) v p))
-                                            (cons (cdar x) (l (cdr x) v p))))))
-                            (else
-                                (let l ((x (vector->array x))(k v)(p p))
-                                    (if (null? x)
-                                        '()
-                                        (if (equal? (caar x) k)
-                                            (cons (p (cdar x)) (l (cdr x) k p))
-                                            (cons (cdar x) (l (cdr x) k p))))))))
-                    (cond
-                        ((boolean? v)
-                            (if v
-                                (let l ((x x)(p p))
-                                    (if (null? x)
-                                        '()
-                                        (cons (cons (caar x) (p (cdar x)))(l (cdr x) p))))))
-                        ((procedure? v)
-                            (let l ((x x)(v v)(p p))
-                                (if (null? x)
-                                    '()
-                                    (if (v (caar x))
-                                        (cons (cons (caar x) (p (cdar x)))(l (cdr x) v p))
-                                        (cons (cons (caar x) (cdar x)) (l (cdr x) v p))))))
-                        (else
-                            (let l ((x x)(k v)(p p))
-                                (if (null? x)
-                                    '()
-                                    (if (equal? (caar x) k)
-                                        (cons (cons k (p (cdar x)))(l (cdr x) k p))
-                                        (cons (cons (caar x) (cdar x)) (l (cdr x) k p)))))))))))
-
-
-    (define-syntax json-map
-        (lambda (x)
-            (syntax-case x ()
-                ((_ j v1 p) #'(map j v1 p))
-                ((_ j v1 v2 p) #'(json-map j v1 (lambda (x) (json-map x v2 p))))
-                ((_ j v1 v2 v3 p ...) #'(json-map j v1 (lambda (x) (json-map x v2 v3 p ...)))))))
                    
                                 
 )
