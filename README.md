@@ -11,7 +11,7 @@
 
 > A JSON-struct in here may be a list (for dict) or a vector (for array) or these infinite multi-layer nesting.
 
-> It can easily builded without tool functions, just using scheme native procedures list, cons and vector. 
+> It can easily be builded without helper functions, just using Scheme native procedures `list`, `cons` and `vector`. 
 
 > As: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3))) = {"foo": "bar", "baz": [1, 2, 3]}`
 
