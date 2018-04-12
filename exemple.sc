@@ -27,3 +27,19 @@
             (list (cons "1" (vector 1 2 3 4 5))(cons "2" (vector 1 2 3 4 5))(cons "3" (vector 1 2 3 4 5)))
             (list (cons "1" (vector 1 2 3 4 5))(cons "2" (vector 1 2 3 4 5))(cons "3" (vector 1 2 3 4 5)))
             (list (cons "1" (vector 1 2 3 4 5))(cons "2" (vector 1 2 3 4 5))(cons "3" (vector 1 2 3 4 5)))))))
+
+
+
+(define x
+    (list (cons "1" (vector 
+        (list (cons "1" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "2" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "3" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5))))
+        (list (cons "1" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "2" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "3" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5))))
+        (list (cons "1" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "2" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "3" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5))))))
+        (cons "2" (vector 
+            (list (cons "1" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "2" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "3" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5))))
+            (list (cons "1" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "2" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "3" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5))))
+            (list (cons "1" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "2" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "3" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5))))))
+            (cons "3" (vector 
+                (list (cons "1" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "2" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "3" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5))))
+                (list (cons "1" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "2" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "3" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5))))
+                (list (cons "1" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "2" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5)))(cons "3" (vector (vector 1 2 3 4 5)(vector 1 2 3 4 5)(vector 1 2 3 4 5))))))))
