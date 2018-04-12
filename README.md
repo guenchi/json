@@ -11,7 +11,7 @@
 
 > A JSON-struct in here may be a list (for dict) or a vector (for array) or these infinite multi-layer nesting.
 
-> It can easily be builded without helper functions, just using Scheme native procedures `list`, `cons` and `vector`. 
+> It can easily be builded without tool functions, just using Scheme native procedures `list`, `cons` and `vector`. 
 
 > As: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3))) = {"foo": "bar", "baz": [1, 2, 3]}`
 
@@ -34,9 +34,9 @@
 
 ### Important pacth update
 
-> When writting json-map, I relized that it's more efficient and powerful than old procedure json-set and have features overlap, so I decided to replace the latter with it. Then I found il will be useful if I rewrite all the tool procedures with base of json-map.
+> When writting json-map, I relized that it's more efficient and powerful than procedure json-set and have features overlap, so I decided to replace the latter with it. Then I found il will be useful if I rewrite all the tool procedures with base of json-map.
 
-json-set, json-push and json-drop is rewrite with higher-order function map as json-map-set, json-map-push, json-map-drop for convienient multi-operating in one time.
+json-set, json-push and json-drop is rewrite with higher-order function map as json-map-set, json-map-push, json-map-drop for convienient multi-branch operating in one time.
 
 But their **names remain the same**: json-set, json-push and json-drop, so old style call will **not** be **affected.**
 
@@ -114,7 +114,7 @@ when it accept plural keys:
 
 ***following procedure is embedded high-order function map***
 
-> They can operate multiple layer and multiple branches at the same time.
+> They can filter multiple layer and operate multiple branches at the same time.
 
 > "Verify" may be a key, a boolean #t or a procedure.
 
