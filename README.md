@@ -15,7 +15,7 @@
 
 > As: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3))) = {"foo": "bar", "baz": [1, 2, 3]}`
 
-> Key must be a string for dict. For a array, the key is a number index begin with 0. 
+> Key must be a string for dict. For an array, the key is a number index begin with 0. 
 
 > Value may be a string, a number, a following symbol: 'true, 'false or 'null, or an other JSON-struct.
 
@@ -27,7 +27,7 @@
 
 > The procedures json-ref, json-set, json-push, json-drop json-map is used to the struct, not to a JSON-string.
 
-> When they accept plural keys they can jump nesting layers to directly get aim.
+> When they accept plural keys / verifys they can jump nesting layers to directly get aim.
 
 > They return a new JSON-struct (a value for json-ref) with specified modify and has no side effect to old one.
 
