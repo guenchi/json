@@ -4,7 +4,7 @@
 
 ***All the procedures are pure functional***
 
-***Easily and powerful hight-order fuctions***
+***Easy and powerful hight-order fuctions***
 
 ***No external dependencies, good portability***
 
