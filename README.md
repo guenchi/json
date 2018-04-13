@@ -25,7 +25,7 @@
 
 > Only when we need to pass it to front-end we parse it to JSON-string. (use json->string).
 
-> The procedures json-ref, json-set, json-push, json-drop json-map is used to the struct, not to a JSON-string.
+> The procedures `json-ref`, `json-set`, `json-push`, `json-drop`, `json-reduce` is used to the struct, not to a JSON-string.
 
 > When they accept plural keys / verifys they can jump nesting layers to directly get aim.
 
@@ -36,13 +36,13 @@
 
 > When writting json-map, I relized that it's more efficient and powerful than procedure json-set and have features overlap, so I decided to replace the latter with it. Then I found il will be useful if I rewrite all the tool procedures with base of json-map.
 
-json-set, json-push and json-drop is rewrite with higher-order function map as json-map-set, json-map-push, json-map-drop for convienient multi-branch operating in one time.
+`json-set`, `json-push` and `json-drop` is rewrite with higher-order function map as `json-map-set`, `json-map-push`, `json-map-drop` for convienient multi-branch operating in one time.
 
-But their **names remain the same**: json-set, json-push and json-drop, so old style call will **not** be **affected.**
+But their **names remain the same**: `json-set`, `json-push` and `json-drop`, so old style call will **not** be **affected.**
 
 What have to **be noticed** is old json-set and json-oper was **removed** because have feature overlap with json-map and less efficient and powerful than the latter. For raison of naming conventions and in principal of change less, **json-map renamed to json-set**.
 
-For the same raison, json-map-reduce named json-reduce.
+For the same raison, new procedure `json-map-reduce` named `json-reduce`.
 
 ### Parse rules: 
 
