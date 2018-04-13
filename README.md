@@ -161,13 +161,13 @@ it has to have a key value pair in arguments.
 
 ***json-drop***
 
-`(json-drop json key value)`
+`(json-drop json key)`
 
-`(json-drop json verify1 verify2 verify3 ... key value)`
+`(json-drop json verify1 verify2 verify3 ... key)`
 
 use to delete a key-value pair from list.
 
-it has to have a key value pair in arguments.
+it has to have a key for the lastest argument.
 
 
 ***json-reduce***
