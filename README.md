@@ -142,7 +142,7 @@ use to modify a value or values in specified location of JSON.
 
 when it's a value, it will directly replace the old one's.
 
-when it's a procedure, it must accept one argument (old value of key) and return a new value to replace.
+when it's a procedure, it must accept one argument (current value of key) and return a new value to replace.
 
 Do NOT set #t, #f and '() to values, use 'true, 'false and 'null.
 
@@ -178,9 +178,11 @@ it has to have a key value pair in arguments.
 
 it likes json-set, the diffrent is it accept only procedure for the lastest argument.
 
-the procedure will receive two arguments: list of keys of all layers `'(verify1 verify2 verify3 ...)` and the current value.
+the procedure will receive two arguments: list of keys of all layers `'(key1 key2 key3 ...)` and the current value.
 
 it have to return a new value what you want to put.
+
+be attention that, the list of keys is not the list of verifys. that's means if you use #t to pass change to all keys of a layer or macth a check procedure to filter them, the procedure will receive its key whitch use to pass this layer not the keys of all match path in this layer. 
 
 
 ### Exemples
