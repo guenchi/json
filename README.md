@@ -112,7 +112,7 @@ when it accept plural keys:
 (json-ref (json-ref (json-ref json key1) key2) key3)))
 ```
 
-***following procedure is embedded high-order function map***
+***following procedures are embedded high-order function map***
 
 > They can filter multiple layer and operate multiple branches at the same time.
 
