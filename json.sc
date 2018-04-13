@@ -194,14 +194,14 @@
                                     '()
                                     (if (v (caar x))
                                         (cons (cons (caar x) (p (cdar x)))(l (cdr x) v p))
-                                        (cons (cons (caar x) (cdar x)) (l (cdr x) v p))))))
+                                        (cons (car x) (l (cdr x) v p))))))
                         (else
                             (let l ((x x)(v v)(p p))
                                 (if (null? x)
                                     '()
                                     (if (equal? (caar x) v)
                                         (cons (cons v (p (cdar x)))(l (cdr x) v p))
-                                        (cons (cons (caar x) (cdar x)) (l (cdr x) v p)))))))))))
+                                        (cons (car x) (l (cdr x) v p)))))))))))
 
 
     (define-syntax json-set
@@ -254,7 +254,7 @@
                         '()
                         (if (equal? (caar x) k)
                             (l (cdr x) k)
-                            (cons (cons (caar x) (cdar x)) (l (cdr x) k))))))))
+                            (cons (car x) (l (cdr x) k))))))))
 
                    
     (define-syntax json-drop
@@ -304,14 +304,14 @@
                                     '()
                                     (if (v (caar x))
                                         (cons (cons (caar x) (p (caar x) (cdar x)))(l (cdr x) v p))
-                                        (cons (cons (caar x) (cdar x)) (l (cdr x) v p ))))))
+                                        (cons (car x) (l (cdr x) v p ))))))
                         (else
                             (let l ((x x)(v v)(p p))
                                 (if (null? x)
                                     '()
                                     (if (equal? (caar x) v)
                                         (cons (cons v (p v (cdar x)))(l (cdr x) v p))
-                                        (cons (cons (caar x) (cdar x)) (l (cdr x) v p))))))))))
+                                        (cons (car x) (l (cdr x) v p))))))))))
 
 
     (define-syntax json-reduce
