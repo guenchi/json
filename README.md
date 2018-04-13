@@ -176,9 +176,11 @@ it has to have a key value pair in arguments.
 
 `(json-set json verify1 verify2 verify3 ... procedure)`
 
-It likes json-set, the diffrent is it accept a procedure rather than a value.
+it likes json-set, the diffrent is it accept only procedure for the lastest argument.
 
-And the procedure have to accept two arguments (key and old value) and return a new value.
+the procedure will receive two arguments: list of keys of all layers `'(verify1 verify2 verify3 ...)` and the current value.
+
+it have to return a new value what you want to put.
 
 
 ### Exemples
