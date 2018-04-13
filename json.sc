@@ -209,7 +209,7 @@
             (syntax-case x ()
                 ((_ j v1 p) #'(set j v1 p))
                 ((_ j v1 v2 p) #'(json-set j v1 (lambda (x) (json-set x v2 p))))
-                ((_ j v1 v2 v3 p ...) #'(json-set j v1 (lambda (x) (json-set x v2 v3 p ...)))))))               
+                ((_ j v1 v2 v3 ... p) #'(json-set j v1 (lambda (x) (json-set x v2 v3 ... p)))))))               
                    
                    
 
@@ -232,7 +232,7 @@
             (syntax-case x ()
                 ((_ j k1 v) #'(push j k1 v))
                 ((_ j k1 k2 v) #'(json-set j k1 (lambda (x) (json-push x k2 v))))
-                ((_ j k1 k2 k3 v ...) #'(json-set j k1 (lambda (x) (json-push x k2 k3 v ...)))))))
+                ((_ j k1 k2 k3 ... v) #'(json-set j k1 (lambda (x) (json-push x k2 k3 ... v))))))) 
                    
                    
 
@@ -314,9 +314,9 @@
     (define-syntax json-reduce
         (lambda (x)
             (syntax-case x ()
-                ((_ j v1 p) #'(reduce j v1 p))
-                ((_ j v1 v2 p) #'(json-set j v1 (lambda (x) (json-reduce x v2 p))))
-                ((_ j v1 v2 v3 p ...) #'(json-set j v1 (lambda (x) (json-reduce x v2 v3 p ...)))))))               
+                ((_ j v1 p) #'(reduce j v1 (lambda (x y)(p (cons x '()) y))))
+                ((_ j v1 v2 p) #'(json-reduce j v1 (lambda (x y) (json-reduce y v2 (lambda (n m)(p (cons (car x) n) m))))))
+                ((_ j v1 v2 v3 ... p) #'(json-reduce j v1 (lambda (x y) (json-reduce y v2 v3 ... (lambda (n m)(p (cons (car x) n) m)))))))))            
                    
                    
                                 
