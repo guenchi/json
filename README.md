@@ -221,7 +221,9 @@ token is a common json string, such as queries from a database:
            "Math":{"School":8,"Exam":8},
            "Literature":{"School":6,"Exam":8}}}]
 ```
+
 ***string->json***
+
 we tranform it to our JSON-struct
 > (string->json token)
 ```
@@ -272,7 +274,9 @@ we tranform it to our JSON-struct
       ("Literature" ("School" . 6) ("Exam" . 8)))))
 ```
 > (define x (string->json token))
+
 ***json->string***
+
 when we need to send JSON-string, we transform our JONS-struct back to string:
 > (display (json->string x))
 ```
@@ -307,7 +311,9 @@ when we need to send JSON-string, we transform our JONS-struct back to string:
            "Math":{"School":8,"Exam":8},
            "Literature":{"School":6,"Exam":8}}}]
 ```
+
 ***json-ref***
+
 if I want to know the name of first persone:
 > (json-ref x 0 "Name")
 ```
@@ -319,7 +325,9 @@ what about her father?
 "Louis"
 ```
 > (define displaydemo (lambda (x) (display (json->string x))))
+
 ***json-set***
+
 if we want change her revenue to 80000
 > (displaydemo (json-set x 0 "Revenue" 80000))
 ```
@@ -388,7 +396,9 @@ In france, the Score is 20/20, if we want to change to 100/100
            "Math":{"School":40,"Exam":40},
            "Literature":{"School":30,"Exam":40}}}]
 ```
+
 ***json-push***
+
 add nationality french to all the person
 > (displaydemo (json-push x #t "Nationality" "french"))
 ```
@@ -426,7 +436,9 @@ add nationality french to all the person
            "Math":{"School":8,"Exam":8},
            "Literature":{"School":6,"Exam":8}}}]
 ```
+
 ***json-drop***
+
 or if we no longer need them Revenue:
 > (displaydemo (json-drop x #t "Revenue"))
 ```
