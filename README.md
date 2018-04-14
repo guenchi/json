@@ -471,43 +471,6 @@ or if we no longer need them Revenue:
            "Literature":{"School":6,"Exam":8}}}]
 ```
 
-***drop layers***
-
-if we want the total score of each displine
-> (displaydemo (json-set x #t "Score" #t (lambda (x)(+ (json-ref x "School") (json-ref x "Exa
-m")))))
-```
-[{"Number":1,
-  "Name":"Laetetia",
-  "Gender":"female",
-  "Age":16,
-  "Father":{"Number":2,"Name":"Louis","Age":48,"Revenue":1000000},
-  "Mother":{"Number":3,"Name":"Lamia","Age":43,"Revenue":800000},
-  "Revenue":100000,
-  "Score":{
-          "Math":17,
-          "Literature":18}},
- {"Number":4,
-  "Name":"Tania",
-  "Gender":"female",
-  "Age":16,
-  "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
-  "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
-  "Revenue":80000,
-  "Score":{
-          "Math":15,
-          "Literature":16}},
- {"Number":7,
-  "Name":"Aarnn",
-  "Gender":"male",
-  "Age":16,
-  "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
-  "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
-  "Revenue":120000,
-  "Score":{
-           "Math":16,
-           "Literature":14}}]
-```
 ***json-reduce***
 
 or add the parents' gender
@@ -546,3 +509,89 @@ or add the parents' gender
            "Math":{"School":8,"Exam":8},
            "Literature":{"School":6,"Exam":8}}}]
 ```
+
+
+***drop layers***
+
+if we want the total score of each displine
+> (displaydemo (json-set x #t "Score" #t (lambda (x)(+ (json-ref x "School") (json-ref x "Exa
+m")))))
+```
+[{"Number":1,
+  "Name":"Laetetia",
+  "Gender":"female",
+  "Age":16,
+  "Father":{"Number":2,"Name":"Louis","Age":48,"Revenue":1000000},
+  "Mother":{"Number":3,"Name":"Lamia","Age":43,"Revenue":800000},
+  "Revenue":100000,
+  "Score":{
+          "Math":17,
+          "Literature":18}},
+ {"Number":4,
+  "Name":"Tania",
+  "Gender":"female",
+  "Age":16,
+  "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
+  "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
+  "Revenue":80000,
+  "Score":{
+          "Math":15,
+          "Literature":16}},
+ {"Number":7,
+  "Name":"Aarnn",
+  "Gender":"male",
+  "Age":16,
+  "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
+  "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
+  "Revenue":120000,
+  "Score":{
+           "Math":16,
+           "Literature":14}}]
+```
+if we only need father's information:
+
+> (displaydemo (json-set x #t (lambda (x)(json-ref x "Father"))))
+
+```
+[{"Number":2,"Name":"Louis","Age":48,"Revenue":1000000},
+ {"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
+ {"Number":8,"Name":"Alex","Age":40,"Revenue":200000}]
+```
+
+set the Revenue as family's total Revenue
+
+> (json-set x #t (lambda (x)(json-set x "Revenue" (lambda (y)(+ y (json-ref x "F
+ather" "Revenue") (json-ref x "Mother" "Revenue"))))))
+
+```
+[{"Number":1,
+  "Name":"Laetetia",
+  "Gender":"female",
+  "Age":16,
+  "Father":{"Number":2,"Name":"Louis","Age":48,"Revenue":1000000},
+  "Mother":{"Number":3,"Name":"Lamia","Age":43,"Revenue":800000},
+  "Revenue":100000,
+  "Score":{
+          "Math":{"School":8,"Exam":9},
+          "Literature":{"School":9,"Exam":9}}},
+ {"Number":4,
+  "Name":"Tania",
+  "Gender":"female",
+  "Age":16,
+  "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
+  "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
+  "Revenue":80000,
+  "Score":{
+          "Math":{"School":7,"Exam":8},
+          "Literature":{"School":10,"Exam":6}}},
+ {"Number":7,
+  "Name":"Aarnn",
+  "Gender":"male",
+  "Age":16,
+  "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
+  "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
+  "Revenue":120000,
+  "Score":{
+           "Math":{"School":8,"Exam":8},
+           "Literature":{"School":6,"Exam":8}}}]
+  ```
