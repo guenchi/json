@@ -570,7 +570,7 @@ ather" "Revenue") (json-ref x "Mother" "Revenue"))))))
   "Age":16,
   "Father":{"Number":2,"Name":"Louis","Age":48,"Revenue":1000000},
   "Mother":{"Number":3,"Name":"Lamia","Age":43,"Revenue":800000},
-  "Revenue":100000,
+  "Revenue":1900000,
   "Score":{
           "Math":{"School":8,"Exam":9},
           "Literature":{"School":9,"Exam":9}}},
@@ -580,7 +580,7 @@ ather" "Revenue") (json-ref x "Mother" "Revenue"))))))
   "Age":16,
   "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
   "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
-  "Revenue":80000,
+  "Revenue":410000,
   "Score":{
           "Math":{"School":7,"Exam":8},
           "Literature":{"School":10,"Exam":6}}},
@@ -590,7 +590,7 @@ ather" "Revenue") (json-ref x "Mother" "Revenue"))))))
   "Age":16,
   "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
   "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
-  "Revenue":120000,
+  "Revenue":370000,
   "Score":{
            "Math":{"School":8,"Exam":8},
            "Literature":{"School":6,"Exam":8}}}]
