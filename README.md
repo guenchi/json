@@ -584,7 +584,8 @@ token is a
  {"Number":7,
   "Name":"Aarnn",
   "Gender":"male",
-  "Age":16,"Father":{"Number":8,"Name":"Alex","Age":40,"revenue":200000},
+  "Age":16,
+  "Father":{"Number":8,"Name":"Alex","Age":40,"revenue":200000},
   "Mother":{"Number":9,"Name":"Anne","Age":43,"revenue":50000},
   "revenue":120000,
   "score":{
