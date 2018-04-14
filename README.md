@@ -194,19 +194,19 @@ token is a common json string, such as queries from a database:
   "Name":"Laetetia",
   "Gender":"female",
   "Age":16,
-  "Father":{"Number":2,"Name":"Louis","Age":48,"revenue":1000000},
-  "Mother":{"Number":3,"Name":"Lamia","Age":43,"revenue":800000},
-   "revenue":100000,
-   "score":{
+  "Father":{"Number":2,"Name":"Louis","Age":48,"Revenue":1000000},
+  "Mother":{"Number":3,"Name":"Lamia","Age":43,"Revenue":800000},
+  "Revenue":100000,
+  "score":{
           "Math":{"School":8,"Exam":9},
           "Literature":{"School":9,"Exam":9}}},
  {"Number":4,
   "Name":"Tania",
   "Gender":"female",
   "Age":16,
-  "Father":{"Number":5,"Name":"Thomas","Age":45,"revenue":150000},
-  "Mother":{"Number":6,"Name":"Jenney","Age":42,"revenue":180000},
-  "revenue":80000,
+  "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
+  "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
+  "Revenue":80000,
   "score":{
           "Math":{"School":7,"Exam":8},
           "Literature":{"School":10,"Exam":6}}},
@@ -214,9 +214,9 @@ token is a common json string, such as queries from a database:
   "Name":"Aarnn",
   "Gender":"male",
   "Age":16,
-  "Father":{"Number":8,"Name":"Alex","Age":40,"revenue":200000},
-  "Mother":{"Number":9,"Name":"Anne","Age":43,"revenue":50000},
-  "revenue":120000,
+  "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
+  "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
+  "Revenue":120000,
   "score":{
            "Math":{"School":8,"Exam":8},
            "Literature":{"School":6,"Exam":8}}}]
@@ -229,14 +229,14 @@ we tranform it to our JSON-struct
       ("Number" . 2)
       ("Name" . "Louis")
       ("Age" . 48)
-      ("revenue" . 1000000))
+      ("Revenue" . 1000000))
     ("Mother"
       ("Number" . 3)
       ("Name" . "Lamia")
       ("Age" . 43)
-      ("revenue" . 800000))
-    ("revenue" . 100000)
-    ("score"
+      ("Revenue" . 800000))
+    ("Revenue" . 100000)
+    ("Score"
       ("Math" ("School" . 8) ("Exam" . 9))
       ("Literature" ("School" . 9) ("Exam" . 9))))
   (("Number" . 4) ("Name" . "Tania") ("Gender" . "female") ("Age" . 16)
@@ -244,14 +244,14 @@ we tranform it to our JSON-struct
       ("Number" . 5)
       ("Name" . "Thomas")
       ("Age" . 45)
-      ("revenue" . 150000))
+      ("Revenue" . 150000))
     ("Mother"
       ("Number" . 6)
       ("Name" . "Jenney")
       ("Age" . 42)
-      ("revenue" . 180000))
-    ("revenue" . 80000)
-    ("score"
+      ("Revenue" . 180000))
+    ("Revenue" . 80000)
+    ("Score"
       ("Math" ("School" . 7) ("Exam" . 8))
       ("Literature" ("School" . 10) ("Exam" . 6))))
   (("Number" . 7) ("Name" . "Anne") ("Gender" . "female") ("Age" . 16)
@@ -259,14 +259,14 @@ we tranform it to our JSON-struct
       ("Number" . 8)
       ("Name" . "Alex")
       ("Age" . 40)
-      ("revenue" . 200000))
+      ("Revenue" . 200000))
     ("Mother"
       ("Number" . 9)
       ("Name" . "Sicie")
       ("Age" . 43)
-      ("revenue" . 50000))
-    ("revenue" . 120000)
-    ("score"
+      ("Revenue" . 50000))
+    ("Revenue" . 120000)
+    ("Score"
       ("Math" ("School" . 8) ("Exam" . 8))
       ("Literature" ("School" . 6) ("Exam" . 8)))))
 ```
@@ -278,19 +278,19 @@ when we need to send JSON-string, we transform our JONS-struct back to string:
   "Name":"Laetetia",
   "Gender":"female",
   "Age":16,
-  "Father":{"Number":2,"Name":"Louis","Age":48,"revenue":1000000},
-  "Mother":{"Number":3,"Name":"Lamia","Age":43,"revenue":800000},
-   "revenue":100000,
-   "score":{
+  "Father":{"Number":2,"Name":"Louis","Age":48,"Revenue":1000000},
+  "Mother":{"Number":3,"Name":"Lamia","Age":43,"Revenue":800000},
+  "Revenue":100000,
+  "score":{
           "Math":{"School":8,"Exam":9},
           "Literature":{"School":9,"Exam":9}}},
  {"Number":4,
   "Name":"Tania",
   "Gender":"female",
   "Age":16,
-  "Father":{"Number":5,"Name":"Thomas","Age":45,"revenue":150000},
-  "Mother":{"Number":6,"Name":"Jenney","Age":42,"revenue":180000},
-  "revenue":80000,
+  "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
+  "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
+  "Revenue":80000,
   "score":{
           "Math":{"School":7,"Exam":8},
           "Literature":{"School":10,"Exam":6}}},
@@ -298,9 +298,9 @@ when we need to send JSON-string, we transform our JONS-struct back to string:
   "Name":"Aarnn",
   "Gender":"male",
   "Age":16,
-  "Father":{"Number":8,"Name":"Alex","Age":40,"revenue":200000},
-  "Mother":{"Number":9,"Name":"Anne","Age":43,"revenue":50000},
-  "revenue":120000,
+  "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
+  "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
+  "Revenue":120000,
   "score":{
            "Math":{"School":8,"Exam":8},
            "Literature":{"School":6,"Exam":8}}}]
@@ -310,9 +310,11 @@ if I want to know the name of first persone:
 ```
 "Laetetia"
 ```
-what about her's father?
+what about her father?
 > (json-ref x 0 "Father" "Name")
 ```
 "Louis"
 ```
 > (define displaydemo (lambda (x) (display (json->string x))))
+if we want change her revenue to 80000
+> (displaydemo (json-set x 0 "Revenue" 80000))
