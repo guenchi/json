@@ -21,9 +21,9 @@
 
 > In this library, we use this JSON-struct in scheme code level, for easily operating.
 
-> When we get a JSON-string from front-end, parse it to JSON-struct first before operate. (use string->json).
+> When we get a JSON-string from front-end, parse it to JSON-struct first before operate. (use `string->json`).
 
-> Only when we need to pass it to front-end we parse it to JSON-string. (use json->string).
+> Only when we need to pass it to front-end we parse it to JSON-string. (use `json->string`).
 
 > `json-ref`, `json-set`, `json-push`, `json-drop` and `json-reduce` is used to the struct, not to a JSON-string.
 
