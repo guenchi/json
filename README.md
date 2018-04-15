@@ -446,7 +446,7 @@ In france, the Score is 20/20, if we want to change to 100/100
 
 ***json-push***
 
-add Laetitia's father's perfession:
+add Laetitia's father's profession:
 > (displaydemo (json-push x 0 "Father" "Profession" "IT"))
 
 ```
