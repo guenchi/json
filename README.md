@@ -203,7 +203,7 @@ token is a common json string, such as queries from a database:
  {"Number":4,
   "Name":"Tania",
   "Gender":"female",
-  "Age":16,
+  "Age":17,
   "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
   "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
   "Revenue":80000,
@@ -213,7 +213,7 @@ token is a common json string, such as queries from a database:
  {"Number":7,
   "Name":"Aarnn",
   "Gender":"male",
-  "Age":16,
+  "Age":18,
   "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
   "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
   "Revenue":120000,
@@ -242,7 +242,7 @@ we tranform it to our JSON-struct
     ("Score"
       ("Math" ("School" . 8) ("Exam" . 9))
       ("Literature" ("School" . 9) ("Exam" . 9))))
-  (("Number" . 4) ("Name" . "Tania") ("Gender" . "female") ("Age" . 16)
+  (("Number" . 4) ("Name" . "Tania") ("Gender" . "female") ("Age" . 17)
     ("Father"
       ("Number" . 5)
       ("Name" . "Thomas")
@@ -257,7 +257,7 @@ we tranform it to our JSON-struct
     ("Score"
       ("Math" ("School" . 7) ("Exam" . 8))
       ("Literature" ("School" . 10) ("Exam" . 6))))
-  (("Number" . 7) ("Name" . "Anne") ("Gender" . "female") ("Age" . 16)
+  (("Number" . 7) ("Name" . "Anne") ("Gender" . "female") ("Age" . 18)
     ("Father"
       ("Number" . 8)
       ("Name" . "Alex")
@@ -293,7 +293,7 @@ when we need to send JSON-string, we transform our JONS-struct back to string:
  {"Number":4,
   "Name":"Tania",
   "Gender":"female",
-  "Age":16,
+  "Age":17,
   "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
   "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
   "Revenue":80000,
@@ -303,7 +303,7 @@ when we need to send JSON-string, we transform our JONS-struct back to string:
  {"Number":7,
   "Name":"Aarnn",
   "Gender":"male",
-  "Age":16,
+  "Age":18,
   "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
   "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
   "Revenue":120000,
@@ -344,7 +344,7 @@ if we want change her revenue to 80000
  {"Number":4,
   "Name":"Tania",
   "Gender":"female",
-  "Age":16,
+  "Age":17,
   "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
   "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
   "Revenue":80000,
@@ -354,7 +354,7 @@ if we want change her revenue to 80000
  {"Number":7,
   "Name":"Aarnn",
   "Gender":"male",
-  "Age":16,
+  "Age":18,
   "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
   "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
   "Revenue":120000,
@@ -378,7 +378,7 @@ In france, the Score is 20/20, if we want to change to 100/100
  {"Number":4,
   "Name":"Tania",
   "Gender":"female",
-  "Age":16,
+  "Age":17,
   "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
   "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
   "Revenue":80000,
@@ -388,7 +388,7 @@ In france, the Score is 20/20, if we want to change to 100/100
  {"Number":7,
   "Name":"Aarnn",
   "Gender":"male",
-  "Age":16,
+  "Age":18,
   "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
   "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
   "Revenue":120000,
@@ -417,7 +417,7 @@ add nationality french to all the person
   "Number":4,
   "Name":"Tania",
   "Gender":"female",
-  "Age":16,
+  "Age":17,
   "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
   "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
   "Revenue":80000,
@@ -428,7 +428,7 @@ add nationality french to all the person
   "Number":7,
   "Name":"Aarnn",
   "Gender":"male",
-  "Age":16,
+  "Age":18,
   "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
   "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
   "Revenue":120000,
@@ -454,7 +454,7 @@ or if we no longer need these Revenue:
  {"Number":4,
   "Name":"Tania",
   "Gender":"female",
-  "Age":16,
+  "Age":17,
   "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
   "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
   "Score":{
@@ -463,7 +463,7 @@ or if we no longer need these Revenue:
  {"Number":7,
   "Name":"Aarnn",
   "Gender":"male",
-  "Age":16,
+  "Age":18,
   "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
   "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
   "Score":{
@@ -476,8 +476,8 @@ if we only need these Name and Age
 ge"))))))
 ```
 [{"Name":"Laetetia","Age":16},
- {"Name":"Tania","Age":16},
- {"Name":"Anne","Age":16}]
+ {"Name":"Tania","Age":17},
+ {"Name":"Anne","Age":18}]
 ```
 
 ***json-reduce***
@@ -500,7 +500,7 @@ or add the parents' gender
  {"Number":4,
   "Name":"Tania",
   "Gender":"female",
-  "Age":16,
+  "Age":17,
   "Father":{"Gender":"male","Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
   "Mother":{"Gender":"female","Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
   "Revenue":80000,
@@ -510,7 +510,7 @@ or add the parents' gender
  {"Number":7,
   "Name":"Aarnn",
   "Gender":"male",
-  "Age":16,
+  "Age":18,
   "Father":{"Gender":"male","Number":8,"Name":"Alex","Age":40,"Revenue":200000},
   "Mother":{"Gender":"female","Number":9,"Name":"Anne","Age":43,"Revenue":50000},
   "Revenue":120000,
@@ -539,7 +539,7 @@ m")))))
  {"Number":4,
   "Name":"Tania",
   "Gender":"female",
-  "Age":16,
+  "Age":17,
   "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
   "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
   "Revenue":80000,
@@ -549,7 +549,7 @@ m")))))
  {"Number":7,
   "Name":"Aarnn",
   "Gender":"male",
-  "Age":16,
+  "Age":18,
   "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
   "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
   "Revenue":120000,
@@ -586,7 +586,7 @@ ather" "Revenue") (json-ref x "Mother" "Revenue"))))))
  {"Number":4,
   "Name":"Tania",
   "Gender":"female",
-  "Age":16,
+  "Age":17,
   "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
   "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
   "Revenue":410000,
@@ -596,7 +596,7 @@ ather" "Revenue") (json-ref x "Mother" "Revenue"))))))
  {"Number":7,
   "Name":"Aarnn",
   "Gender":"male",
-  "Age":16,
+  "Age":18,
   "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
   "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
   "Revenue":370000,
@@ -623,7 +623,7 @@ ure")))))
  {"Number":4,
   "Name":"Tania",
   "Gender":"female",
-  "Age":16,
+  "Age":17,
   "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
   "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
   "Revenue":80000,
@@ -631,7 +631,7 @@ ure")))))
  {"Number":7,
   "Name":"Aarnn",
   "Gender":"male",
-  "Age":16,
+  "Age":18,
   "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
   "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
   "Revenue":120000,
