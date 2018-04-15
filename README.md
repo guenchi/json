@@ -372,6 +372,43 @@ if we want change her revenue to 80000
            "Math":{"School":8,"Exam":8},
            "Literature":{"School":6,"Exam":8}}}]
 ```
+
+we can hide everyone's mother's age:
+> (displaydemo (json-set x #t "Mother" "Age" "secret"))
+
+```
+[{"Number":1,
+  "Name":"Laetetia",
+  "Gender":"female",
+  "Age":16,
+  "Father":{"Number":2,"Name":"Louis","Age":48,"Revenue":1000000},
+  "Mother":{"Number":3,"Name":"Lamia","Age":"secret","Revenue":800000},
+  "Revenue":100000,
+  "Score":{
+          "Math":{"School":8,"Exam":9},
+          "Literature":{"School":9,"Exam":9}}},
+ {"Number":4,
+  "Name":"Tania",
+  "Gender":"female",
+  "Age":17,
+  "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
+  "Mother":{"Number":6,"Name":"Jenney","Age":"secret","Revenue":180000},
+  "Revenue":80000,
+  "Score":{
+          "Math":{"School":7,"Exam":8},
+          "Literature":{"School":10,"Exam":6}}},
+ {"Number":7,
+  "Name":"Aarnn",
+  "Gender":"male",
+  "Age":18,
+  "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
+  "Mother":{"Number":9,"Name":"Anne","Age":"secret","Revenue":50000},
+  "Revenue":120000,
+  "Score":{
+           "Math":{"School":8,"Exam":8},
+           "Literature":{"School":6,"Exam":8}}}]
+```
+
 In france, the Score is 20/20, if we want to change to 100/100
 > (displaydemo (json-set x #t "Score" #t #t (lambda (x) (* x 5))))
 ```
