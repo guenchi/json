@@ -161,7 +161,7 @@ it has to have a key value pair in arguments.
 
 ***json-drop***
 
-`(json-drop json key)`
+`(json-drop json verify)`
 
 `(json-drop json verify1 verify2 verify3 ...)`
 
