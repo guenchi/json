@@ -232,37 +232,55 @@
     (define-syntax json-push
         (lambda (x)
             (syntax-case x ()
-                ((_ j k1 v) #'(push j k1 v))
-                ((_ j k1 k2 v) #'(json-set j k1 (lambda (x) (json-push x k2 v))))
-                ((_ j k1 k2 k3 ... v) #'(json-set j k1 (lambda (x) (json-push x k2 k3 ... v))))))) 
+                ((_ j k v) #'(push j k v))
+                ((_ j v1 k v) #'(json-set j v1 (lambda (x) (json-push x k v))))
+                ((_ j v1 v2 ... k v) #'(json-set j v1 (lambda (x) (json-push x v2 ... k v))))))) 
                    
                    
 
     (define drop
-        (lambda (x k)
+        (lambda (x v)
             (if (vector? x)
                 (if (> (vector-length x) 0)
                     (list->vector
-                        (let l ((x (vector->array x))(k k))
+                        (cond
+                            ((procedure? v)
+                                (let l ((x (vector->array x))(v v))
+                                    (if (null? x)
+                                        '()
+                                        (if (v (caar x))
+                                            (l (cdr x) v)
+                                            (cons (cdar x) (l (cdr x) v))))))
+                            (else 
+                                (let l ((x (vector->array x))(v v))
+                                    (if (null? x)
+                                        '()
+                                        (if (equal? (caar x) v)
+                                            (l (cdr x) v)
+                                            (cons (cdar x) (l (cdr x) v)))))))))
+                (cond 
+                    ((procedure? v)
+                        (let l ((x x)(v v))
                             (if (null? x)
                                 '()
-                                (if (equal? (caar x) k)
-                                    (l (cdr x) k)
-                                    (cons (cdar x) (l (cdr x) k)))))))
-                (let l ((x x)(k k))
-                    (if (null? x)
-                        '()
-                        (if (equal? (caar x) k)
-                            (l (cdr x) k)
-                            (cons (car x) (l (cdr x) k))))))))
+                                (if (v (caar x))
+                                    (l (cdr x) v)
+                                    (cons (car x) (l (cdr x) v))))))
+                    (else    
+                        (let l ((x x)(v v))
+                            (if (null? x)
+                                '()
+                                (if (equal? (caar x) v)
+                                    (l (cdr x) v)
+                                    (cons (car x) (l (cdr x) v))))))))))
 
                    
     (define-syntax json-drop
         (lambda (x)
             (syntax-case x ()
-                ((_ j k1) #'(drop j k1))
-                ((_ j k1 k2) #'(json-set j k1 (lambda (x) (json-drop x k2))))
-                ((_ j k1 k2 k3 ...) #'(json-set j k1 (lambda (x) (json-drop x k2 k3 ...)))))))
+                ((_ j v1) #'(drop j v1))
+                ((_ j v1 v2) #'(json-set j v1 (lambda (x) (json-drop x v2))))
+                ((_ j v1 v2 v3 ...) #'(json-set j v1 (lambda (x) (json-drop x v2 v3 ...)))))))
                    
                    
                   
