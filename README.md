@@ -163,11 +163,11 @@ it has to have a key value pair in arguments.
 
 `(json-drop json key)`
 
-`(json-drop json verify1 verify2 verify3 ... key)`
+`(json-drop json verify1 verify2 verify3 ...)`
 
 use to delete a key-value pair from list.
 
-it has to have a key for the lastest argument.
+the lastest argument only accept a key or a procedure who needs one argument (key) and return boolean.
 
 
 ***json-reduce***
@@ -439,7 +439,7 @@ add nationality french to all the person
 
 ***json-drop***
 
-or if we no longer need them Revenue:
+or if we no longer need these Revenue:
 > (displaydemo (json-drop x #t "Revenue"))
 ```
 [{"Number":1,
@@ -469,6 +469,15 @@ or if we no longer need them Revenue:
   "Score":{
            "Math":{"School":8,"Exam":8},
            "Literature":{"School":6,"Exam":8}}}]
+```
+
+if we only need these Name and Age
+> (displaydemo (json-drop x #t (lambda (x)(not (or (equal? x "Name")(equal? x "A
+ge"))))))
+```
+[{"Name":"Laetetia","Age":16},
+ {"Name":"Tania","Age":16},
+ {"Name":"Anne","Age":16}]
 ```
 
 ***json-reduce***
@@ -595,3 +604,36 @@ ather" "Revenue") (json-ref x "Mother" "Revenue"))))))
            "Math":{"School":8,"Exam":8},
            "Literature":{"School":6,"Exam":8}}}]
  ```
+ 
+ set the Score to all the displines' total score
+ 
+ > (json-set x #t "Score" (lambda (x)(let ((x (json-set x #t (lambda(n)(+ (json-r
+ef n "School")(json-ref n "Exam"))))))(+ (json-ref x "Math")(json-ref x "Literat
+ure")))))
+
+```
+[{"Number":1,
+  "Name":"Laetetia",
+  "Gender":"female",
+  "Age":16,
+  "Father":{"Number":2,"Name":"Louis","Age":48,"Revenue":1000000},
+  "Mother":{"Number":3,"Name":"Lamia","Age":43,"Revenue":800000},
+  "Revenue":100000,
+  "Score":35},
+ {"Number":4,
+  "Name":"Tania",
+  "Gender":"female",
+  "Age":16,
+  "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
+  "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
+  "Revenue":80000,
+  "Score":31},
+ {"Number":7,
+  "Name":"Aarnn",
+  "Gender":"male",
+  "Age":16,
+  "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
+  "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
+  "Revenue":120000,
+  "Score":30}]
+```
