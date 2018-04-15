@@ -124,7 +124,7 @@ when it accept plural keys:
 
 > When it's a procedure, it match all of keys with in this layer.
 
-> The procedure must accept one argument (key) and return boolean.
+> The procedure will receive the key of branch and have to return boolean.
 
 > When it accept plural verifys, each key will match each layer.
 
@@ -167,7 +167,7 @@ it has to have a key value pair in arguments.
 
 use to delete a key-value pair from list.
 
-the lastest argument only accept a key or a procedure who needs one argument (key) and return boolean.
+the lastest verify only accept a key or a procedure.
 
 
 ***json-reduce***
