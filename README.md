@@ -320,12 +320,21 @@ if I want to know the name of first persone:
 ```
 "Laetetia"
 ```
-what about her father?
-> (json-ref x 0 "Father" "Name")
+her mother's name?
+> (json-ref x 0 "Mother" "Name")
+
 ```
-"Louis"
+"Lamia"
 ```
+
 > (define displaydemo (lambda (x) (display (json->string x))))
+
+what about her father?
+
+> (displaydemo (json-ref x 0 "Father"))
+```
+{"Number":2,"Name":"Louis","Age":48,"Revenue":1000000}
+```
 
 ***json-set***
 
