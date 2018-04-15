@@ -446,6 +446,42 @@ In france, the Score is 20/20, if we want to change to 100/100
 
 ***json-push***
 
+add Laetitia's father's perfession:
+> (displaydemo (json-push x 0 "Father" "Profession" "IT"))
+
+```
+[{"Number":1,
+  "Name":"Laetetia",
+  "Gender":"female",
+  "Age":16,
+  "Father":{"Profession:"IT","Number":2,"Name":"Louis","Age":48,"Revenue":1000000},
+  "Mother":{"Number":3,"Name":"Lamia","Age":43,"Revenue":800000},
+  "Revenue":100000,
+  "Score":{
+          "Math":{"School":8,"Exam":9},
+          "Literature":{"School":9,"Exam":9}}},
+ {"Number":4,
+  "Name":"Tania",
+  "Gender":"female",
+  "Age":17,
+  "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
+  "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
+  "Revenue":80000,
+  "Score":{
+          "Math":{"School":7,"Exam":8},
+          "Literature":{"School":10,"Exam":6}}},
+ {"Number":7,
+  "Name":"Aarnn",
+  "Gender":"male",
+  "Age":18,
+  "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
+  "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
+  "Revenue":120000,
+  "Score":{
+           "Math":{"School":8,"Exam":8},
+           "Literature":{"School":6,"Exam":8}}}]
+```
+
 add nationality french to all the person
 > (displaydemo (json-push x #t "Nationality" "french"))
 ```
@@ -486,8 +522,8 @@ add nationality french to all the person
 
 ***json-drop***
 
-or if we no longer need these Revenue:
-> (displaydemo (json-drop x #t "Revenue"))
+or if we no longer need Laetetia's score:
+> (displaydemo (json-drop x 0 "Score"))
 ```
 [{"Number":1,
   "Name":"Laetetia",
@@ -495,15 +531,14 @@ or if we no longer need these Revenue:
   "Age":16,
   "Father":{"Number":2,"Name":"Louis","Age":48,"Revenue":1000000},
   "Mother":{"Number":3,"Name":"Lamia","Age":43,"Revenue":800000},
-  "Score":{
-          "Math":{"School":8,"Exam":9},
-          "Literature":{"School":9,"Exam":9}}},
+  "Revenue":100000},
  {"Number":4,
   "Name":"Tania",
   "Gender":"female",
   "Age":17,
   "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
   "Mother":{"Number":6,"Name":"Jenney","Age":42,"Revenue":180000},
+  "Revenue":80000,
   "Score":{
           "Math":{"School":7,"Exam":8},
           "Literature":{"School":10,"Exam":6}}},
@@ -513,9 +548,45 @@ or if we no longer need these Revenue:
   "Age":18,
   "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
   "Mother":{"Number":9,"Name":"Anne","Age":43,"Revenue":50000},
+  "Revenue":120000,
   "Score":{
            "Math":{"School":8,"Exam":8},
            "Literature":{"School":6,"Exam":8}}}]
+```
+delete everyone's mother's age:
+
+> (displaydemo (json-drop x #t "Mother" "Age"))
+```
+[{"Number":1,
+  "Name":"Laetetia",
+  "Gender":"female",
+  "Age":16,
+  "Father":{"Number":2,"Name":"Louis","Age":48,"Revenue":1000000},
+  "Mother":{"Number":3,"Name":"Lamia","Revenue":800000},
+  "Revenue":100000,
+  "Score":{
+          "Math":{"School":8,"Exam":9},
+          "Literature":{"School":9,"Exam":9}}},
+ {"Number":4,
+  "Name":"Tania",
+  "Gender":"female",
+  "Age":17,
+  "Father":{"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
+  "Mother":{"Number":6,"Name":"Jenney","Revenue":180000},
+  "Revenue":80000,
+  "Score":{
+          "Math":{"School":7,"Exam":8},
+          "Literature":{"School":10,"Exam":6}}},
+ {"Number":7,
+  "Name":"Aarnn",
+  "Gender":"male",
+  "Age":18,
+  "Father":{"Number":8,"Name":"Alex","Age":40,"Revenue":200000},
+  "Mother":{"Number":9,"Name":"Anne","Revenue":50000},
+  "Revenue":120000,
+  "Score":{
+           "Math":{"School":8,"Exam":8},
+           "Literature":{"School":6,"Exam":8}}}]
 ```
 
 if we only need these Name and Age
@@ -567,7 +638,7 @@ or add the parents' gender
 ```
 
 
-***drop layers***
+***Drop layers***
 
 if we want the total score of each displine
 > (displaydemo (json-set x #t "Score" #t (lambda (x)(+ (json-ref x "School") (json-ref x "Exam")))))
@@ -612,6 +683,8 @@ if we only need father's information:
  {"Number":5,"Name":"Thomas","Age":45,"Revenue":150000},
  {"Number":8,"Name":"Alex","Age":40,"Revenue":200000}]
 ```
+
+***Reorganization data***
 
 set the Revenue as family's total Revenue
 
