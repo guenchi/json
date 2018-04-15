@@ -27,7 +27,7 @@
 
 > `json-ref`, `json-set`, `json-push`, `json-drop` and `json-reduce` is used to the struct, not to a JSON-string.
 
-> When they accept plural keys / verifys they can jump nesting layers to directly get aim.
+> When they accept plural keys / verifys they can jump nesting layers to operate multipe branchs.
 
 > They return a new JSON-struct (a value for json-ref) with specified modify and has no side effect to old one.
 
