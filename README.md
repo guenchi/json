@@ -523,8 +523,7 @@ or add the parents' gender
 ***drop layers***
 
 if we want the total score of each displine
-> (displaydemo (json-set x #t "Score" #t (lambda (x)(+ (json-ref x "School") (json-ref x "Exa
-m")))))
+> (displaydemo (json-set x #t "Score" #t (lambda (x)(+ (json-ref x "School") (json-ref x "Exam")))))
 ```
 [{"Number":1,
   "Name":"Laetetia",
@@ -569,8 +568,7 @@ if we only need father's information:
 
 set the Revenue as family's total Revenue
 
-> (json-set x #t (lambda (x)(json-set x "Revenue" (lambda (y)(+ y (json-ref x "F
-ather" "Revenue") (json-ref x "Mother" "Revenue"))))))
+> (json-set x #t (lambda (x)(json-set x "Revenue" (lambda (y)(+ y (json-ref x "Father" "Revenue") (json-ref x "Mother" "Revenue"))))))
 
 ```
 [{"Number":1,
@@ -607,9 +605,7 @@ ather" "Revenue") (json-ref x "Mother" "Revenue"))))))
  
  set the Score to all the displines' total score
  
- > (json-set x #t "Score" (lambda (x)(let ((x (json-set x #t (lambda(n)(+ (json-r
-ef n "School")(json-ref n "Exam"))))))(+ (json-ref x "Math")(json-ref x "Literat
-ure")))))
+ > (json-set x #t "Score" (lambda (x)(let ((x (json-set x #t (lambda(n)(+ (json-ref n "School")(json-ref n "Exam"))))))(+ (json-ref x "Math")(json-ref x "Literature")))))
 
 ```
 [{"Number":1,
