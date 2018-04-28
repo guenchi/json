@@ -602,7 +602,7 @@ ge"))))))
 
 or add the parents' gender
 
-> (displaydemo (json-reduce x #t (lambda (x)(or (equal? x "Father")(equal? x "Mother"))) (lambda (x y)(json-push y "Gender" (if (equal?(cadr x) "Father") "male" "female")))))
+> (displaydemo (json-reduce x #t (lambda (x)(or (equal? x "Father")(equal? x "Mother"))) (lambda (x y)(json-push y "Gender" (if (equal? (cadr x) "Father") "male" "female")))))
 
 ```
 [{"Number":1,
