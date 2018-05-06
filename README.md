@@ -9,7 +9,7 @@
 ***No external dependencies, good portability***
 
 
-> A JSON-struct in here may be a list (for dict) or a vector (for array) or these infinite multi-layer nesting.
+> A JSON-struct in here may be a association list (for dict) or a vector (for array) or these infinite multi-layer nesting.
 
 > It can easily be builded without tool functions, just using Scheme native procedures `list`, `cons` and `vector`. 
 
