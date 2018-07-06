@@ -297,11 +297,9 @@
 
                    
     (define-syntax json-drop
-        (lambda (x)
-            (syntax-case x ()
-                ((_ j v1) #'(drop j v1))
-                ((_ j v1 v2) #'(json-set j v1 (lambda (x) (json-drop x v2))))
-                ((_ j v1 v2 v3 ...) #'(json-set j v1 (lambda (x) (json-drop x v2 v3 ...)))))))
+        (syntax-rules ()
+            ((_ j v1) (drop j v1))
+            ((_ j v1 v2 ...) (json-set j v1 (lambda (x) (json-drop x v2 ...))))))
                    
                    
                   
