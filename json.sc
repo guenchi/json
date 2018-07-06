@@ -229,11 +229,9 @@
 
 
     (define-syntax json-set
-        (lambda (x)
-            (syntax-case x ()
-                ((_ j v1 p) #'(set j v1 p))
-                ((_ j v1 v2 p) #'(json-set j v1 (lambda (x) (json-set x v2 p))))
-                ((_ j v1 v2 v3 ... p) #'(json-set j v1 (lambda (x) (json-set x v2 v3 ... p)))))))               
+        (syntax-rules ()
+            ((_ j v1 p) (set j v1 p))
+            ((_ j v1 v2 ... p) (json-set j v1 (lambda (x) (json-set x v2 ... p))))))           
                    
                    
 
