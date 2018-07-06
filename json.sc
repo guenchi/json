@@ -252,11 +252,10 @@
 
                    
     (define-syntax json-push
-        (lambda (x)
-            (syntax-case x ()
-                ((_ j k v) #'(push j k v))
-                ((_ j v1 k v) #'(json-set j v1 (lambda (x) (json-push x k v))))
-                ((_ j v1 v2 ... k v) #'(json-set j v1 (lambda (x) (json-push x v2 ... k v))))))) 
+        (syntax-rules ()
+            ((_ j k v) (push j k v))
+            ((_ j v1 k v) (json-set j v1 (lambda (x) (json-push x k v))))
+            ((_ j v1 v2 ... k v) (json-set j v1 (lambda (x) (json-push x v2 ... k v))))))  
                    
                    
 
