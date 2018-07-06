@@ -173,11 +173,9 @@
 
     
     (define-syntax json-ref
-        (lambda (x)
-            (syntax-case x ()
-                ((_ j k1) #'(ref j k1))
-                ((_ j k1 k2) #'(json-ref (json-ref j k1) k2))
-                ((_ j k1 k2 k3 ...) #'(json-ref (json-ref j k1 k2) k3 ...))))) 
+        (syntax-rules ()
+            ((_ j k1) (ref j k1))
+            ((_ j k1 k2 ...) (json-ref (json-ref j k1) k2 ...))))
                    
                    
                    
