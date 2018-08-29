@@ -13,7 +13,7 @@
 
 > It can easily be builded without tool functions, just using Scheme list, vector and pair. 
 
-> That means you only need ``( ) . ' # ` `` to construct the json-stractures, as:
+> That means you only need `` ` ( ) # . `` to construct the json-stractures, as:
 
 > `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3))) = {"foo": "bar", "baz": [1, 2, 3]}`
 
