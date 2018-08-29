@@ -13,7 +13,9 @@
 
 > It can easily be builded without tool functions, just using Scheme native procedures `list`, `cons` and `vector`. 
 
-> As: `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3))) = {"foo": "bar", "baz": [1, 2, 3]}`
+> That means you only need ( ) . ' # \' to construct the json-stractures, as:
+
+> `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3))) = {"foo": "bar", "baz": [1, 2, 3]}`
 
 > Key must be a string for dict. For an array, the key is a number index begin with 0. 
 
