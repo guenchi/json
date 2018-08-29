@@ -94,41 +94,37 @@
         (lambda (lst)
             (define f
                 (lambda (x)
-                    (cond 
-                        ((string? x) (string-append "\"" x "\""))
-                        ((number? x) (number->string x))
-                        ((symbol? x) (symbol->string x)))))
+                    (if (string? x) 
+                        (string-append "\"" x "\"") 
+                        (number->string x))))
             (define c
                 (lambda (x)
                     (if (= x 0) "" ",")))
-            (define q
-                (lambda (x)
-                    (if (vector? x) "[" "{")))
-            (let l ((lst lst)(x (q lst)))
+            (let l ((lst lst)(x (if (vector? lst) "[" "{")))
                 (if (vector? lst)
                     (string-append x 
                         (let t ((len (vector-length lst))(n 0)(y ""))
                             (if (< n len)
                                 (t len (+ n 1)
-                                    (if (atom? (vector-ref lst n))
-                                        (if (vector? (vector-ref lst n))
-                                            (l (vector-ref lst n) (string-append y (c n) "["))
-                                            (string-append y (c n) (f (vector-ref lst n))))
-                                        (l (vector-ref lst n) (string-append y (c n) "{"))))
+                                    (let ((k (vector-ref lst n)))
+                                        (if (atom? k)
+                                            (if (vector? k)
+                                                (l k (string-append y (c n) "["))
+                                                (string-append y (c n) (f k)))
+                                            (l k (string-append y (c n) "{")))))
                                 (string-append y "]"))))
-                    (if (null? (cdr lst))
-                        (string-append x "\"" (caar lst) "\":"
-                            (if (list? (cdar lst))
-                                (l (cdar lst) (q (cdar lst)))
-                                (if (vector? (cdar lst))
-                                    (l (cdar lst) x)
-                                    (f (cdar lst)))) "}")
-                        (l (cdr lst)
-                            (if (list? (cdar lst))
-                                (string-append x "\"" (caar lst) "\":" (l (cdar lst) "{") ",")
-                                (if (vector? (cdar lst))
-                                    (string-append x "\"" (caar lst) "\":" (l (cdar lst) "[") ",")
-                                    (string-append x "\"" (caar lst) "\":" (f (cdar lst)) ",")))))))))
+                    (let ((k (cdar lst)))
+                        (if (null? (cdr lst))
+                            (string-append x "\"" (caar lst) "\":"
+                                (cond 
+                                    ((list? k)(l k "{"))
+                                    ((vector? k)(l k "["))
+                                    (else (f k))) "}")
+                            (l (cdr lst)
+                                (cond 
+                                    ((list? k)(string-append x "\"" (caar lst) "\":" (l k "{") ","))
+                                    ((vector? k)(string-append x "\"" (caar lst) "\":" (l k "[") ","))
+                                    (else (string-append x "\"" (caar lst) "\":" (f k) ","))))))))))
                    
     
                    
