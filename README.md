@@ -11,7 +11,7 @@
 
 > A JSON-struct in here may be a association-list (for dict) or a vector (for array) or these infinite nesting.
 
-> It can easily be builded without tool functions, just need `` ` ( ) . # `` five symbols.
+> It can easily be builded without tool functions, just need `` ` # ( . ) `` five symbols.
 
 > such as: `` `(("foo" . "bar")("baz" . #(1 2 3))) = {"foo": "bar", "baz": [1, 2, 3]}``
 
