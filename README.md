@@ -9,13 +9,11 @@
 ***No external dependencies, good portability***
 
 
-> A JSON-struct in here may be a association list (for dict) or a vector (for array) or these infinite nesting.
+> A JSON-struct in here may be a association-list (for dict) or a vector (for array) or these infinite nesting.
 
-> It can easily be builded without tool functions, just using Scheme list, vector and pair. 
+> It can easily be builded without tool functions, just need `` ` ( ) # . `` five symbols.
 
-> That means you only need `` ` ( ) # . `` to construct the json-stractures, as:
-
-> `(list (cons "foo" "bar")(cons "baz" (vector 1 2 3))) = {"foo": "bar", "baz": [1, 2, 3]}`
+> such as: `` `(("foo" . "bar")("baz" . #(1 2 3))) = {"foo": "bar", "baz": [1, 2, 3]}``
 
 > Key must be a string for dict. For an array, the key is a number index begin with 0. 
 
