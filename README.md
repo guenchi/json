@@ -61,9 +61,9 @@ For the same raison, new procedure `json-map-reduce` named `json-reduce`.
 `(json->string json)`
 
 ```
-((key1 . value2)(key2 . value2)(key3 . value3) ...)    =>    "{key1: value1, key2: value2, key3: value3 ...}"
+`((key1 . value2)(key2 . value2)(key3 . value3) ...)   =>    "{key1: value1, key2: value2, key3: value3 ...}"
 
-#(value1 value2 value3 ...)                            =>    "[value1, value2, value3 ...]"
+`#(value1 value2 value3 ...)                           =>    "[value1, value2, value3 ...]"
 ```
 
 if you want more libert to operate vector, use:
@@ -74,7 +74,7 @@ if you want more libert to operate vector, use:
 
 
 ```
-#(value1 value2 value3 ...)                    =>     ((0 . value1)(1 . value2)(2 . value3) ...) 
+`#(value1 value2 value3 ...)                    =>     ((0 . value1)(1 . value2)(2 . value3) ...) 
 ```
 
 ***array->vector***
@@ -82,7 +82,7 @@ if you want more libert to operate vector, use:
 `(vector->array list)`
 
 ```
-((0 . value1)(1 . value2)(2 . value3) ...)     =>     #(value1 value2 value3 ...)
+`((0 . value1)(1 . value2)(2 . value3) ...)     =>     #(value1 value2 value3 ...)
 ```
 
 
