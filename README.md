@@ -6,6 +6,7 @@
 
 ***Easy and powerful hight-order fuctions***
 
+***No external dependencies, good portability***
 
 
 > A JSON-struct in here may be a association-list (for dict) or a vector (for array) or these infinite nesting.
@@ -41,7 +42,10 @@ But their **names remain the same**: `json-set`, `json-push` and `json-drop`, so
 
 What have to **be noticed** is old json-set and json-oper was **removed** because have feature overlap with json-map and less efficient and powerful than the latter. For raison of naming conventions and in principal of change less, **json-map renamed to json-set**.
 
-For the same raison, new procedure `json-map-reduce` named `json-reduce`.
+For the same raison, new procedure `json-map-reduce` named `json-reduce`. 
+
+> from 1.5.6, the procedures array->vector and vector->array move to https://github.com/guenchi/core so this json library is dependent it.
+for reason of portability, you can just copy procedure vector->alist's code into json library to remove the external dependencie.
 
 ### Parse rules: 
 
