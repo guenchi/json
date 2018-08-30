@@ -1,5 +1,5 @@
 (("name" . "json")
-("version" . "1.5.5")
+("version" . "1.5.6")
 ("description" . "JSON lib for Scheme")
 ("keywords"
     ("Scheme" "JSON"))
