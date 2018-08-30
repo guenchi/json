@@ -6,7 +6,6 @@
 
 ***Easy and powerful hight-order fuctions***
 
-***No external dependencies, good portability***
 
 
 > A JSON-struct in here may be a association-list (for dict) or a vector (for array) or these infinite nesting.
@@ -64,25 +63,6 @@ For the same raison, new procedure `json-map-reduce` named `json-reduce`.
 `((key1 . value2)(key2 . value2)(key3 . value3) ...)   =>    "{key1: value1, key2: value2, key3: value3 ...}"
 
 `#(value1 value2 value3 ...)                           =>    "[value1, value2, value3 ...]"
-```
-
-if you want more libert to operate vector, use:
-
-***vector->array***
-
-`(vector->array vector)`
-
-
-```
-`#(value1 value2 value3 ...)                    =>     ((0 . value1)(1 . value2)(2 . value3) ...) 
-```
-
-***array->vector***
-
-`(vector->array list)`
-
-```
-`((0 . value1)(1 . value2)(2 . value3) ...)     =>     #(value1 value2 value3 ...)
 ```
 
 
