@@ -34,6 +34,8 @@
 
 ### Important pacth update
 
+> From 1.5.6, the procedures `array->vector` and `vector->array` move to https://github.com/guenchi/core so this json library is dependent it. For reason of portability, you can just copy procedure `vector->alist`'s code into library to remove the external dependencie.
+
 > When writting json-map, I relized that it's more efficient and powerful than procedure json-set and have features overlap, so I decided to replace the latter with it. Then I found il will be useful if I rewrite all the tool procedures with base of json-map.
 
 `json-set`, `json-push` and `json-drop` is rewrite with higher-order function map as `json-map-set`, `json-map-push`, `json-map-drop` for convienient multi-branch operating in one time.
@@ -43,9 +45,6 @@ But their **names remain the same**: `json-set`, `json-push` and `json-drop`, so
 What have to **be noticed** is old json-set and json-oper was **removed** because have feature overlap with json-map and less efficient and powerful than the latter. For raison of naming conventions and in principal of change less, **json-map renamed to json-set**.
 
 For the same raison, new procedure `json-map-reduce` named `json-reduce`. 
-
-> from 1.5.6, the procedures array->vector and vector->array move to https://github.com/guenchi/core so this json library is dependent it.
-for reason of portability, you can just copy procedure vector->alist's code into json library to remove the external dependencie.
 
 ### Parse rules: 
 
