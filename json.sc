@@ -27,16 +27,15 @@
   (export
     string->json
     json->string
-    vector->array
-    array->vector
     json-ref
     json-set
-    json-push
     json-drop
+    json-push
     json-reduce
   )
   (import
-     (scheme)
+    (scheme)
+    (only (core alist) vector->alist)
   )
  
 
@@ -126,26 +125,7 @@
                                     ((list? k)(string-append x "\"" (caar lst) "\":" (l k "{") ","))
                                     ((vector? k)(string-append x "\"" (caar lst) "\":" (l k "[") ","))
                                     (else (string-append x "\"" (caar lst) "\":" (f k) ","))))))))))
-                   
-    
-                   
-   (define vector->array
-        (lambda (x)
-            (let l ((x (vector->list x))(n 0))
-                (cons (cons n (car x)) 
-                    (if (null? (cdr x))
-                        '()
-                        (l (cdr x) (+ n 1)))))))
-
-
-    (define array->vector
-        (lambda (x)
-            (list->vector         
-                (let l ((x x)(n 0))
-                    (cons (cdar x)
-                        (if (null? (cdr x))
-                            '()
-                            (l (cdr x) (+ n 1))))))))               
+                              
                               
                    
     (define ref
@@ -184,19 +164,19 @@
                         (cond 
                             ((boolean? v)
                                 (if v
-                                    (let l ((x (vector->array x))(p p))
+                                    (let l ((x (vector->alist x))(p p))
                                         (if (null? x)
                                             '()
                                             (cons (p (cdar x)) (l (cdr x) p))))))
                             ((procedure? v)
-                                (let l ((x (vector->array x))(v v)(p p))
+                                (let l ((x (vector->alist x))(v v)(p p))
                                     (if (null? x)
                                         '()
                                         (if (v (caar x))
                                             (cons (p (cdar x)) (l (cdr x) v p))
                                             (cons (cdar x) (l (cdr x) v p))))))
                             (else
-                                (let l ((x (vector->array x))(v v)(p p))
+                                (let l ((x (vector->alist x))(v v)(p p))
                                     (if (null? x)
                                         '()
                                         (if (equal? (caar x) v)
@@ -238,7 +218,7 @@
                 (if (= (vector-length x) 0)
                     (vector v)
                     (list->vector    
-                        (let l ((x (vector->array x))(k k)(v v)(b #f))
+                        (let l ((x (vector->alist x))(k k)(v v)(b #f))
                             (if (null? x)
                                 (if b '() (cons v '()))
                                 (if (equal? (caar x) k)
@@ -263,14 +243,14 @@
                     (list->vector
                         (cond
                             ((procedure? v)
-                                (let l ((x (vector->array x))(v v))
+                                (let l ((x (vector->alist x))(v v))
                                     (if (null? x)
                                         '()
                                         (if (v (caar x))
                                             (l (cdr x) v)
                                             (cons (cdar x) (l (cdr x) v))))))
                             (else 
-                                (let l ((x (vector->array x))(v v))
+                                (let l ((x (vector->alist x))(v v))
                                     (if (null? x)
                                         '()
                                         (if (equal? (caar x) v)
@@ -307,19 +287,19 @@
                         (cond 
                             ((boolean? v)
                                 (if v
-                                    (let l ((x (vector->array x))(p p))
+                                    (let l ((x (vector->alist x))(p p))
                                         (if (null? x)
                                             '()
                                             (cons (p (caar x) (cdar x)) (l (cdr x) p))))))
                             ((procedure? v)
-                                (let l ((x (vector->array x))(v v)(p p))
+                                (let l ((x (vector->alist x))(v v)(p p))
                                     (if (null? x)
                                         '()
                                         (if (v (caar x))
                                             (cons (p (caar x) (cdar x)) (l (cdr x) v p))
                                             (cons (cdar x) (l (cdr x) v p ))))))
                             (else
-                                (let l ((x (vector->array x))(v v)(p p))
+                                (let l ((x (vector->alist x))(v v)(p p))
                                     (if (null? x)
                                         '()
                                         (if (equal? (caar x) v)
