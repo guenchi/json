@@ -7,5 +7,6 @@
     ("guenchi" "chclock"))
 ("private" . #f)
 ("scripts")
-("dependencies")
+("dependencies"
+    ("core" . "1.0.0"))
 ("devDependencies"))
