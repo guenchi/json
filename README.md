@@ -34,7 +34,7 @@
 
 ### Important pacth update
 
-> From 1.5.6, the procedures `array->vector` and `vector->array` move to https://github.com/guenchi/core so this json library is dependent it. For reason of portability, you can just copy procedure `vector->alist`'s code into library to remove the external dependencie.
+> From 1.5.6, the procedures `array->vector` and `vector->array` move to [Core](https://github.com/guenchi/core) so this json library is dependent it. For reason of portability, you can just copy procedure `vector->alist`'s code into library to remove the external dependencie.
 
 > When writting json-map, I relized that it's more efficient and powerful than procedure json-set and have features overlap, so I decided to replace the latter with it. Then I found il will be useful if I rewrite all the tool procedures with base of json-map.
 
