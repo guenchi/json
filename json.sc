@@ -47,6 +47,34 @@
     (if (eq? '() pair-or-empty)
         '()
         (cdr pair-or-empty)))
+
+  (define (string-length-sum strings)
+    (let loop ((o 0)
+               (rest strings))
+      (cond
+       ((eq? '() rest) o)
+       (else
+        (loop (+ o (string-length (car rest)))
+              (cdr rest))))))
+
+  (define (fast-string-list-append strings)
+    (let* ((output-length (string-length-sum strings))
+           (output (make-string output-length #\_))
+           (fill 0))
+      (let outer ((rest strings))
+        (cond
+         ((eq? '() rest) output)
+         (else
+          (let* ((s (car rest))
+                 (n (string-length s)))
+            (let inner ((i 0))
+              (cond ((= i n) 'done)
+                    (else
+                     (string-set! output fill (string-ref s i))
+                     (set! fill (+ fill 1))
+                     (inner (+ i 1))))))
+          (outer (cdr rest)))))))
+
  
   (define string->json
     (lambda (s)
@@ -55,7 +83,7 @@
           ((s s)(bgn 0)(end 0)(rst '())(len (string-length s))(quts? #f)(lst '(#t)))
           (cond
             ((= end len)
-              (apply string-append (reverse rst)))
+              (fast-string-list-append (reverse rst)))
             ((and quts? (not (char=? (string-ref s end) #\")))
               (l s bgn (+ 1 end) rst len quts? lst))
             (else
