@@ -37,8 +37,16 @@
     (scheme)
     (only (core alist) vector->alist)
   )
- 
 
+  (define (loose-car pair-or-empty)
+    (if (eq? '() pair-or-empty)
+        '()
+        (car pair-or-empty)))
+
+  (define (loose-cdr pair-or-empty)
+    (if (eq? '() pair-or-empty)
+        '()
+        (cdr pair-or-empty)))
  
   (define string->json
     (lambda (s)
@@ -61,7 +69,7 @@
                 (l s (+ 1 end) (+ 1 end) 
                   (cons 
                     (string-append 
-                      (substring s bgn end) "))") rst) len quts? (cdr lst)))
+                      (substring s bgn end) "))") rst) len quts? (loose-cdr lst)))
               ((#\[)
                 (l s (+ 1 end) (+ 1 end) 
                   (cons
@@ -71,7 +79,7 @@
                 (l s (+ 1 end) (+ 1 end) 
                   (cons 
                     (string-append 
-                      (substring s bgn end) ")") rst) len quts? (cdr lst)))
+                      (substring s bgn end) ")") rst) len quts? (loose-cdr lst)))
               ((#\:)
                 (l s (+ 1 end) (+ 1 end) 
                   (cons 
@@ -82,7 +90,7 @@
                   (cons 
                     (string-append 
                       (substring s bgn end) 
-                      (if (car lst) ")(" " ")) rst) len quts? lst))
+                      (if (loose-car lst) ")(" " ")) rst) len quts? lst))
               ((#\")
                 (l s bgn (+ 1 end) rst len (not quts?) lst))
               (else
