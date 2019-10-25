@@ -1,3 +1,28 @@
+### JSON-struct
+
+A JSON-struct in here may be a association-list (for dict) or a vector (for array) or these infinite nesting.
+
+It can easily be builded without tool functions, just need `` ` # ( . ) `` five symbols.
+
+such as: `` `(("foo" . "bar")("baz" . #(1 2 3))) = {"foo": "bar", "baz": [1, 2, 3]}``
+
+Key must be a string for dict. For an array, the key is a number index begin with 0. 
+
+Value may be a string, a number, a following symbol: 'true, 'false or 'null, or an other JSON-struct.
+
+In this library, we use this JSON-struct in scheme code level, for easily operating.
+
+When we get a JSON-string from front-end, parse it to JSON-struct first before operate. (use `string->json`).
+
+Only when we need to pass it to front-end we parse it to JSON-string. (use `json->string`).
+
+`json-ref`, `json-set`, `json-push`, `json-drop` and `json-reduce` is used to the struct, not to a JSON-string.
+
+When they accept plural keys / verifys they can jump nesting layers to operate multipe branchs.
+
+They return a new JSON-struct (a value for json-ref) with specified modify and has no side effect to old one.
+
+
 ### Struct parse rules: 
 
 ***string->json***
