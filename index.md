@@ -646,7 +646,7 @@ if we want the total score of each displine
 ```
 if we only need father's information:
 
-> (displaydemo (json-set x #t (lambda (x)(json-ref x "Father"))))
+`(displaydemo (json-set x #t (lambda (x)(json-ref x "Father"))))`
 
 ```
 [{"Number":2,"Name":"Louis","Age":48,"Revenue":1000000},
@@ -658,7 +658,7 @@ if we only need father's information:
 
 set the Revenue as family's total Revenue
 
-> (displaydemo (json-set x #t (lambda (x)(json-set x "Revenue" (lambda (y)(+ y (json-ref x "Father" "Revenue") (json-ref x "Mother" "Revenue")))))))
+`(displaydemo (json-set x #t (lambda (x)(json-set x "Revenue" (lambda (y)(+ y (json-ref x "Father" "Revenue") (json-ref x "Mother" "Revenue")))))))`
 
 ```
 [{"Number":1,
@@ -695,7 +695,7 @@ set the Revenue as family's total Revenue
  
  set the Score to all the displines' total score
  
- > (displaydemo (json-set x #t "Score" (lambda (x)(let ((x (json-set x #t (lambda(n)(+ (json-ref n "School")(json-ref n "Exam"))))))(+ (json-ref x "Math")(json-ref x "Literature"))))))
+`(displaydemo (json-set x #t "Score" (lambda (x)(let ((x (json-set x #t (lambda(n)(+ (json-ref n "School")(json-ref n "Exam"))))))(+ (json-ref x "Math")(json-ref x "Literature"))))))`
 
 ```
 [{"Number":1,
