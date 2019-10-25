@@ -157,9 +157,10 @@ be attention that, the list of keys is not the list of verifys. that's means if 
 
 ### Exemples
 
-token (see the exemple.sc) is a common json string, such as queries from a database:
+token (see the example.sc) is a common json string, such as queries from a database:
 
-> (display token)
+`(display token)`
+
 ```
 [{"Number":1,
   "Name":"Laetetia",
@@ -196,7 +197,9 @@ token (see the exemple.sc) is a common json string, such as queries from a datab
 ***string->json***
 
 we tranform it to our JSON-struct
-> (string->json token)
+
+`(string->json token)`
+
 ```
 #((("Number" . 1) ("Name" . "Laetetia") ("Gender" . "female") ("Age" . 16)
     ("Father"
@@ -244,12 +247,15 @@ we tranform it to our JSON-struct
       ("Math" ("School" . 8) ("Exam" . 8))
       ("Literature" ("School" . 6) ("Exam" . 8)))))
 ```
-> (define x (string->json token))
+
+`(define x (string->json token))`
 
 ***json->string***
 
 when we need to send JSON-string, we transform our JONS-struct back to string:
-> (display (json->string x))
+
+`(display (json->string x))`
+
 ```
 [{"Number":1,
   "Name":"Laetetia",
@@ -286,22 +292,26 @@ when we need to send JSON-string, we transform our JONS-struct back to string:
 ***json-ref***
 
 if I want to know the name of first persone:
-> (json-ref x 0 "Name")
+
+`(json-ref x 0 "Name")`
+
 ```
 "Laetetia"
 ```
 her mother's name?
-> (json-ref x 0 "Mother" "Name")
+
+`(json-ref x 0 "Mother" "Name")`
 
 ```
 "Lamia"
 ```
 
-> (define displaydemo (lambda (x) (display (json->string x))))
+`(define displaydemo (lambda (x) (display (json->string x))))`
 
 what about her father?
 
-> (displaydemo (json-ref x 0 "Father"))
+`(displaydemo (json-ref x 0 "Father"))`
+
 ```
 {"Number":2,"Name":"Louis","Age":48,"Revenue":1000000}
 ```
@@ -309,7 +319,9 @@ what about her father?
 ***json-set***
 
 if we want change her revenue to 80000
-> (displaydemo (json-set x 0 "Revenue" 80000))
+
+`(displaydemo (json-set x 0 "Revenue" 80000))`
+
 ```
 [{"Number":1,
   "Name":"Laetetia",
@@ -344,7 +356,8 @@ if we want change her revenue to 80000
 ```
 
 we can hide everyone's mother's age:
-> (displaydemo (json-set x #t "Mother" "Age" "secret"))
+
+`(displaydemo (json-set x #t "Mother" "Age" "secret"))`
 
 ```
 [{"Number":1,
@@ -380,7 +393,9 @@ we can hide everyone's mother's age:
 ```
 
 In france, the Score is 20/20, if we want to change to 100/100
-> (displaydemo (json-set x #t "Score" #t #t (lambda (x) (* x 5))))
+
+`(displaydemo (json-set x #t "Score" #t #t (lambda (x) (* x 5))))`
+
 ```
 [{"Number":1,
   "Name":"Laetetia",
@@ -417,7 +432,8 @@ In france, the Score is 20/20, if we want to change to 100/100
 ***json-push***
 
 add Laetitia's father's profession:
-> (displaydemo (json-push x 0 "Father" "Profession" "IT"))
+
+`(displaydemo (json-push x 0 "Father" "Profession" "IT"))`
 
 ```
 [{"Number":1,
@@ -453,7 +469,9 @@ add Laetitia's father's profession:
 ```
 
 add nationality french to all the person
-> (displaydemo (json-push x #t "Nationality" "french"))
+
+`(displaydemo (json-push x #t "Nationality" "french"))`
+
 ```
 [{"Nationality":"french",
   "Number":1,
@@ -493,7 +511,8 @@ add nationality french to all the person
 ***json-drop***
 
 or if we no longer need Laetetia's score:
-> (displaydemo (json-drop x 0 "Score"))
+`(displaydemo (json-drop x 0 "Score"))`
+
 ```
 [{"Number":1,
   "Name":"Laetetia",
@@ -525,7 +544,8 @@ or if we no longer need Laetetia's score:
 ```
 delete everyone's mother's age:
 
-> (displaydemo (json-drop x #t "Mother" "Age"))
+`(displaydemo (json-drop x #t "Mother" "Age"))`
+
 ```
 [{"Number":1,
   "Name":"Laetetia",
@@ -560,8 +580,9 @@ delete everyone's mother's age:
 ```
 
 if we only need these Name and Age
-> (displaydemo (json-drop x #t (lambda (x)(not (or (equal? x "Name")(equal? x "A
-ge"))))))
+
+`(displaydemo (json-drop x #t (lambda (x)(not (or (equal? x "Name")(equal? x "Age"))))))`
+
 ```
 [{"Name":"Laetetia","Age":16},
  {"Name":"Tania","Age":17},
@@ -572,7 +593,7 @@ ge"))))))
 
 or add the parents' gender
 
-> (displaydemo (json-reduce x #t (lambda (x)(or (equal? x "Father")(equal? x "Mother"))) (lambda (x y)(json-push y "Gender" (if (equal? (cadr x) "Father") "male" "female")))))
+`(displaydemo (json-reduce x #t (lambda (x)(or (equal? x "Father")(equal? x "Mother"))) (lambda (x y)(json-push y "Gender" (if (equal? (cadr x) "Father") "male" "female")))))`
 
 ```
 [{"Number":1,
@@ -611,7 +632,9 @@ or add the parents' gender
 ***Drop layers***
 
 if we want the total score of each displine
-> (displaydemo (json-set x #t "Score" #t (lambda (x)(+ (json-ref x "School") (json-ref x "Exam")))))
+
+`(displaydemo (json-set x #t "Score" #t (lambda (x)(+ (json-ref x "School") (json-ref x "Exam")))))`
+
 ```
 [{"Number":1,
   "Name":"Laetetia",
