@@ -37,4 +37,4 @@ jobs:
             cd ./json
             mkdir json
             mv ./json.sc ./json/json.ss
-            chez ./test/test.sc
+            scheme ./test/test.sc
