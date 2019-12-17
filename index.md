@@ -157,7 +157,7 @@ be attention that, the list of keys is not the list of verifys. that's means if 
 
 ### Exemples
 
-token (see the example.sc) is a common json string, such as queries from a database:
+token (see the test.sc) is a common json string, such as queries from a database:
 
 `(display token)`
 
