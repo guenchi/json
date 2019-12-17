@@ -34,7 +34,7 @@ jobs:
     - name: test with gambit scheme
       run:  |
             cd json
-            gsi test/test.sc
+            gsi test/test.ss
 
   Ubuntu:
 
