@@ -17,7 +17,10 @@ jobs:
     - name: install chez scheme
       run: brew install chezscheme
     - name: install gambit scheme
-      run: brew install gambit-scheme
+      run: |
+           brew install gambit-scheme
+           export LIBRARY_PATH=/usr/local/Gambit/lib
+           export CPATH=/usr/local/Gambit/include
     - name : prepare files
       run: |
             git clone -b portable https://github.com/guenchi/json
