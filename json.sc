@@ -35,7 +35,7 @@
   )
   (import
     (scheme)
-    (only (core alist) vector->alist)
+    ;(only (core alist) vector->alist)
   )
  
 
