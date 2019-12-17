@@ -9,13 +9,28 @@ on:
        - portable
 
 jobs:
-  build:
+  MacOS:
 
     runs-on: macos-latest
 
     steps:
     - name: install chez scheme
       run: brew install chezscheme
+    - name : test
+      run: |
+            git clone -b portable https://github.com/guenchi/json
+            cd ./json
+            mkdir json
+            mv ./json.sc ./json/json.ss
+            chez ./test/test.sc
+
+  Ubuntu:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: install chez scheme
+      run: sudo apt install chezscheme
     - name : test
       run: |
             git clone -b portable https://github.com/guenchi/json
