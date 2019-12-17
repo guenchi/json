@@ -1,3 +1,5 @@
+![](https://github.com/guenchi/json/workflows/MacOS%20master/badge.svg)
+
 # json
 
 ***The shortest code JSON Parser in history***
