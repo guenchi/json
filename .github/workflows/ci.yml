@@ -16,7 +16,7 @@ jobs:
     steps:
     - name: install chez scheme
       run: brew install chezscheme
-    - name: install gambit
+    - name: install gambit scheme
       run: brew install gambit-scheme
     - name : prepare files
       run: |
@@ -28,6 +28,10 @@ jobs:
       run:  |
             cd json
             chez test/test.sc
+    - name: test with gambit scheme
+      run:  |
+            cd json
+            gsi test/test.sc
 
   Ubuntu:
 
