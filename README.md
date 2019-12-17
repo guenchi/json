@@ -1,3 +1,5 @@
+![](https://github.com/guenchi/json/workflows/Master/badge.svg) ![](https://github.com/guenchi/json/workflows/Portable/badge.svg)
+
 # json
 
 ***The shortest code JSON Parser in history***
