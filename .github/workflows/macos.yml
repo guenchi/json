@@ -1,4 +1,4 @@
-name: MacOS-CI
+name: MacOS master
 
 on: [push]
 
