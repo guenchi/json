@@ -89,38 +89,38 @@
               (l s bgn (+ 1 end) rst len quts? lst))
             (else
               (case (string-ref s end)
-              ((#\{)
+              (#\{
                 (l s (+ 1 end) (+ 1 end) 
                   (cons 
                     (string-append 
                       (substring s bgn end) "((" ) rst) len quts? (cons #t lst)))
-              ((#\})
+              (#\}
                 (l s (+ 1 end) (+ 1 end) 
                   (cons 
                     (string-append 
                       (substring s bgn end) "))") rst) len quts? (loose-cdr lst)))
-              ((#\[)
+              (#\[
                 (l s (+ 1 end) (+ 1 end) 
                   (cons
                     (string-append 
                       (substring s bgn end) "#(") rst) len quts? (cons #f lst)))
-              ((#\])
+              (#\]
                 (l s (+ 1 end) (+ 1 end) 
                   (cons 
                     (string-append 
                       (substring s bgn end) ")") rst) len quts? (loose-cdr lst)))
-              ((#\:)
+              (#\:
                 (l s (+ 1 end) (+ 1 end) 
                   (cons 
                     (string-append 
                       (substring s bgn end) " . ") rst) len quts? lst))
-              ((#\,)
+              (#\,
                 (l s (+ 1 end) (+ 1 end) 
                   (cons 
                     (string-append 
                       (substring s bgn end) 
                       (if (loose-car lst) ")(" " ")) rst) len quts? lst))
-              ((#\")
+              (#\"
                 (l s bgn (+ 1 end) rst len (not quts?) lst))
               (else
                 (l s bgn (+ 1 end) rst len quts? lst))))))))))
