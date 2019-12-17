@@ -19,9 +19,9 @@ jobs:
       run: |
             git clone https://github.com/guenchi/json
             cd ./json
-            raven install
-            cd ./lib
-            mkdir json
-            cd  ../
-            mv ./json.sc ./lib/json/
+            raven install json
+        #    cd ./lib
+        #    mkdir json
+        #    cd ../
+       #     mv ./json.sc ./lib/json/
             raven run ./test/test.sc
