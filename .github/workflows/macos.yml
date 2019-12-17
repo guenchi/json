@@ -1,0 +1,23 @@
+name: MacOS-CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - name: install chez scheme
+      run: |
+           brew install chezscheme
+           cd /usr/local/bin
+           cp chez scheme
+    - name: install raven
+      run: curl -L http://ravensc.com/install | scheme
+    - name : git clone
+      run: |
+            git clone https://github.com/guenchi/json
+            cd ./ChezScheme-CI
+            raven install json
+            raven run ./test/test.sc
