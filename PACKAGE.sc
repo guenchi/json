@@ -7,6 +7,5 @@
     ("guenchi"))
 ("private" . #f)
 ("scripts")
-("dependencies"
-    ("core" . "1.3.1"))
+("dependencies")
 ("devDependencies"))
