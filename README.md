@@ -1,4 +1,4 @@
-![](https://github.com/guenchi/json/workflows/MacOS%20master/badge.svg)
+![](https://github.com/guenchi/json/workflows/MacOS/badge.svg)
 
 # json
 
