@@ -22,6 +22,6 @@ jobs:
             raven install
             cd ./lib
             mkdir json
-            cd ../
+            cd  ../
             mv ./json.sc ./lib/json/
             raven run ./test/test.sc
