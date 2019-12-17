@@ -15,9 +15,9 @@ jobs:
            cp chez scheme
     - name: install raven
       run: curl -L http://ravensc.com/install | scheme
-    - name : git clone
+    - name : test
       run: |
             git clone https://github.com/guenchi/json
-            cd ./ChezScheme-CI
+            cd ./json
             raven install json
             raven run ./test/test.sc
