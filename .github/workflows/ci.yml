@@ -19,8 +19,6 @@ jobs:
            brew install chezscheme
            cd /usr/local/bin
            cp chez scheme
-    - name: install gambit
-      run: brew install gambit-scheme
     - name: install raven
       run: curl -L http://ravensc.com/install | scheme
     - name : test
