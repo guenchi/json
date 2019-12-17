@@ -24,13 +24,13 @@ jobs:
     - name : test
       run: |
             git clone https://github.com/guenchi/json
-            cd ./json
+            cd json
             raven install core@1.2.0
-            cd ./lib
+            cd lib
             mkdir json
-            cd ../
-            mv ./json.sc ./lib/json/
-            raven run ./test/test.sc
+            cd ..
+            mv json.sc lib/json/
+            raven run test/test.sc
             
   Ubuntu:
 
@@ -44,10 +44,10 @@ jobs:
     - name : test
       run: |
             git clone https://github.com/guenchi/json
-            cd ./json
+            cd json
             raven install core@1.2.0
-            cd ./lib
+            cd lib
             mkdir json
-            cd ../
-            mv ./json.sc ./lib/json/
-            raven run ./test/test.sc
+            cd ..
+            mv json.sc lib/json/
+            raven run test/test.sc
