@@ -1,6 +1,12 @@
-name: MacOS-CI
+name: MacOS
 
-on: [push]
+on: 
+   push:
+     branches : 
+       - portable
+   pull_request:
+     branches : 
+       - portable
 
 jobs:
   build:
@@ -17,9 +23,9 @@ jobs:
       run: curl -L http://ravensc.com/install | scheme
     - name : test
       run: |
-            git clone https://github.com/guenchi/json
+            git clone https://github.com/guenchi/json/tree/portable
             cd ./json
-            raven install core@1.0.0
+            mkdir lib
             cd ./lib
             mkdir json
             cd ../
