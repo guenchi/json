@@ -7,4 +7,4 @@
 (display
   (if (equal? (json-ref (json-reduce (string->json (json->string (string->json token))) 0 "Score" "Math"  (lambda (x y) (json-set y "School" (lambda (x) (+ x 100))))) 0 "Score" "Math" "School") 108)
       "ok"
-      "error")
+      "error"))
