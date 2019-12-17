@@ -9,7 +9,7 @@ on:
        - master
 
 jobs:
-  build:
+  MacOS:
 
     runs-on: macos-latest
 
@@ -21,6 +21,26 @@ jobs:
            cp chez scheme
     - name: install raven
       run: curl -L http://ravensc.com/install | scheme
+    - name : test
+      run: |
+            git clone https://github.com/guenchi/json
+            cd ./json
+            raven install core@1.2.0
+            cd ./lib
+            mkdir json
+            cd ../
+            mv ./json.sc ./lib/json/
+            raven run ./test/test.sc
+            
+  Ubuntu:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: install chez scheme
+      run: sudo apt install chezscheme
+    - name: install raven
+      run: curl -L http://ravensc.com/install | sudo scheme
     - name : test
       run: |
             git clone https://github.com/guenchi/json
