@@ -16,11 +16,11 @@ jobs:
     steps:
     - name: install chez scheme
       run: brew install chezscheme
-    - name: install gambit scheme
-      run: |
-           brew install gambit-scheme
-           sudo ln -s /usr/local/Cellar/gambit-scheme/4.9.3_1/v4.9.3/bin/gsi /usr/local/bin/gsi
-           sudo ln -s /usr/local/Cellar/gambit-scheme/4.9.3_1/v4.9.3/bin/gsc /usr/local/bin/gsc
+    # - name: install gambit scheme
+    #   run: |
+    #        brew install gambit-scheme
+    #        sudo ln -s /usr/local/Cellar/gambit-scheme/4.9.3_1/v4.9.3/bin/gsi /usr/local/bin/gsi
+    #        sudo ln -s /usr/local/Cellar/gambit-scheme/4.9.3_1/v4.9.3/bin/gsc /usr/local/bin/gsc
     - name : prepare files
       run: |
             git clone -b portable https://github.com/guenchi/json
@@ -31,10 +31,10 @@ jobs:
       run:  |
             cd json
             chez test/test.sc
-    - name: test with gambit scheme
-      run:  |
-            cd json
-            gsi test/test.sc
+    # - name: test with gambit scheme
+    #   run:  |
+    #         cd json
+    #         gsi test/test.sc
 
   Ubuntu:
 
