@@ -19,7 +19,7 @@ jobs:
       run: |
             git clone https://github.com/guenchi/json
             cd ./json
-            raven install
+            raven install core@1.0.0
             cd ./lib
             mkdir json
             cd ../

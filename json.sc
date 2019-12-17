@@ -1,4 +1,4 @@
-;  MIT License
+;;  MIT License
 
 ;  Copyright guenchi (c) 2018 - 2019 
      
@@ -35,15 +35,9 @@
   )
   (import
     (scheme)
+    (only (core alist) vector->alist)
   )
  
-  (define vector->alist
-    (lambda (x)
-      (let l ((x (vector->list x))(n 0))
-        (cons (cons n (car x)) 
-          (if (null? (cdr x))
-            '()
-            (l (cdr x) (+ n 1)))))))
 
   (define (loose-car pair-or-empty)
     (if (eq? '() pair-or-empty)
