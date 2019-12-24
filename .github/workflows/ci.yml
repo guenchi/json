@@ -22,9 +22,7 @@ jobs:
       with:
         implementation: chez
 
-    - run: |
-           cd /usr/local/bin
-           cp chez scheme
+    - run: cp /usr/local/bin/chez /usr/local/bin/scheme
 
     - name: install raven
       run: curl -L http://ravensc.com/install | scheme
