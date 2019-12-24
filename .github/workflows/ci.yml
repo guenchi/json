@@ -21,11 +21,7 @@ jobs:
       uses: guenchi/setup-scheme@master
       with:
         implementation: chez
-
-    - run: cp /usr/local/bin/chez /usr/local/bin/scheme
-
-    - name: install raven
-      run: curl -L http://ravensc.com/install | scheme
+        option: raven
       
     - name : test
       run: |
