@@ -46,9 +46,7 @@ jobs:
       uses: guenchi/setup-scheme@master
       with:
         implementation: chez
-
-    - name: install raven
-      run: curl -L http://ravensc.com/install | sudo scheme
+        option: raven
       
     - name : test
       run: |
