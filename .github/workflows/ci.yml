@@ -14,14 +14,14 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
-
-    - name: use Setup-Scheme
-      uses: guenchi/setup-scheme@master
-      with:
-        implementation: chez
-        option: raven
+    - name: install chez scheme
+      run: |
+           brew install chezscheme
+           cd /usr/local/bin
+           cp chez scheme
+           
+    - name: install raven
+      run: curl -L http://ravensc.com/install | scheme
       
     - name : test
       run: |
@@ -46,7 +46,9 @@ jobs:
       uses: guenchi/setup-scheme@master
       with:
         implementation: chez
-        option: raven
+
+    - name: install raven
+      run: curl -L http://ravensc.com/install | sudo scheme
       
     - name : test
       run: |
@@ -58,3 +60,5 @@ jobs:
             cd ..
             mv json.sc lib/json/
             raven run test/test.sc
+            
+ 
