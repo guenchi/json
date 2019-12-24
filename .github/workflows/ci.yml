@@ -14,13 +14,21 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - name: install chez scheme
-      run: |
-           brew install chezscheme
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: use Setup-Scheme
+      uses: guenchi/setup-scheme@master
+      with:
+        implementation: chez
+
+    - run: |
            cd /usr/local/bin
            cp chez scheme
+
     - name: install raven
       run: curl -L http://ravensc.com/install | scheme
+      
     - name : test
       run: |
             git clone https://github.com/guenchi/json
@@ -37,10 +45,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: install chez scheme
-      run: sudo apt install chezscheme
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: use Setup-Scheme
+      uses: guenchi/setup-scheme@master
+      with:
+        implementation: chez
+
     - name: install raven
       run: curl -L http://ravensc.com/install | sudo scheme
+      
     - name : test
       run: |
             git clone https://github.com/guenchi/json
