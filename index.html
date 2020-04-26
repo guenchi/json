@@ -1,0 +1,782 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Introduction · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter active" data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Introduction</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <p><img src="https://github.com/guenchi/json/workflows/Master/badge.svg" alt=""> <img src="https://github.com/guenchi/json/workflows/Portable/badge.svg" alt=""></p>
+<p><strong><em>The shortest code JSON Parser in history</em></strong></p>
+<p><strong><em>All the procedures are purely functional</em></strong></p>
+<p><strong><em>Easy and powerful hight-order fuctions</em></strong></p>
+<p><strong><em>No external dependencies, good portability</em></strong></p>
+<h3 id="json-struct">JSON-struct</h3>
+<p>A JSON-struct in here may be a association-list (for dict) or a vector (for array) or these infinite nesting.</p>
+<p>It can easily be builded without tool functions, just need <code>` # ( . )</code> five symbols.</p>
+<p>such as: <code>`((&quot;foo&quot; . &quot;bar&quot;)(&quot;baz&quot; . #(1 2 3))) = {&quot;foo&quot;: &quot;bar&quot;, &quot;baz&quot;: [1, 2, 3]}</code></p>
+<p>Key must be a string for dict. For an array, the key is a number index begin with 0. </p>
+<p>Value may be a string, a number, a following symbol: &apos;true, &apos;false or &apos;null, or an other JSON-struct.</p>
+<p>In this library, we use this JSON-struct in scheme code level, for easily operating.</p>
+<p>When we get a JSON-string from front-end, parse it to JSON-struct first before operate. (use <code>string-&gt;json</code>).</p>
+<p>Only when we need to pass it to front-end we parse it to JSON-string. (use <code>json-&gt;string</code>).</p>
+<p><code>json-ref</code>, <code>json-set</code>, <code>json-push</code>, <code>json-drop</code> and <code>json-reduce</code> is used to the struct, not to a JSON-string.</p>
+<p>When they accept plural keys / verifys they can jump nesting layers to operate multipe branchs.</p>
+<p>They return a new JSON-struct (a value for json-ref) with specified modify and has no side effect to old one.</p>
+<h3 id="struct-parse-rules">Struct parse rules:</h3>
+<p><strong><em>string-&gt;json</em></strong></p>
+<p><code>(string-&gt;json string)</code> </p>
+<pre><code>&quot;{key1: value1, key2: value2, key3: value3 ...}&quot;      =&gt;     ((key1 . value2)(key2 . value2)(key3 . value3) ...)
+
+&quot;[value1, value2, value3 ...]&quot;                        =&gt;     #(value1 value2 value3 ...)
+</code></pre><p><strong><em>json-&gt;string</em></strong></p>
+<p><code>(json-&gt;string json)</code></p>
+<pre><code>`((key1 . value2)(key2 . value2)(key3 . value3) ...)   =&gt;    &quot;{key1: value1, key2: value2, key3: value3 ...}&quot;
+
+`#(value1 value2 value3 ...)                           =&gt;    &quot;[value1, value2, value3 ...]&quot;
+</code></pre><h3 id="tool-functions">Tool functions</h3>
+<p><strong><em>json-ref</em></strong></p>
+<p><code>(json-ref json key)</code></p>
+<p><code>(json-ref json key1 key2 key3 ...)</code></p>
+<p>use to return the value of a key in specified location of JSON.</p>
+<pre><code>when value is:     json-ref return:
+
+true          =&gt;      #t
+false         =&gt;      #f
+null          =&gt;      &apos;()
+</code></pre><p>when it accept plural keys:</p>
+<pre><code>(json-ref json key1 key2 key3) = 
+
+(json-ref (json-ref (json-ref json key1) key2) key3)))
+</code></pre><p><strong><em>following procedures are embedded high-order function map</em></strong></p>
+<blockquote>
+<p>They can filter multiple layer and operate multiple branches at the same time.</p>
+<p>&quot;Verify&quot; may be a key, a boolean #t or a procedure.</p>
+<p>When it&apos;s a key, it specife the branch to throw this layer.</p>
+<p>When it&apos;s a #t, it means operate all of branch of this layer.</p>
+<p>When it&apos;s a procedure, it match all of keys with in this layer.</p>
+<p>The procedure will receive the key of branch and have to return boolean.</p>
+<p>When it accept plural verifys, each key will match each layer.</p>
+</blockquote>
+<p><strong><em>json-set</em></strong></p>
+<p><code>(json-set json verify value)</code></p>
+<p><code>(json-set json verify1 verify2 verify3 ... value)</code></p>
+<p>use to modify a value or values in specified location of JSON.</p>
+<p>&quot;value&quot; may be a value or a procedure.</p>
+<p>when it&apos;s a value, it will directly replace the old one&apos;s.</p>
+<p>when it&apos;s a procedure, it must accept one argument (current value of key) and return a new value to replace.</p>
+<p>Do NOT set #t, #f and &apos;() to values, use &apos;true, &apos;false and &apos;null.</p>
+<p><strong><em>json-push</em></strong></p>
+<p><code>(json-push json key value)</code></p>
+<p><code>(json-push json verify1 verify2 verify3 ... key value)</code></p>
+<p>use to add a key-value pair to json.</p>
+<p>it has to have a key value pair in arguments.</p>
+<p><strong><em>json-drop</em></strong></p>
+<p><code>(json-drop json verify)</code></p>
+<p><code>(json-drop json verify1 verify2 verify3 ...)</code></p>
+<p>use to delete a key-value pair from list.</p>
+<p>the lastest verify only accept a key or a procedure.</p>
+<p><strong><em>json-reduce</em></strong></p>
+<p><code>(json-set json verify procedure)</code></p>
+<p><code>(json-set json verify1 verify2 verify3 ... procedure)</code></p>
+<p>it likes json-set, the diffrent is it accept only procedure for the lastest argument.</p>
+<p>the procedure will receive two arguments: list of key of all layers <code>&apos;(key1 key2 key3 ...)</code> and the current value.</p>
+<p>it have to return a new value what you want to put.</p>
+<p>be attention that, the list of keys is not the list of verifys. that&apos;s means if you use #t to pass all branch of a layer or macth a check procedure to filter them, the procedure will receive its key whitch use to pass this layer not the keys of all match path in this layer. </p>
+<h3 id="exemples">Exemples</h3>
+<p>token (see the test.sc) is a common json string, such as queries from a database:</p>
+<p><code>(display token)</code></p>
+<pre><code>[{&quot;Number&quot;:1,
+  &quot;Name&quot;:&quot;Laetetia&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:16,
+  &quot;Father&quot;:{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
+  &quot;Mother&quot;:{&quot;Number&quot;:3,&quot;Name&quot;:&quot;Lamia&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:800000},
+  &quot;Revenue&quot;:100000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:9},
+          &quot;Literature&quot;:{&quot;School&quot;:9,&quot;Exam&quot;:9}}},
+ {&quot;Number&quot;:4,
+  &quot;Name&quot;:&quot;Tania&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:17,
+  &quot;Father&quot;:{&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
+  &quot;Mother&quot;:{&quot;Number&quot;:6,&quot;Name&quot;:&quot;Jenney&quot;,&quot;Age&quot;:42,&quot;Revenue&quot;:180000},
+  &quot;Revenue&quot;:80000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:7,&quot;Exam&quot;:8},
+          &quot;Literature&quot;:{&quot;School&quot;:10,&quot;Exam&quot;:6}}},
+ {&quot;Number&quot;:7,
+  &quot;Name&quot;:&quot;Aarnn&quot;,
+  &quot;Gender&quot;:&quot;male&quot;,
+  &quot;Age&quot;:18,
+  &quot;Father&quot;:{&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000},
+  &quot;Mother&quot;:{&quot;Number&quot;:9,&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:50000},
+  &quot;Revenue&quot;:120000,
+  &quot;Score&quot;:{
+           &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
+           &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
+</code></pre><p><strong><em>string-&gt;json</em></strong></p>
+<p>we tranform it to our JSON-struct</p>
+<p><code>(string-&gt;json token)</code></p>
+<pre><code>#(((&quot;Number&quot; . 1) (&quot;Name&quot; . &quot;Laetetia&quot;) (&quot;Gender&quot; . &quot;female&quot;) (&quot;Age&quot; . 16)
+    (&quot;Father&quot;
+      (&quot;Number&quot; . 2)
+      (&quot;Name&quot; . &quot;Louis&quot;)
+      (&quot;Age&quot; . 48)
+      (&quot;Revenue&quot; . 1000000))
+    (&quot;Mother&quot;
+      (&quot;Number&quot; . 3)
+      (&quot;Name&quot; . &quot;Lamia&quot;)
+      (&quot;Age&quot; . 43)
+      (&quot;Revenue&quot; . 800000))
+    (&quot;Revenue&quot; . 100000)
+    (&quot;Score&quot;
+      (&quot;Math&quot; (&quot;School&quot; . 8) (&quot;Exam&quot; . 9))
+      (&quot;Literature&quot; (&quot;School&quot; . 9) (&quot;Exam&quot; . 9))))
+  ((&quot;Number&quot; . 4) (&quot;Name&quot; . &quot;Tania&quot;) (&quot;Gender&quot; . &quot;female&quot;) (&quot;Age&quot; . 17)
+    (&quot;Father&quot;
+      (&quot;Number&quot; . 5)
+      (&quot;Name&quot; . &quot;Thomas&quot;)
+      (&quot;Age&quot; . 45)
+      (&quot;Revenue&quot; . 150000))
+    (&quot;Mother&quot;
+      (&quot;Number&quot; . 6)
+      (&quot;Name&quot; . &quot;Jenney&quot;)
+      (&quot;Age&quot; . 42)
+      (&quot;Revenue&quot; . 180000))
+    (&quot;Revenue&quot; . 80000)
+    (&quot;Score&quot;
+      (&quot;Math&quot; (&quot;School&quot; . 7) (&quot;Exam&quot; . 8))
+      (&quot;Literature&quot; (&quot;School&quot; . 10) (&quot;Exam&quot; . 6))))
+  ((&quot;Number&quot; . 7) (&quot;Name&quot; . &quot;Anne&quot;) (&quot;Gender&quot; . &quot;female&quot;) (&quot;Age&quot; . 18)
+    (&quot;Father&quot;
+      (&quot;Number&quot; . 8)
+      (&quot;Name&quot; . &quot;Alex&quot;)
+      (&quot;Age&quot; . 40)
+      (&quot;Revenue&quot; . 200000))
+    (&quot;Mother&quot;
+      (&quot;Number&quot; . 9)
+      (&quot;Name&quot; . &quot;Sicie&quot;)
+      (&quot;Age&quot; . 43)
+      (&quot;Revenue&quot; . 50000))
+    (&quot;Revenue&quot; . 120000)
+    (&quot;Score&quot;
+      (&quot;Math&quot; (&quot;School&quot; . 8) (&quot;Exam&quot; . 8))
+      (&quot;Literature&quot; (&quot;School&quot; . 6) (&quot;Exam&quot; . 8)))))
+</code></pre><p><code>(define x (string-&gt;json token))</code></p>
+<p><strong><em>json-&gt;string</em></strong></p>
+<p>when we need to send JSON-string, we transform our JONS-struct back to string:</p>
+<p><code>(display (json-&gt;string x))</code></p>
+<pre><code>[{&quot;Number&quot;:1,
+  &quot;Name&quot;:&quot;Laetetia&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:16,
+  &quot;Father&quot;:{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
+  &quot;Mother&quot;:{&quot;Number&quot;:3,&quot;Name&quot;:&quot;Lamia&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:800000},
+  &quot;Revenue&quot;:100000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:9},
+          &quot;Literature&quot;:{&quot;School&quot;:9,&quot;Exam&quot;:9}}},
+ {&quot;Number&quot;:4,
+  &quot;Name&quot;:&quot;Tania&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:17,
+  &quot;Father&quot;:{&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
+  &quot;Mother&quot;:{&quot;Number&quot;:6,&quot;Name&quot;:&quot;Jenney&quot;,&quot;Age&quot;:42,&quot;Revenue&quot;:180000},
+  &quot;Revenue&quot;:80000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:7,&quot;Exam&quot;:8},
+          &quot;Literature&quot;:{&quot;School&quot;:10,&quot;Exam&quot;:6}}},
+ {&quot;Number&quot;:7,
+  &quot;Name&quot;:&quot;Aarnn&quot;,
+  &quot;Gender&quot;:&quot;male&quot;,
+  &quot;Age&quot;:18,
+  &quot;Father&quot;:{&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000},
+  &quot;Mother&quot;:{&quot;Number&quot;:9,&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:50000},
+  &quot;Revenue&quot;:120000,
+  &quot;Score&quot;:{
+           &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
+           &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
+</code></pre><p><strong><em>json-ref</em></strong></p>
+<p>if I want to know the name of first persone:</p>
+<p><code>(json-ref x 0 &quot;Name&quot;)</code></p>
+<pre><code>&quot;Laetetia&quot;
+</code></pre><p>her mother&apos;s name?</p>
+<p><code>(json-ref x 0 &quot;Mother&quot; &quot;Name&quot;)</code></p>
+<pre><code>&quot;Lamia&quot;
+</code></pre><p><code>(define displaydemo (lambda (x) (display (json-&gt;string x))))</code></p>
+<p>what about her father?</p>
+<p><code>(displaydemo (json-ref x 0 &quot;Father&quot;))</code></p>
+<pre><code>{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000}
+</code></pre><p><strong><em>json-set</em></strong></p>
+<p>if we want change her revenue to 80000</p>
+<p><code>(displaydemo (json-set x 0 &quot;Revenue&quot; 80000))</code></p>
+<pre><code>[{&quot;Number&quot;:1,
+  &quot;Name&quot;:&quot;Laetetia&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:16,
+  &quot;Father&quot;:{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
+  &quot;Mother&quot;:{&quot;Number&quot;:3,&quot;Name&quot;:&quot;Lamia&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:800000},
+  &quot;Revenue&quot;:80000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:9},
+          &quot;Literature&quot;:{&quot;School&quot;:9,&quot;Exam&quot;:9}}},
+ {&quot;Number&quot;:4,
+  &quot;Name&quot;:&quot;Tania&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:17,
+  &quot;Father&quot;:{&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
+  &quot;Mother&quot;:{&quot;Number&quot;:6,&quot;Name&quot;:&quot;Jenney&quot;,&quot;Age&quot;:42,&quot;Revenue&quot;:180000},
+  &quot;Revenue&quot;:80000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:7,&quot;Exam&quot;:8},
+          &quot;Literature&quot;:{&quot;School&quot;:10,&quot;Exam&quot;:6}}},
+ {&quot;Number&quot;:7,
+  &quot;Name&quot;:&quot;Aarnn&quot;,
+  &quot;Gender&quot;:&quot;male&quot;,
+  &quot;Age&quot;:18,
+  &quot;Father&quot;:{&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000},
+  &quot;Mother&quot;:{&quot;Number&quot;:9,&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:50000},
+  &quot;Revenue&quot;:120000,
+  &quot;Score&quot;:{
+           &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
+           &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
+</code></pre><p>we can hide everyone&apos;s mother&apos;s age:</p>
+<p><code>(displaydemo (json-set x #t &quot;Mother&quot; &quot;Age&quot; &quot;secret&quot;))</code></p>
+<pre><code>[{&quot;Number&quot;:1,
+  &quot;Name&quot;:&quot;Laetetia&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:16,
+  &quot;Father&quot;:{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
+  &quot;Mother&quot;:{&quot;Number&quot;:3,&quot;Name&quot;:&quot;Lamia&quot;,&quot;Age&quot;:&quot;secret&quot;,&quot;Revenue&quot;:800000},
+  &quot;Revenue&quot;:100000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:9},
+          &quot;Literature&quot;:{&quot;School&quot;:9,&quot;Exam&quot;:9}}},
+ {&quot;Number&quot;:4,
+  &quot;Name&quot;:&quot;Tania&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:17,
+  &quot;Father&quot;:{&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
+  &quot;Mother&quot;:{&quot;Number&quot;:6,&quot;Name&quot;:&quot;Jenney&quot;,&quot;Age&quot;:&quot;secret&quot;,&quot;Revenue&quot;:180000},
+  &quot;Revenue&quot;:80000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:7,&quot;Exam&quot;:8},
+          &quot;Literature&quot;:{&quot;School&quot;:10,&quot;Exam&quot;:6}}},
+ {&quot;Number&quot;:7,
+  &quot;Name&quot;:&quot;Aarnn&quot;,
+  &quot;Gender&quot;:&quot;male&quot;,
+  &quot;Age&quot;:18,
+  &quot;Father&quot;:{&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000},
+  &quot;Mother&quot;:{&quot;Number&quot;:9,&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:&quot;secret&quot;,&quot;Revenue&quot;:50000},
+  &quot;Revenue&quot;:120000,
+  &quot;Score&quot;:{
+           &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
+           &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
+</code></pre><p>In france, the Score is 20/20, if we want to change to 100/100</p>
+<p><code>(displaydemo (json-set x #t &quot;Score&quot; #t #t (lambda (x) (* x 5))))</code></p>
+<pre><code>[{&quot;Number&quot;:1,
+  &quot;Name&quot;:&quot;Laetetia&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:16,
+  &quot;Father&quot;:{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
+  &quot;Mother&quot;:{&quot;Number&quot;:3,&quot;Name&quot;:&quot;Lamia&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:800000},
+  &quot;Revenue&quot;:100000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:40,&quot;Exam&quot;:45},
+          &quot;Literature&quot;:{&quot;School&quot;:45,&quot;Exam&quot;:45}}},
+ {&quot;Number&quot;:4,
+  &quot;Name&quot;:&quot;Tania&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:17,
+  &quot;Father&quot;:{&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
+  &quot;Mother&quot;:{&quot;Number&quot;:6,&quot;Name&quot;:&quot;Jenney&quot;,&quot;Age&quot;:42,&quot;Revenue&quot;:180000},
+  &quot;Revenue&quot;:80000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:35,&quot;Exam&quot;:40},
+          &quot;Literature&quot;:{&quot;School&quot;:50,&quot;Exam&quot;:30}}},
+ {&quot;Number&quot;:7,
+  &quot;Name&quot;:&quot;Aarnn&quot;,
+  &quot;Gender&quot;:&quot;male&quot;,
+  &quot;Age&quot;:18,
+  &quot;Father&quot;:{&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000},
+  &quot;Mother&quot;:{&quot;Number&quot;:9,&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:50000},
+  &quot;Revenue&quot;:120000,
+  &quot;Score&quot;:{
+           &quot;Math&quot;:{&quot;School&quot;:40,&quot;Exam&quot;:40},
+           &quot;Literature&quot;:{&quot;School&quot;:30,&quot;Exam&quot;:40}}}]
+</code></pre><p><strong><em>json-push</em></strong></p>
+<p>add Laetitia&apos;s father&apos;s profession:</p>
+<p><code>(displaydemo (json-push x 0 &quot;Father&quot; &quot;Profession&quot; &quot;IT&quot;))</code></p>
+<pre><code>[{&quot;Number&quot;:1,
+  &quot;Name&quot;:&quot;Laetetia&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:16,
+  &quot;Father&quot;:{&quot;Profession:&quot;IT&quot;,&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
+  &quot;Mother&quot;:{&quot;Number&quot;:3,&quot;Name&quot;:&quot;Lamia&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:800000},
+  &quot;Revenue&quot;:100000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:9},
+          &quot;Literature&quot;:{&quot;School&quot;:9,&quot;Exam&quot;:9}}},
+ {&quot;Number&quot;:4,
+  &quot;Name&quot;:&quot;Tania&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:17,
+  &quot;Father&quot;:{&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
+  &quot;Mother&quot;:{&quot;Number&quot;:6,&quot;Name&quot;:&quot;Jenney&quot;,&quot;Age&quot;:42,&quot;Revenue&quot;:180000},
+  &quot;Revenue&quot;:80000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:7,&quot;Exam&quot;:8},
+          &quot;Literature&quot;:{&quot;School&quot;:10,&quot;Exam&quot;:6}}},
+ {&quot;Number&quot;:7,
+  &quot;Name&quot;:&quot;Aarnn&quot;,
+  &quot;Gender&quot;:&quot;male&quot;,
+  &quot;Age&quot;:18,
+  &quot;Father&quot;:{&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000},
+  &quot;Mother&quot;:{&quot;Number&quot;:9,&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:50000},
+  &quot;Revenue&quot;:120000,
+  &quot;Score&quot;:{
+           &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
+           &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
+</code></pre><p>add nationality french to all the person</p>
+<p><code>(displaydemo (json-push x #t &quot;Nationality&quot; &quot;french&quot;))</code></p>
+<pre><code>[{&quot;Nationality&quot;:&quot;french&quot;,
+  &quot;Number&quot;:1,
+  &quot;Name&quot;:&quot;Laetetia&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:16,
+  &quot;Father&quot;:{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
+  &quot;Mother&quot;:{&quot;Number&quot;:3,&quot;Name&quot;:&quot;Lamia&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:800000},
+  &quot;Revenue&quot;:100000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:9},
+          &quot;Literature&quot;:{&quot;School&quot;:9,&quot;Exam&quot;:9}}},
+ {&quot;Nationality&quot;:&quot;french&quot;,
+  &quot;Number&quot;:4,
+  &quot;Name&quot;:&quot;Tania&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:17,
+  &quot;Father&quot;:{&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
+  &quot;Mother&quot;:{&quot;Number&quot;:6,&quot;Name&quot;:&quot;Jenney&quot;,&quot;Age&quot;:42,&quot;Revenue&quot;:180000},
+  &quot;Revenue&quot;:80000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:7,&quot;Exam&quot;:8},
+          &quot;Literature&quot;:{&quot;School&quot;:10,&quot;Exam&quot;:6}}},
+ {&quot;Nationality&quot;:&quot;french&quot;,
+  &quot;Number&quot;:7,
+  &quot;Name&quot;:&quot;Aarnn&quot;,
+  &quot;Gender&quot;:&quot;male&quot;,
+  &quot;Age&quot;:18,
+  &quot;Father&quot;:{&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000},
+  &quot;Mother&quot;:{&quot;Number&quot;:9,&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:50000},
+  &quot;Revenue&quot;:120000,
+  &quot;Score&quot;:{
+           &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
+           &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
+</code></pre><p><strong><em>json-drop</em></strong></p>
+<p>or if we no longer need Laetetia&apos;s score:
+<code>(displaydemo (json-drop x 0 &quot;Score&quot;))</code></p>
+<pre><code>[{&quot;Number&quot;:1,
+  &quot;Name&quot;:&quot;Laetetia&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:16,
+  &quot;Father&quot;:{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
+  &quot;Mother&quot;:{&quot;Number&quot;:3,&quot;Name&quot;:&quot;Lamia&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:800000},
+  &quot;Revenue&quot;:100000},
+ {&quot;Number&quot;:4,
+  &quot;Name&quot;:&quot;Tania&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:17,
+  &quot;Father&quot;:{&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
+  &quot;Mother&quot;:{&quot;Number&quot;:6,&quot;Name&quot;:&quot;Jenney&quot;,&quot;Age&quot;:42,&quot;Revenue&quot;:180000},
+  &quot;Revenue&quot;:80000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:7,&quot;Exam&quot;:8},
+          &quot;Literature&quot;:{&quot;School&quot;:10,&quot;Exam&quot;:6}}},
+ {&quot;Number&quot;:7,
+  &quot;Name&quot;:&quot;Aarnn&quot;,
+  &quot;Gender&quot;:&quot;male&quot;,
+  &quot;Age&quot;:18,
+  &quot;Father&quot;:{&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000},
+  &quot;Mother&quot;:{&quot;Number&quot;:9,&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:50000},
+  &quot;Revenue&quot;:120000,
+  &quot;Score&quot;:{
+           &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
+           &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
+</code></pre><p>delete everyone&apos;s mother&apos;s age:</p>
+<p><code>(displaydemo (json-drop x #t &quot;Mother&quot; &quot;Age&quot;))</code></p>
+<pre><code>[{&quot;Number&quot;:1,
+  &quot;Name&quot;:&quot;Laetetia&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:16,
+  &quot;Father&quot;:{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
+  &quot;Mother&quot;:{&quot;Number&quot;:3,&quot;Name&quot;:&quot;Lamia&quot;,&quot;Revenue&quot;:800000},
+  &quot;Revenue&quot;:100000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:9},
+          &quot;Literature&quot;:{&quot;School&quot;:9,&quot;Exam&quot;:9}}},
+ {&quot;Number&quot;:4,
+  &quot;Name&quot;:&quot;Tania&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:17,
+  &quot;Father&quot;:{&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
+  &quot;Mother&quot;:{&quot;Number&quot;:6,&quot;Name&quot;:&quot;Jenney&quot;,&quot;Revenue&quot;:180000},
+  &quot;Revenue&quot;:80000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:7,&quot;Exam&quot;:8},
+          &quot;Literature&quot;:{&quot;School&quot;:10,&quot;Exam&quot;:6}}},
+ {&quot;Number&quot;:7,
+  &quot;Name&quot;:&quot;Aarnn&quot;,
+  &quot;Gender&quot;:&quot;male&quot;,
+  &quot;Age&quot;:18,
+  &quot;Father&quot;:{&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000},
+  &quot;Mother&quot;:{&quot;Number&quot;:9,&quot;Name&quot;:&quot;Anne&quot;,&quot;Revenue&quot;:50000},
+  &quot;Revenue&quot;:120000,
+  &quot;Score&quot;:{
+           &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
+           &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
+</code></pre><p>if we only need these Name and Age</p>
+<p><code>(displaydemo (json-drop x #t (lambda (x)(not (or (equal? x &quot;Name&quot;)(equal? x &quot;Age&quot;))))))</code></p>
+<pre><code>[{&quot;Name&quot;:&quot;Laetetia&quot;,&quot;Age&quot;:16},
+ {&quot;Name&quot;:&quot;Tania&quot;,&quot;Age&quot;:17},
+ {&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:18}]
+</code></pre><p><strong><em>json-reduce</em></strong></p>
+<p>or add the parents&apos; gender</p>
+<p><code>(displaydemo (json-reduce x #t (lambda (x)(or (equal? x &quot;Father&quot;)(equal? x &quot;Mother&quot;))) (lambda (x y)(json-push y &quot;Gender&quot; (if (equal? (cadr x) &quot;Father&quot;) &quot;male&quot; &quot;female&quot;)))))</code></p>
+<pre><code>[{&quot;Number&quot;:1,
+  &quot;Name&quot;:&quot;Laetetia&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:16,
+  &quot;Father&quot;:{&quot;Gender&quot;:&quot;male&quot;,&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
+  &quot;Mother&quot;:{&quot;Gender&quot;:&quot;female&quot;,&quot;Number&quot;:3,&quot;Name&quot;:&quot;Lamia&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:800000},
+  &quot;Revenue&quot;:100000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:9},
+          &quot;Literature&quot;:{&quot;School&quot;:9,&quot;Exam&quot;:9}}},
+ {&quot;Number&quot;:4,
+  &quot;Name&quot;:&quot;Tania&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:17,
+  &quot;Father&quot;:{&quot;Gender&quot;:&quot;male&quot;,&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
+  &quot;Mother&quot;:{&quot;Gender&quot;:&quot;female&quot;,&quot;Number&quot;:6,&quot;Name&quot;:&quot;Jenney&quot;,&quot;Age&quot;:42,&quot;Revenue&quot;:180000},
+  &quot;Revenue&quot;:80000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:7,&quot;Exam&quot;:8},
+          &quot;Literature&quot;:{&quot;School&quot;:10,&quot;Exam&quot;:6}}},
+ {&quot;Number&quot;:7,
+  &quot;Name&quot;:&quot;Aarnn&quot;,
+  &quot;Gender&quot;:&quot;male&quot;,
+  &quot;Age&quot;:18,
+  &quot;Father&quot;:{&quot;Gender&quot;:&quot;male&quot;,&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000},
+  &quot;Mother&quot;:{&quot;Gender&quot;:&quot;female&quot;,&quot;Number&quot;:9,&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:50000},
+  &quot;Revenue&quot;:120000,
+  &quot;Score&quot;:{
+           &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
+           &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
+</code></pre><p><strong><em>Drop layers</em></strong></p>
+<p>if we want the total score of each displine</p>
+<p><code>(displaydemo (json-set x #t &quot;Score&quot; #t (lambda (x)(+ (json-ref x &quot;School&quot;) (json-ref x &quot;Exam&quot;)))))</code></p>
+<pre><code>[{&quot;Number&quot;:1,
+  &quot;Name&quot;:&quot;Laetetia&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:16,
+  &quot;Father&quot;:{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
+  &quot;Mother&quot;:{&quot;Number&quot;:3,&quot;Name&quot;:&quot;Lamia&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:800000},
+  &quot;Revenue&quot;:100000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:17,
+          &quot;Literature&quot;:18}},
+ {&quot;Number&quot;:4,
+  &quot;Name&quot;:&quot;Tania&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:17,
+  &quot;Father&quot;:{&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
+  &quot;Mother&quot;:{&quot;Number&quot;:6,&quot;Name&quot;:&quot;Jenney&quot;,&quot;Age&quot;:42,&quot;Revenue&quot;:180000},
+  &quot;Revenue&quot;:80000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:15,
+          &quot;Literature&quot;:16}},
+ {&quot;Number&quot;:7,
+  &quot;Name&quot;:&quot;Aarnn&quot;,
+  &quot;Gender&quot;:&quot;male&quot;,
+  &quot;Age&quot;:18,
+  &quot;Father&quot;:{&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000},
+  &quot;Mother&quot;:{&quot;Number&quot;:9,&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:50000},
+  &quot;Revenue&quot;:120000,
+  &quot;Score&quot;:{
+           &quot;Math&quot;:16,
+           &quot;Literature&quot;:14}}]
+</code></pre><p>if we only need father&apos;s information:</p>
+<p><code>(displaydemo (json-set x #t (lambda (x)(json-ref x &quot;Father&quot;))))</code></p>
+<pre><code>[{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
+ {&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
+ {&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000}]
+</code></pre><p><strong><em>Reorganization data</em></strong></p>
+<p>set the Revenue as family&apos;s total Revenue</p>
+<p><code>(displaydemo (json-set x #t (lambda (x)(json-set x &quot;Revenue&quot; (lambda (y)(+ y (json-ref x &quot;Father&quot; &quot;Revenue&quot;) (json-ref x &quot;Mother&quot; &quot;Revenue&quot;)))))))</code></p>
+<pre><code>[{&quot;Number&quot;:1,
+  &quot;Name&quot;:&quot;Laetetia&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:16,
+  &quot;Father&quot;:{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
+  &quot;Mother&quot;:{&quot;Number&quot;:3,&quot;Name&quot;:&quot;Lamia&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:800000},
+  &quot;Revenue&quot;:1900000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:9},
+          &quot;Literature&quot;:{&quot;School&quot;:9,&quot;Exam&quot;:9}}},
+ {&quot;Number&quot;:4,
+  &quot;Name&quot;:&quot;Tania&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:17,
+  &quot;Father&quot;:{&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
+  &quot;Mother&quot;:{&quot;Number&quot;:6,&quot;Name&quot;:&quot;Jenney&quot;,&quot;Age&quot;:42,&quot;Revenue&quot;:180000},
+  &quot;Revenue&quot;:410000,
+  &quot;Score&quot;:{
+          &quot;Math&quot;:{&quot;School&quot;:7,&quot;Exam&quot;:8},
+          &quot;Literature&quot;:{&quot;School&quot;:10,&quot;Exam&quot;:6}}},
+ {&quot;Number&quot;:7,
+  &quot;Name&quot;:&quot;Aarnn&quot;,
+  &quot;Gender&quot;:&quot;male&quot;,
+  &quot;Age&quot;:18,
+  &quot;Father&quot;:{&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000},
+  &quot;Mother&quot;:{&quot;Number&quot;:9,&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:50000},
+  &quot;Revenue&quot;:370000,
+  &quot;Score&quot;:{
+           &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
+           &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
+</code></pre><p> set the Score to all the displines&apos; total score</p>
+<p><code>(displaydemo (json-set x #t &quot;Score&quot; (lambda (x)(let ((x (json-set x #t (lambda(n)(+ (json-ref n &quot;School&quot;)(json-ref n &quot;Exam&quot;))))))(+ (json-ref x &quot;Math&quot;)(json-ref x &quot;Literature&quot;))))))</code></p>
+<pre><code>[{&quot;Number&quot;:1,
+  &quot;Name&quot;:&quot;Laetetia&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:16,
+  &quot;Father&quot;:{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
+  &quot;Mother&quot;:{&quot;Number&quot;:3,&quot;Name&quot;:&quot;Lamia&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:800000},
+  &quot;Revenue&quot;:100000,
+  &quot;Score&quot;:35},
+ {&quot;Number&quot;:4,
+  &quot;Name&quot;:&quot;Tania&quot;,
+  &quot;Gender&quot;:&quot;female&quot;,
+  &quot;Age&quot;:17,
+  &quot;Father&quot;:{&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
+  &quot;Mother&quot;:{&quot;Number&quot;:6,&quot;Name&quot;:&quot;Jenney&quot;,&quot;Age&quot;:42,&quot;Revenue&quot;:180000},
+  &quot;Revenue&quot;:80000,
+  &quot;Score&quot;:31},
+ {&quot;Number&quot;:7,
+  &quot;Name&quot;:&quot;Aarnn&quot;,
+  &quot;Gender&quot;:&quot;male&quot;,
+  &quot;Age&quot;:18,
+  &quot;Father&quot;:{&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000},
+  &quot;Mother&quot;:{&quot;Number&quot;:9,&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:43,&quot;Revenue&quot;:50000},
+  &quot;Revenue&quot;:120000,
+  &quot;Score&quot;:30}]
+</code></pre>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2020-04-26T23:40:51.108Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-26T23:41:15.771Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
