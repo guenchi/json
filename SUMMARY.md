@@ -24,20 +24,20 @@
 
 ### Exemples
 
-* [string->json](README.md#Ex:string->json)
+* [string->json](README.md#Ex:%20string->json)
 
-* [json->string](README.md#Ex: json->string)
+* [json->string](README.md#Ex:%20json->string)
 
-* [json-ref](README.md#Ex: json-ref)
+* [json-ref](README.md#Ex:%20json-ref)
 
-* [json-set](README.md#Ex: json-set)
+* [json-set](README.md#Ex:%20json-set)
 
-* [json-push](README.md#Ex: json-push)
+* [json-push](README.md#Ex:%20json-push)
 
-* [json-drop](README.md#Ex: json-drop)
+* [json-drop](README.md#Ex:%20json-drop)
 
-* [json-reduce](README.md#Ex: json-reduce)
+* [json-reduce](README.md#Ex:%20json-reduce)
 
-* [Drop layers](README.md#Drop layers)
+* [Drop layers](README.md#Drop%20layers)
 
-* [Reorganization data](README.md#Reorganization data)
+* [Reorganization data](README.md#Reorganization%20data)
