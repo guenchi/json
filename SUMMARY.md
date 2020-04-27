@@ -24,4 +24,20 @@
 
 ### Exemples
 
-* [Exemples](README.md#Exemples)
+* [string->json](README.md#Ex: string->json)
+
+* [json->string](README.md#Ex: json->string)
+
+* [json-ref](README.md#Ex: json-ref)
+
+* [json-set](README.md#Ex: json-set)
+
+* [json-push](README.md#Ex: json-push)
+
+* [json-drop](README.md#Ex: json-drop)
+
+* [json-reduce](README.md#Ex: json-reduce)
+
+* [Drop layers](README.md#Drop layers)
+
+* [Reorganization data](README.md#Reorganization data)
