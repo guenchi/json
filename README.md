@@ -195,7 +195,7 @@ token (see the test.sc) is a common json string, such as queries from a database
            "Literature":{"School":6,"Exam":8}}}]
 ```
 
-### Ex: string->json
+### Ex. string->json
 
 we tranform it to our JSON-struct
 
@@ -251,7 +251,7 @@ we tranform it to our JSON-struct
 
 `(define x (string->json token))`
 
-### Ex: json->string
+### Ex. json->string
 
 when we need to send JSON-string, we transform our JONS-struct back to string:
 
@@ -290,7 +290,7 @@ when we need to send JSON-string, we transform our JONS-struct back to string:
            "Literature":{"School":6,"Exam":8}}}]
 ```
 
-### Ex: json-ref
+### Ex. json-ref
 
 if I want to know the name of first persone:
 
@@ -317,7 +317,7 @@ what about her father?
 {"Number":2,"Name":"Louis","Age":48,"Revenue":1000000}
 ```
 
-### Ex: json-set
+### Ex. json-set
 
 if we want change her revenue to 80000
 
@@ -430,7 +430,7 @@ In france, the Score is 20/20, if we want to change to 100/100
            "Literature":{"School":30,"Exam":40}}}]
 ```
 
-### Ex: json-push
+### Ex. json-push
 
 add Laetitia's father's profession:
 
@@ -509,7 +509,7 @@ add nationality french to all the person
            "Literature":{"School":6,"Exam":8}}}]
 ```
 
-### Ex: json-drop
+### Ex. json-drop
 
 or if we no longer need Laetetia's score:
 `(displaydemo (json-drop x 0 "Score"))`
@@ -590,7 +590,7 @@ if we only need these Name and Age
  {"Name":"Anne","Age":18}]
 ```
 
-### Ex: json-reduce
+### Ex. json-reduce
 
 or add the parents' gender
 
