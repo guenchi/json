@@ -288,7 +288,7 @@
 <p><strong><em>All the procedures are purely functional</em></strong></p>
 <p><strong><em>Easy and powerful hight-order fuctions</em></strong></p>
 <p><strong><em>No external dependencies, good portability</em></strong></p>
-<h3 id="json-struct">JSON-struct</h3>
+<h2 id="json-struct">JSON-struct</h2>
 <p>A JSON-struct in here may be a association-list (for dict) or a vector (for array) or these infinite nesting.</p>
 <p>It can easily be builded without tool functions, just need <code>` # ( . )</code> five symbols.</p>
 <p>such as: <code>`((&quot;foo&quot; . &quot;bar&quot;)(&quot;baz&quot; . #(1 2 3))) = {&quot;foo&quot;: &quot;bar&quot;, &quot;baz&quot;: [1, 2, 3]}</code></p>
@@ -300,19 +300,19 @@
 <p><code>json-ref</code>, <code>json-set</code>, <code>json-push</code>, <code>json-drop</code> and <code>json-reduce</code> is used to the struct, not to a JSON-string.</p>
 <p>When they accept plural keys / verifys they can jump nesting layers to operate multipe branchs.</p>
 <p>They return a new JSON-struct (a value for json-ref) with specified modify and has no side effect to old one.</p>
-<h3 id="struct-parse-rules">Struct parse rules:</h3>
-<p><strong><em>string-&gt;json</em></strong></p>
+<h2 id="struct-parse-rules">Struct parse rules:</h2>
+<h3 id="string-json">string-&gt;json</h3>
 <p><code>(string-&gt;json string)</code> </p>
 <pre><code>&quot;{key1: value1, key2: value2, key3: value3 ...}&quot;      =&gt;     ((key1 . value2)(key2 . value2)(key3 . value3) ...)
 
 &quot;[value1, value2, value3 ...]&quot;                        =&gt;     #(value1 value2 value3 ...)
-</code></pre><p><strong><em>json-&gt;string</em></strong></p>
+</code></pre><h3 id="json-string">json-&gt;string</h3>
 <p><code>(json-&gt;string json)</code></p>
 <pre><code>`((key1 . value2)(key2 . value2)(key3 . value3) ...)   =&gt;    &quot;{key1: value1, key2: value2, key3: value3 ...}&quot;
 
 `#(value1 value2 value3 ...)                           =&gt;    &quot;[value1, value2, value3 ...]&quot;
-</code></pre><h3 id="tool-functions">Tool functions</h3>
-<p><strong><em>json-ref</em></strong></p>
+</code></pre><h2 id="tool-functions">Tool functions</h2>
+<h3 id="json-ref">json-ref</h3>
 <p><code>(json-ref json key)</code></p>
 <p><code>(json-ref json key1 key2 key3 ...)</code></p>
 <p>use to return the value of a key in specified location of JSON.</p>
@@ -335,7 +335,7 @@ null          =&gt;      &apos;()
 <p>The procedure will receive the key of branch and have to return boolean.</p>
 <p>When it accept plural verifys, each key will match each layer.</p>
 </blockquote>
-<p><strong><em>json-set</em></strong></p>
+<h3 id="json-set">json-set</h3>
 <p><code>(json-set json verify value)</code></p>
 <p><code>(json-set json verify1 verify2 verify3 ... value)</code></p>
 <p>use to modify a value or values in specified location of JSON.</p>
@@ -343,24 +343,24 @@ null          =&gt;      &apos;()
 <p>when it&apos;s a value, it will directly replace the old one&apos;s.</p>
 <p>when it&apos;s a procedure, it must accept one argument (current value of key) and return a new value to replace.</p>
 <p>Do NOT set #t, #f and &apos;() to values, use &apos;true, &apos;false and &apos;null.</p>
-<p><strong><em>json-push</em></strong></p>
+<h3 id="json-push">json-push</h3>
 <p><code>(json-push json key value)</code></p>
 <p><code>(json-push json verify1 verify2 verify3 ... key value)</code></p>
 <p>use to add a key-value pair to json.</p>
 <p>it has to have a key value pair in arguments.</p>
-<p><strong><em>json-drop</em></strong></p>
+<h3 id="json-drop">json-drop</h3>
 <p><code>(json-drop json verify)</code></p>
 <p><code>(json-drop json verify1 verify2 verify3 ...)</code></p>
 <p>use to delete a key-value pair from list.</p>
 <p>the lastest verify only accept a key or a procedure.</p>
-<p><strong><em>json-reduce</em></strong></p>
+<h3 id="json-reduce">json-reduce</h3>
 <p><code>(json-set json verify procedure)</code></p>
 <p><code>(json-set json verify1 verify2 verify3 ... procedure)</code></p>
 <p>it likes json-set, the diffrent is it accept only procedure for the lastest argument.</p>
 <p>the procedure will receive two arguments: list of key of all layers <code>&apos;(key1 key2 key3 ...)</code> and the current value.</p>
 <p>it have to return a new value what you want to put.</p>
 <p>be attention that, the list of keys is not the list of verifys. that&apos;s means if you use #t to pass all branch of a layer or macth a check procedure to filter them, the procedure will receive its key whitch use to pass this layer not the keys of all match path in this layer. </p>
-<h3 id="exemples">Exemples</h3>
+<h2 id="exemples">Exemples</h2>
 <p>token (see the test.sc) is a common json string, such as queries from a database:</p>
 <p><code>(display token)</code></p>
 <pre><code>[{&quot;Number&quot;:1,
@@ -393,7 +393,7 @@ null          =&gt;      &apos;()
   &quot;Score&quot;:{
            &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
            &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
-</code></pre><p><strong><em>string-&gt;json</em></strong></p>
+</code></pre><h3 id="ex-string-json">Ex: string-&gt;json</h3>
 <p>we tranform it to our JSON-struct</p>
 <p><code>(string-&gt;json token)</code></p>
 <pre><code>#(((&quot;Number&quot; . 1) (&quot;Name&quot; . &quot;Laetetia&quot;) (&quot;Gender&quot; . &quot;female&quot;) (&quot;Age&quot; . 16)
@@ -442,7 +442,7 @@ null          =&gt;      &apos;()
       (&quot;Math&quot; (&quot;School&quot; . 8) (&quot;Exam&quot; . 8))
       (&quot;Literature&quot; (&quot;School&quot; . 6) (&quot;Exam&quot; . 8)))))
 </code></pre><p><code>(define x (string-&gt;json token))</code></p>
-<p><strong><em>json-&gt;string</em></strong></p>
+<h3 id="ex-json-string">Ex: json-&gt;string</h3>
 <p>when we need to send JSON-string, we transform our JONS-struct back to string:</p>
 <p><code>(display (json-&gt;string x))</code></p>
 <pre><code>[{&quot;Number&quot;:1,
@@ -475,7 +475,7 @@ null          =&gt;      &apos;()
   &quot;Score&quot;:{
            &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
            &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
-</code></pre><p><strong><em>json-ref</em></strong></p>
+</code></pre><h3 id="ex-json-ref">Ex: json-ref</h3>
 <p>if I want to know the name of first persone:</p>
 <p><code>(json-ref x 0 &quot;Name&quot;)</code></p>
 <pre><code>&quot;Laetetia&quot;
@@ -486,7 +486,7 @@ null          =&gt;      &apos;()
 <p>what about her father?</p>
 <p><code>(displaydemo (json-ref x 0 &quot;Father&quot;))</code></p>
 <pre><code>{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000}
-</code></pre><p><strong><em>json-set</em></strong></p>
+</code></pre><h3 id="ex-json-set">Ex: json-set</h3>
 <p>if we want change her revenue to 80000</p>
 <p><code>(displaydemo (json-set x 0 &quot;Revenue&quot; 80000))</code></p>
 <pre><code>[{&quot;Number&quot;:1,
@@ -583,7 +583,7 @@ null          =&gt;      &apos;()
   &quot;Score&quot;:{
            &quot;Math&quot;:{&quot;School&quot;:40,&quot;Exam&quot;:40},
            &quot;Literature&quot;:{&quot;School&quot;:30,&quot;Exam&quot;:40}}}]
-</code></pre><p><strong><em>json-push</em></strong></p>
+</code></pre><h3 id="ex-json-push">Ex: json-push</h3>
 <p>add Laetitia&apos;s father&apos;s profession:</p>
 <p><code>(displaydemo (json-push x 0 &quot;Father&quot; &quot;Profession&quot; &quot;IT&quot;))</code></p>
 <pre><code>[{&quot;Number&quot;:1,
@@ -651,7 +651,7 @@ null          =&gt;      &apos;()
   &quot;Score&quot;:{
            &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
            &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
-</code></pre><p><strong><em>json-drop</em></strong></p>
+</code></pre><h3 id="ex-json-drop">Ex: json-drop</h3>
 <p>or if we no longer need Laetetia&apos;s score:
 <code>(displaydemo (json-drop x 0 &quot;Score&quot;))</code></p>
 <pre><code>[{&quot;Number&quot;:1,
@@ -718,7 +718,7 @@ null          =&gt;      &apos;()
 <pre><code>[{&quot;Name&quot;:&quot;Laetetia&quot;,&quot;Age&quot;:16},
  {&quot;Name&quot;:&quot;Tania&quot;,&quot;Age&quot;:17},
  {&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:18}]
-</code></pre><p><strong><em>json-reduce</em></strong></p>
+</code></pre><h3 id="ex-json-reduce">Ex: json-reduce</h3>
 <p>or add the parents&apos; gender</p>
 <p><code>(displaydemo (json-reduce x #t (lambda (x)(or (equal? x &quot;Father&quot;)(equal? x &quot;Mother&quot;))) (lambda (x y)(json-push y &quot;Gender&quot; (if (equal? (cadr x) &quot;Father&quot;) &quot;male&quot; &quot;female&quot;)))))</code></p>
 <pre><code>[{&quot;Number&quot;:1,
@@ -751,7 +751,7 @@ null          =&gt;      &apos;()
   &quot;Score&quot;:{
            &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
            &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
-</code></pre><p><strong><em>Drop layers</em></strong></p>
+</code></pre><h3 id="drop-layers">Drop layers</h3>
 <p>if we want the total score of each displine</p>
 <p><code>(displaydemo (json-set x #t &quot;Score&quot; #t (lambda (x)(+ (json-ref x &quot;School&quot;) (json-ref x &quot;Exam&quot;)))))</code></p>
 <pre><code>[{&quot;Number&quot;:1,
@@ -789,7 +789,7 @@ null          =&gt;      &apos;()
 <pre><code>[{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000},
  {&quot;Number&quot;:5,&quot;Name&quot;:&quot;Thomas&quot;,&quot;Age&quot;:45,&quot;Revenue&quot;:150000},
  {&quot;Number&quot;:8,&quot;Name&quot;:&quot;Alex&quot;,&quot;Age&quot;:40,&quot;Revenue&quot;:200000}]
-</code></pre><p><strong><em>Reorganization data</em></strong></p>
+</code></pre><h3 id="reorganization-data">Reorganization data</h3>
 <p>set the Revenue as family&apos;s total Revenue</p>
 <p><code>(displaydemo (json-set x #t (lambda (x)(json-set x &quot;Revenue&quot; (lambda (y)(+ y (json-ref x &quot;Father&quot; &quot;Revenue&quot;) (json-ref x &quot;Mother&quot; &quot;Revenue&quot;)))))))</code></p>
 <pre><code>[{&quot;Number&quot;:1,
@@ -887,7 +887,7 @@ null          =&gt;      &apos;()
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"json","level":"1.1","depth":1,"next":{"title":"JSON-struct","level":"1.2","depth":1,"anchor":"#JSON-struct","path":"README.md","ref":"README.md#JSON-struct","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2020-04-27T00:51:18.304Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-27T00:51:49.672Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"json","level":"1.1","depth":1,"next":{"title":"JSON-struct","level":"1.2","depth":1,"anchor":"#JSON-struct","path":"README.md","ref":"README.md#JSON-struct","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2020-04-27T00:54:35.537Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-27T00:55:03.301Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
