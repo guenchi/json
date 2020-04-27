@@ -26,17 +26,17 @@
 
 * [string->json](README.md#Ex.%20string->json)
 
-* [json->string](README.md#Ex%20json->string)
+* [json->string](README.md#Ex.%20json->string)
 
-* [json-ref](README.md#Ex%20json-ref)
+* [json-ref](README.md#Ex.%20json-ref)
 
-* [json-set](README.md#Ex%20json-set)
+* [json-set](README.md#Ex.%20json-set)
 
-* [json-push](README.md#Ex%20json-push)
+* [json-push](README.md#Ex.%20json-push)
 
-* [json-drop](README.md#Ex%20json-drop)
+* [json-drop](README.md#Ex.%20json-drop)
 
-* [json-reduce](README.md#Ex%20json-reduce)
+* [json-reduce](README.md#Ex.%20json-reduce)
 
 * [Drop layers](README.md#Drop%20layers)
 
