@@ -1,45 +1,43 @@
 # Summary
 
-* [json](README.md)
+* [Scheme JSON Library](README.md)
 
 * [JSON-struct](README.md#json-struct)
 
-### Struct parse rules
+* [Struct parse rules](README.md#struct-parse-rules)
 
-* [string->json](README.md#string-json)
+  * [string->json](README.md#string-json)
 
-* [json->string](README.md#json-string)
+  * [json->string](README.md#json-string)
 
-### Tool functions
+* [Tool functions](README.md#tool-functions)
 
-* [json-ref](README.md#json-ref)
+  * [json-ref](README.md#json-ref)
 
-* [json-set](README.md#json-set)
+  * [json-set](README.md#json-set)
 
-* [json-push](README.md#json-push)
+  * [json-push](README.md#json-push)
 
-* [json-drop](README.md#json-drop)
+  * [json-drop](README.md#json-drop)
 
-* [json-reduce](README.md#json-reduce)
-
-### Exemples
+  * [json-reduce](README.md#json-reduce)
 
 * [Exemples](README.md#exemples)
 
-* [string->json](README.md#ex-string-json)
+  * [string->json](README.md#ex-string-json)
 
-* [json->string](README.md#ex-json-string)
+  * [json->string](README.md#ex-json-string)
 
-* [json-ref](README.md#ex-json-ref)
+  * [json-ref](README.md#ex-json-ref)
 
-* [json-set](README.md#ex-json-set)
+  * [json-set](README.md#ex-json-set)
 
-* [json-push](README.md#ex-json-push)
+  * [json-push](README.md#ex-json-push)
 
-* [json-drop](README.md#ex-json-drop)
+  * [json-drop](README.md#ex-json-drop)
 
-* [json-reduce](README.md#ex-json-reduce)
+  * [json-reduce](README.md#ex-json-reduce)
 
-* [Drop layers](README.md#drop-layers)
+  * [Drop layers](README.md#drop-layers)
 
-* [Reorganization data](README.md#reorganization-data)
+  * [Reorganization data](README.md#reorganization-data)
