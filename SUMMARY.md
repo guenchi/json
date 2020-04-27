@@ -24,7 +24,7 @@
 
 ### Exemples
 
-* [string->json](README.md#Ex: string->json)
+* [string->json](README.md#Ex:string->json)
 
 * [json->string](README.md#Ex: json->string)
 
