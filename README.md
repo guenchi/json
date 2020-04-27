@@ -9,7 +9,7 @@
 ***No external dependencies, good portability***
 
 
-### JSON-struct
+## JSON-struct
 
 A JSON-struct in here may be a association-list (for dict) or a vector (for array) or these infinite nesting.
 
@@ -34,9 +34,9 @@ When they accept plural keys / verifys they can jump nesting layers to operate m
 They return a new JSON-struct (a value for json-ref) with specified modify and has no side effect to old one.
 
 
-### Struct parse rules: 
+## Struct parse rules: 
 
-***string->json***
+### string->json
 
 `(string->json string)` 
 
@@ -46,7 +46,7 @@ They return a new JSON-struct (a value for json-ref) with specified modify and h
 "[value1, value2, value3 ...]"                        =>     #(value1 value2 value3 ...)
 ```
 
-***json->string***
+### json->string
 
 `(json->string json)`
 
@@ -57,9 +57,9 @@ They return a new JSON-struct (a value for json-ref) with specified modify and h
 ```
 
 
-### Tool functions
+## Tool functions
 
-***json-ref***
+### json-ref
 
 `(json-ref json key)`
 
@@ -101,7 +101,7 @@ when it accept plural keys:
 
 
 
-***json-set***
+### json-set
 
 `(json-set json verify value)`
 
@@ -119,7 +119,7 @@ Do NOT set #t, #f and '() to values, use 'true, 'false and 'null.
 
 
 
-***json-push***
+### json-push
 
 `(json-push json key value)`
 
@@ -130,7 +130,7 @@ use to add a key-value pair to json.
 it has to have a key value pair in arguments.
 
 
-***json-drop***
+### json-drop
 
 `(json-drop json verify)`
 
@@ -141,7 +141,7 @@ use to delete a key-value pair from list.
 the lastest verify only accept a key or a procedure.
 
 
-***json-reduce***
+### json-reduce
 
 `(json-set json verify procedure)`
 
@@ -156,7 +156,7 @@ it have to return a new value what you want to put.
 be attention that, the list of keys is not the list of verifys. that's means if you use #t to pass all branch of a layer or macth a check procedure to filter them, the procedure will receive its key whitch use to pass this layer not the keys of all match path in this layer. 
 
 
-### Exemples
+## Exemples
 
 token (see the test.sc) is a common json string, such as queries from a database:
 
@@ -195,7 +195,7 @@ token (see the test.sc) is a common json string, such as queries from a database
            "Literature":{"School":6,"Exam":8}}}]
 ```
 
-***string->json***
+### Ex: string->json
 
 we tranform it to our JSON-struct
 
@@ -251,7 +251,7 @@ we tranform it to our JSON-struct
 
 `(define x (string->json token))`
 
-***json->string***
+### Ex: json->string
 
 when we need to send JSON-string, we transform our JONS-struct back to string:
 
@@ -290,7 +290,7 @@ when we need to send JSON-string, we transform our JONS-struct back to string:
            "Literature":{"School":6,"Exam":8}}}]
 ```
 
-***json-ref***
+### Ex: json-ref
 
 if I want to know the name of first persone:
 
@@ -317,7 +317,7 @@ what about her father?
 {"Number":2,"Name":"Louis","Age":48,"Revenue":1000000}
 ```
 
-***json-set***
+### Ex: json-set
 
 if we want change her revenue to 80000
 
@@ -430,7 +430,7 @@ In france, the Score is 20/20, if we want to change to 100/100
            "Literature":{"School":30,"Exam":40}}}]
 ```
 
-***json-push***
+### Ex: json-push
 
 add Laetitia's father's profession:
 
@@ -509,7 +509,7 @@ add nationality french to all the person
            "Literature":{"School":6,"Exam":8}}}]
 ```
 
-***json-drop***
+### Ex: json-drop
 
 or if we no longer need Laetetia's score:
 `(displaydemo (json-drop x 0 "Score"))`
@@ -590,7 +590,7 @@ if we only need these Name and Age
  {"Name":"Anne","Age":18}]
 ```
 
-***json-reduce***
+### Ex: json-reduce
 
 or add the parents' gender
 
@@ -630,7 +630,7 @@ or add the parents' gender
 ```
 
 
-***Drop layers***
+### Drop layers
 
 if we want the total score of each displine
 
@@ -678,7 +678,7 @@ if we only need father's information:
  {"Number":8,"Name":"Alex","Age":40,"Revenue":200000}]
 ```
 
-***Reorganization data***
+### Reorganization data
 
 set the Revenue as family's total Revenue
 
