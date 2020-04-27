@@ -2,13 +2,13 @@
 
 * [json](README.md)
 
-* [JSON-struct](README.md#JSON-struct)
+* [JSON-struct](README.md#json-struct)
 
 ### Struct parse rules
 
-* [string->json](README.md#string->json)
+* [string->json](README.md#string-json)
 
-* [json->string](README.md#json->string)
+* [json->string](README.md#json-string)
 
 ### Tool functions
 
@@ -24,22 +24,22 @@
 
 ### Exemples
 
-* [Exemples](README.md#Exemples)
+* [Exemples](README.md#exemples)
 
-* [string->json](README.md#Ex.%20string->json)
+* [string->json](README.md#ex-string-json)
 
-* [json->string](README.md#Ex.%20json->string)
+* [json->string](README.md#ex-json-string)
 
-* [json-ref](README.md#Ex.%20json-ref)
+* [json-ref](README.md#ex-json-ref)
 
-* [json-set](README.md#Ex.%20json-set)
+* [json-set](README.md#ex-json-set)
 
-* [json-push](README.md#Ex.%20json-push)
+* [json-push](README.md#ex-json-push)
 
-* [json-drop](README.md#Ex.%20json-drop)
+* [json-drop](README.md#ex-json-drop)
 
-* [json-reduce](README.md#Ex.%20json-reduce)
+* [json-reduce](README.md#ex-json-reduce)
 
-* [Drop layers](README.md#Drop%20layers)
+* [Drop layers](README.md#drop-layers)
 
-* [Reorganization data](README.md#Reorganization%20data)
+* [Reorganization data](README.md#reorganization-data)
