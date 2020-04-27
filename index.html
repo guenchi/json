@@ -227,6 +227,19 @@
     
         <li class="chapter " data-level="4.1" data-path="./">
             
+                <a href="./#Exemples">
+            
+                    
+                    Exemples
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="./">
+            
                 <a href="./#Ex.%20string->json">
             
                     
@@ -238,7 +251,7 @@
             
         </li>
     
-        <li class="chapter " data-level="4.2" data-path="./">
+        <li class="chapter " data-level="4.3" data-path="./">
             
                 <a href="./#Ex.%20json->string">
             
@@ -251,7 +264,7 @@
             
         </li>
     
-        <li class="chapter " data-level="4.3" data-path="./">
+        <li class="chapter " data-level="4.4" data-path="./">
             
                 <a href="./#Ex.%20json-ref">
             
@@ -264,7 +277,7 @@
             
         </li>
     
-        <li class="chapter " data-level="4.4" data-path="./">
+        <li class="chapter " data-level="4.5" data-path="./">
             
                 <a href="./#Ex.%20json-set">
             
@@ -277,7 +290,7 @@
             
         </li>
     
-        <li class="chapter " data-level="4.5" data-path="./">
+        <li class="chapter " data-level="4.6" data-path="./">
             
                 <a href="./#Ex.%20json-push">
             
@@ -290,7 +303,7 @@
             
         </li>
     
-        <li class="chapter " data-level="4.6" data-path="./">
+        <li class="chapter " data-level="4.7" data-path="./">
             
                 <a href="./#Ex.%20json-drop">
             
@@ -303,7 +316,7 @@
             
         </li>
     
-        <li class="chapter " data-level="4.7" data-path="./">
+        <li class="chapter " data-level="4.8" data-path="./">
             
                 <a href="./#Ex.%20json-reduce">
             
@@ -316,7 +329,7 @@
             
         </li>
     
-        <li class="chapter " data-level="4.8" data-path="./">
+        <li class="chapter " data-level="4.9" data-path="./">
             
                 <a href="./#Drop%20layers">
             
@@ -329,7 +342,7 @@
             
         </li>
     
-        <li class="chapter " data-level="4.9" data-path="./">
+        <li class="chapter " data-level="4.10" data-path="./">
             
                 <a href="./#Reorganization%20data">
             
@@ -497,7 +510,7 @@ null          =&gt;      &apos;()
   &quot;Score&quot;:{
            &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
            &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
-</code></pre><h3 id="ex-string-json">Ex: string-&gt;json</h3>
+</code></pre><h3 id="ex-string-json">Ex. string-&gt;json</h3>
 <p>we tranform it to our JSON-struct</p>
 <p><code>(string-&gt;json token)</code></p>
 <pre><code>#(((&quot;Number&quot; . 1) (&quot;Name&quot; . &quot;Laetetia&quot;) (&quot;Gender&quot; . &quot;female&quot;) (&quot;Age&quot; . 16)
@@ -546,7 +559,7 @@ null          =&gt;      &apos;()
       (&quot;Math&quot; (&quot;School&quot; . 8) (&quot;Exam&quot; . 8))
       (&quot;Literature&quot; (&quot;School&quot; . 6) (&quot;Exam&quot; . 8)))))
 </code></pre><p><code>(define x (string-&gt;json token))</code></p>
-<h3 id="ex-json-string">Ex: json-&gt;string</h3>
+<h3 id="ex-json-string">Ex. json-&gt;string</h3>
 <p>when we need to send JSON-string, we transform our JONS-struct back to string:</p>
 <p><code>(display (json-&gt;string x))</code></p>
 <pre><code>[{&quot;Number&quot;:1,
@@ -579,7 +592,7 @@ null          =&gt;      &apos;()
   &quot;Score&quot;:{
            &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
            &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
-</code></pre><h3 id="ex-json-ref">Ex: json-ref</h3>
+</code></pre><h3 id="ex-json-ref">Ex. json-ref</h3>
 <p>if I want to know the name of first persone:</p>
 <p><code>(json-ref x 0 &quot;Name&quot;)</code></p>
 <pre><code>&quot;Laetetia&quot;
@@ -590,7 +603,7 @@ null          =&gt;      &apos;()
 <p>what about her father?</p>
 <p><code>(displaydemo (json-ref x 0 &quot;Father&quot;))</code></p>
 <pre><code>{&quot;Number&quot;:2,&quot;Name&quot;:&quot;Louis&quot;,&quot;Age&quot;:48,&quot;Revenue&quot;:1000000}
-</code></pre><h3 id="ex-json-set">Ex: json-set</h3>
+</code></pre><h3 id="ex-json-set">Ex. json-set</h3>
 <p>if we want change her revenue to 80000</p>
 <p><code>(displaydemo (json-set x 0 &quot;Revenue&quot; 80000))</code></p>
 <pre><code>[{&quot;Number&quot;:1,
@@ -687,7 +700,7 @@ null          =&gt;      &apos;()
   &quot;Score&quot;:{
            &quot;Math&quot;:{&quot;School&quot;:40,&quot;Exam&quot;:40},
            &quot;Literature&quot;:{&quot;School&quot;:30,&quot;Exam&quot;:40}}}]
-</code></pre><h3 id="ex-json-push">Ex: json-push</h3>
+</code></pre><h3 id="ex-json-push">Ex. json-push</h3>
 <p>add Laetitia&apos;s father&apos;s profession:</p>
 <p><code>(displaydemo (json-push x 0 &quot;Father&quot; &quot;Profession&quot; &quot;IT&quot;))</code></p>
 <pre><code>[{&quot;Number&quot;:1,
@@ -755,7 +768,7 @@ null          =&gt;      &apos;()
   &quot;Score&quot;:{
            &quot;Math&quot;:{&quot;School&quot;:8,&quot;Exam&quot;:8},
            &quot;Literature&quot;:{&quot;School&quot;:6,&quot;Exam&quot;:8}}}]
-</code></pre><h3 id="ex-json-drop">Ex: json-drop</h3>
+</code></pre><h3 id="ex-json-drop">Ex. json-drop</h3>
 <p>or if we no longer need Laetetia&apos;s score:
 <code>(displaydemo (json-drop x 0 &quot;Score&quot;))</code></p>
 <pre><code>[{&quot;Number&quot;:1,
@@ -822,7 +835,7 @@ null          =&gt;      &apos;()
 <pre><code>[{&quot;Name&quot;:&quot;Laetetia&quot;,&quot;Age&quot;:16},
  {&quot;Name&quot;:&quot;Tania&quot;,&quot;Age&quot;:17},
  {&quot;Name&quot;:&quot;Anne&quot;,&quot;Age&quot;:18}]
-</code></pre><h3 id="ex-json-reduce">Ex: json-reduce</h3>
+</code></pre><h3 id="ex-json-reduce">Ex. json-reduce</h3>
 <p>or add the parents&apos; gender</p>
 <p><code>(displaydemo (json-reduce x #t (lambda (x)(or (equal? x &quot;Father&quot;)(equal? x &quot;Mother&quot;))) (lambda (x y)(json-push y &quot;Gender&quot; (if (equal? (cadr x) &quot;Father&quot;) &quot;male&quot; &quot;female&quot;)))))</code></p>
 <pre><code>[{&quot;Number&quot;:1,
@@ -991,7 +1004,7 @@ null          =&gt;      &apos;()
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"json","level":"1.1","depth":1,"next":{"title":"JSON-struct","level":"1.2","depth":1,"anchor":"#JSON-struct","path":"README.md","ref":"README.md#JSON-struct","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2020-04-27T01:07:57.241Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-27T01:08:23.900Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"json","level":"1.1","depth":1,"next":{"title":"JSON-struct","level":"1.2","depth":1,"anchor":"#JSON-struct","path":"README.md","ref":"README.md#JSON-struct","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2020-04-27T01:09:08.350Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-27T01:09:32.857Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
