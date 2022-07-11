@@ -190,6 +190,31 @@
     (syntax-rules ()
       ((_ j k1) (ref j k1))
       ((_ j k1 k2 ...) (json-ref (json-ref j k1) k2 ...))))
+       
+       
+       
+  (define vector-check?
+    (lambda (vct v)
+      (define l (vector-length vct))
+      (let loop ((n 0))
+        (if (< n l)
+            (if (equal? v (vector-ref vct n))
+                #t
+                (loop (+ n 1)))
+            #f))))
+
+
+
+  (define check?
+    (lambda (x k v)
+      (let l ((x x))
+      (if (null? x)
+          #f
+          (if (equal? (caar x) k)
+              (if (equal? v (cadar x))
+                  #t
+                  (l (cdr x)))
+              (l (cdr x))))))) 
            
            
            
@@ -369,6 +394,9 @@
     (syntax-rules ()
       ((_ j v1 p) (reduce j v1 (lambda (x y)(p (cons x '()) y))))
       ((_ j v1 v2 ... p) (json-reduce j v1 (lambda (x y) (json-reduce y v2 ... (lambda (n m)(p (cons (car x) n) m))))))))
+       
+       
+
            
                 
 )
