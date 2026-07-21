@@ -1,402 +1,269 @@
-;;  MIT License
+#!chezscheme
+;;; (igropyr json) -- safe JSON parser and writer.
+;;;
+;;; A recursive-descent parser over the input string: no reader tricks,
+;;; safe for untrusted input (HTTP request bodies). Full string escape
+;;; handling including \uXXXX and surrogate pairs.
+;;;
+;;; Data model (compatible with guenchi/json's path DSL):
+;;;   object -> alist with string keys      {"a":1}   -> (("a" . 1))
+;;;   array  -> vector                      [1,2]     -> #(1 2)
+;;;   string -> string, number -> number
+;;;   true/false -> #t/#f, null -> 'null
+;;;
+;;; (string->json s)   parse; raises #(json-error msg pos) on bad input
+;;; (json->string x)   serialize (alists -> objects, vectors -> arrays;
+;;;                    plain lists also serialize as arrays)
+;;; (json-ref x k ...) path access: string/symbol key for objects,
+;;;                    integer index for arrays; #f when absent
 
-;  Copyright guenchi (c) 2018 - 2019 
-     
-;  Permission is hereby granted, free of charge, to any person obtaining a copy
-;  of this software and associated documentation files (the "Software"), to deal
-;  in the Software without restriction, including without limitation the rights
-;  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-;  copies of the Software, and to permit persons to whom the Software is
-;  furnished to do so, subject to the following conditions:
-     
-;  The above copyright notice and this permission notice shall be included in all
-;  copies or substantial portions of the Software.
-     
-;  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-;  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-;  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-;  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-;  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-;  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-;  SOFTWARE.
+(library (igropyr json)
+  (export string->json json->string json-ref)
+  (import (chezscheme))
 
+  (define (jfail msg pos)
+    (raise (vector 'json-error msg pos)))
 
+  ;; ---- parser -----------------------------------------------------------
 
-
-(library (json json)
-  (export
-    string->json
-    json->string
-    json-ref
-    json-set
-    json-drop
-    json-push
-    json-reduce
-  )
-  (import
-    (scheme)
-    (only (core alist) vector->alist)
-  )
- 
-
-  (define (loose-car pair-or-empty)
-    (if (eq? '() pair-or-empty)
-        '()
-        (car pair-or-empty)))
-
-  (define (loose-cdr pair-or-empty)
-    (if (eq? '() pair-or-empty)
-        '()
-        (cdr pair-or-empty)))
-
-  (define (string-length-sum strings)
-    (let loop ((o 0)
-               (rest strings))
-      (cond
-       ((eq? '() rest) o)
-       (else
-        (loop (+ o (string-length (car rest)))
-              (cdr rest))))))
-
-  (define (fast-string-list-append strings)
-    (let* ((output-length (string-length-sum strings))
-           (output (make-string output-length #\_))
-           (fill 0))
-      (let outer ((rest strings))
-        (cond
-         ((eq? '() rest) output)
-         (else
-          (let* ((s (car rest))
-                 (n (string-length s)))
-            (let inner ((i 0))
-              (cond ((= i n) 'done)
-                    (else
-                     (string-set! output fill (string-ref s i))
-                     (set! fill (+ fill 1))
-                     (inner (+ i 1))))))
-          (outer (cdr rest)))))))
-
- 
-  (define string->json
-    (lambda (s)
-      (read (open-input-string
-        (let l
-          ((s s)(bgn 0)(end 0)(rst '())(len (string-length s))(quts? #f)(lst '(#t)))
-          (cond
-            ((= end len)
-              (fast-string-list-append (reverse rst)))
-            ((and quts? (not (char=? (string-ref s end) #\")))
-              (l s bgn (+ 1 end) rst len quts? lst))
-            (else
-              (case (string-ref s end)
-              (#\{
-                (l s (+ 1 end) (+ 1 end) 
-                  (cons 
-                    (string-append 
-                      (substring s bgn end) "((" ) rst) len quts? (cons #t lst)))
-              (#\}
-                (l s (+ 1 end) (+ 1 end) 
-                  (cons 
-                    (string-append 
-                      (substring s bgn end) "))") rst) len quts? (loose-cdr lst)))
-              (#\[
-                (l s (+ 1 end) (+ 1 end) 
-                  (cons
-                    (string-append 
-                      (substring s bgn end) "#(") rst) len quts? (cons #f lst)))
-              (#\]
-                (l s (+ 1 end) (+ 1 end) 
-                  (cons 
-                    (string-append 
-                      (substring s bgn end) ")") rst) len quts? (loose-cdr lst)))
-              (#\:
-                (l s (+ 1 end) (+ 1 end) 
-                  (cons 
-                    (string-append 
-                      (substring s bgn end) " . ") rst) len quts? lst))
-              (#\,
-                (l s (+ 1 end) (+ 1 end) 
-                  (cons 
-                    (string-append 
-                      (substring s bgn end) 
-                      (if (loose-car lst) ")(" " ")) rst) len quts? lst))
-              (#\"
-                (l s bgn (+ 1 end) rst len (not quts?) lst))
-              (else
-                (l s bgn (+ 1 end) rst len quts? lst))))))))))
-
-                
-  (define json->string
-    (lambda (lst)
-      (define f
-        (lambda (x)
-          (cond 		          
-            ((string? x) (string-append "\"" x "\""))		             
-            ((number? x) (number->string x))		             
-            ((symbol? x) (symbol->string x)))))
-      (define c
-        (lambda (x)
-          (if (= x 0) "" ",")))
-      (let l ((lst lst)(x (if (vector? lst) "[" "{")))
-        (if (vector? lst)
-          (string-append x 
-            (let t ((len (vector-length lst))(n 0)(y ""))
-              (if (< n len)
-                (t len (+ n 1)
-                  (let ((k (vector-ref lst n)))
-                    (if (atom? k)
-                      (if (vector? k)
-                        (l k (string-append y (c n) "["))
-                        (string-append y (c n) (f k)))
-                      (l k (string-append y (c n) "{")))))
-                (string-append y "]"))))
-          (let ((k (cdar lst)))
-            (if (null? (cdr lst))
-              (string-append x "\"" (caar lst) "\":"
-                (cond 
-                  ((list? k)(l k "{"))
-                  ((vector? k)(l k "["))
-                  (else (f k))) "}")
-              (l (cdr lst)
-                (cond 
-                  ((list? k)(string-append x "\"" (caar lst) "\":" (l k "{") ","))
-                  ((vector? k)(string-append x "\"" (caar lst) "\":" (l k "[") ","))
-                  (else (string-append x "\"" (caar lst) "\":" (f k) ","))))))))))
-                
-                
-           
-  (define ref
-    (lambda (x k)
-      (define return
-        (lambda (x)
-          (if (symbol? x)
+  (define (string->json s)
+    (let ((n (string-length s)))
+      (define (skip-ws i)
+        (if (and (< i n) (memv (string-ref s i) '(#\space #\tab #\newline #\return)))
+            (skip-ws (+ i 1))
+            i))
+      (define (expect ch i)
+        (if (and (< i n) (char=? (string-ref s i) ch))
+            (+ i 1)
+            (jfail (string-append "expected " (string ch)) i)))
+      (define (parse-value i)
+        (let ((i (skip-ws i)))
+          (when (>= i n) (jfail "unexpected end of input" i))
+          (let ((ch (string-ref s i)))
             (cond
-              ((symbol=? x 'true) #t)
-              ((symbol=? x 'false) #f)
-              ((symbol=? x 'null) '())
-              (else x))
-            x)))
-      (if (vector? x)
-        (return (vector-ref x k))
-        (let l ((x x)(k k))
-          (if (null? x)
-            '()
-            (if (equal? (caar x) k)
-              (return (cdar x))
-              (l (cdr x) k)))))))
+              ((char=? ch #\{) (parse-object (+ i 1)))
+              ((char=? ch #\[) (parse-array (+ i 1)))
+              ((char=? ch #\") (parse-string (+ i 1)))
+              ((char=? ch #\t) (parse-literal i "true" #t))
+              ((char=? ch #\f) (parse-literal i "false" #f))
+              ((char=? ch #\n) (parse-literal i "null" 'null))
+              ((or (char=? ch #\-) (char-numeric? ch)) (parse-number i))
+              (else (jfail "unexpected character" i))))))
+      (define (parse-literal i word value)
+        (let ((end (+ i (string-length word))))
+          (if (and (<= end n) (string=? (substring s i end) word))
+              (values value end)
+              (jfail "bad literal" i))))
+      (define (parse-object i)
+        (let ((i (skip-ws i)))
+          (if (and (< i n) (char=? (string-ref s i) #\}))
+              (values '() (+ i 1))
+              (let loop ((i i) (acc '()))
+                (let ((i (skip-ws i)))
+                  (unless (and (< i n) (char=? (string-ref s i) #\"))
+                    (jfail "expected object key" i))
+                  (let-values (((key i) (parse-string (+ i 1))))
+                    (let ((i (expect #\: (skip-ws i))))
+                      (let-values (((val i) (parse-value i)))
+                        (let ((i (skip-ws i)))
+                          (cond
+                            ((and (< i n) (char=? (string-ref s i) #\,))
+                             (loop (+ i 1) (cons (cons key val) acc)))
+                            ((and (< i n) (char=? (string-ref s i) #\}))
+                             (values (reverse (cons (cons key val) acc)) (+ i 1)))
+                            (else (jfail "expected , or } in object" i))))))))))))
+      (define (parse-array i)
+        (let ((i (skip-ws i)))
+          (if (and (< i n) (char=? (string-ref s i) #\]))
+              (values (vector) (+ i 1))
+              (let loop ((i i) (acc '()))
+                (let-values (((val i) (parse-value i)))
+                  (let ((i (skip-ws i)))
+                    (cond
+                      ((and (< i n) (char=? (string-ref s i) #\,))
+                       (loop (+ i 1) (cons val acc)))
+                      ((and (< i n) (char=? (string-ref s i) #\]))
+                       (values (list->vector (reverse (cons val acc))) (+ i 1)))
+                      (else (jfail "expected , or ] in array" i)))))))))
+      (define (hex4 i)
+        (unless (<= (+ i 4) n) (jfail "bad \\u escape" i))
+        (let ((v (string->number (substring s i (+ i 4)) 16)))
+          (unless v (jfail "bad \\u escape" i))
+          v))
+      (define (parse-string i)   ; i points after the opening quote
+        (call-with-values
+          (lambda ()
+            (let ((p (open-output-string)))
+              (let loop ((i i))
+                (when (>= i n) (jfail "unterminated string" i))
+                (let ((ch (string-ref s i)))
+                  (cond
+                    ((char=? ch #\") (values (get-output-string p) (+ i 1)))
+                    ((char=? ch #\\)
+                     (when (>= (+ i 1) n) (jfail "bad escape" i))
+                     (let ((e (string-ref s (+ i 1))))
+                       (case e
+                         ((#\") (write-char #\" p) (loop (+ i 2)))
+                         ((#\\) (write-char #\\ p) (loop (+ i 2)))
+                         ((#\/) (write-char #\/ p) (loop (+ i 2)))
+                         ((#\b) (write-char (integer->char 8) p) (loop (+ i 2)))
+                         ((#\f) (write-char (integer->char 12) p) (loop (+ i 2)))
+                         ((#\n) (write-char #\newline p) (loop (+ i 2)))
+                         ((#\r) (write-char #\return p) (loop (+ i 2)))
+                         ((#\t) (write-char #\tab p) (loop (+ i 2)))
+                         ((#\u)
+                          (let ((v (hex4 (+ i 2))))
+                            (if (and (>= v #xD800) (<= v #xDBFF))
+                                ;; high surrogate: expect \uDC00-\uDFFF
+                                (begin
+                                  (unless (and (<= (+ i 12) n)
+                                               (char=? (string-ref s (+ i 6)) #\\)
+                                               (char=? (string-ref s (+ i 7)) #\u))
+                                    (jfail "lone high surrogate" i))
+                                  (let ((lo (hex4 (+ i 8))))
+                                    (unless (and (>= lo #xDC00) (<= lo #xDFFF))
+                                      (jfail "bad low surrogate" i))
+                                    (write-char
+                                      (integer->char
+                                        (+ #x10000
+                                           (* (- v #xD800) #x400)
+                                           (- lo #xDC00)))
+                                      p)
+                                    (loop (+ i 12))))
+                                (begin
+                                  (when (and (>= v #xDC00) (<= v #xDFFF))
+                                    (jfail "lone low surrogate" i))
+                                  (write-char (integer->char v) p)
+                                  (loop (+ i 6))))))
+                         (else (jfail "bad escape" i)))))
+                    (else (write-char ch p) (loop (+ i 1))))))))
+          values))
+      (define (parse-number i)
+        (let scan ((j (if (char=? (string-ref s i) #\-) (+ i 1) i))
+                   (float? #f))
+          (if (and (< j n)
+                   (let ((c (string-ref s j)))
+                     (or (char-numeric? c)
+                         (memv c '(#\. #\e #\E #\+ #\-)))))
+              (scan (+ j 1)
+                    (or float? (memv (string-ref s j) '(#\. #\e #\E))))
+              (let ((v (string->number (substring s i j) 10)))
+                (unless v (jfail "bad number" i))
+                (values (if (and float? (exact? v)) (exact->inexact v) v) j)))))
+      ;; top level: one value, then only whitespace
+      (let-values (((v end) (parse-value 0)))
+        (unless (= (skip-ws end) n) (jfail "trailing characters" end))
+        v)))
 
-  
-  (define-syntax json-ref
-    (syntax-rules ()
-      ((_ j k1) (ref j k1))
-      ((_ j k1 k2 ...) (json-ref (json-ref j k1) k2 ...))))
-       
-       
-       
-  (define vector-check?
-    (lambda (vct v)
-      (define l (vector-length vct))
-      (let loop ((n 0))
-        (if (< n l)
-            (if (equal? v (vector-ref vct n))
-                #t
-                (loop (+ n 1)))
-            #f))))
+  ;; ---- writer ------------------------------------------------------------
+  ;; Everything is emitted into ONE string output port: linear in the
+  ;; output size. (The previous string-append accumulation re-copied the
+  ;; accumulator for every element -- quadratic on large arrays/objects.)
 
+  ;; does s need any escaping at all? If not it is emitted with a single
+  ;; put-string -- the common case for keys and plain values.
+  (define (json-clean? s)
+    (let ((n (string-length s)))
+      (let loop ((i 0))
+        (or (fx= i n)
+            (let ((ch (string-ref s i)))
+              (and (not (char=? ch #\"))
+                   (not (char=? ch #\\))
+                   (fx>= (char->integer ch) #x20)
+                   (loop (fx+ i 1))))))))
 
+  (define (write-json-string s p)
+    (put-char p #\")
+    (if (json-clean? s)
+        (put-string p s)
+        (string-for-each
+          (lambda (ch)
+            (let ((code (char->integer ch)))
+              (cond
+                ((char=? ch #\") (put-string p "\\\""))
+                ((char=? ch #\\) (put-string p "\\\\"))
+                ((char=? ch #\newline) (put-string p "\\n"))
+                ((char=? ch #\return) (put-string p "\\r"))
+                ((char=? ch #\tab) (put-string p "\\t"))
+                ((fx< code #x20)
+                 (put-string p "\\u")
+                 (let ((h (number->string code 16)))
+                   (do ((i (string-length h) (fx+ i 1))) ((fx= i 4))
+                     (put-char p #\0))
+                   (put-string p h)))
+                (else (put-char p ch)))))
+          s))
+    (put-char p #\"))
 
-  (define check?
-    (lambda (x k v)
-      (let l ((x x))
-      (if (null? x)
-          #f
-          (if (equal? (caar x) k)
-              (if (equal? v (cadar x))
-                  #t
-                  (l (cdr x)))
-              (l (cdr x))))))) 
-           
-           
-           
-  (define set
-    (lambda (x v p)
-      (let ((x x)(v v)(p (if (procedure? p) p (lambda (x) p))))
-        (if (vector? x)
-          (list->vector
-            (cond 
-              ((boolean? v)
-                (if v
-                  (let l ((x (vector->alist x))(p p))
-                    (if (null? x)
-                      '()
-                      (cons (p (cdar x)) (l (cdr x) p))))))
-              ((procedure? v)
-                (let l ((x (vector->alist x))(v v)(p p))
-                  (if (null? x)
-                    '()
-                    (if (v (caar x))
-                      (cons (p (cdar x)) (l (cdr x) v p))
-                      (cons (cdar x) (l (cdr x) v p))))))
-              (else
-                (let l ((x (vector->alist x))(v v)(p p))
-                  (if (null? x)
-                    '()
-                    (if (equal? (caar x) v)
-                      (cons (p (cdar x)) (l (cdr x) v p))
-                      (cons (cdar x) (l (cdr x) v p))))))))
-          (cond
-            ((boolean? v)
-              (if v
-                (let l ((x x)(p p))
-                  (if (null? x)
-                    '()
-                    (cons (cons (caar x) (p (cdar x)))(l (cdr x) p))))))
-            ((procedure? v)
-              (let l ((x x)(v v)(p p))
-                (if (null? x)
-                  '()
-                  (if (v (caar x))
-                    (cons (cons (caar x) (p (cdar x)))(l (cdr x) v p))
-                    (cons (car x) (l (cdr x) v p))))))
-            (else
-              (let l ((x x)(v v)(p p))
-                (if (null? x)
-                  '()
-                  (if (equal? (caar x) v)
-                    (cons (cons v (p (cdar x)))(l (cdr x) v p))
-                    (cons (car x) (l (cdr x) v p)))))))))))
+  (define (number->json v)
+    (cond
+      ;; a non-real (e.g. complex) would serialize to invalid JSON
+      ((not (real? v))
+       (assertion-violation 'json->string "JSON numbers must be real" v))
+      ((and (exact? v) (integer? v)) (number->string v))
+      ;; JSON has no NaN/Infinity; emit null as JSON.stringify does
+      ((or (nan? v) (infinite? v)) "null")
+      ((exact? v) (number->string (exact->inexact v)))
+      (else (number->string v))))
 
+  (define (write-json x p)
+    (cond
+      ((eq? x #t) (put-string p "true"))
+      ((eq? x #f) (put-string p "false"))
+      ((eq? x 'null) (put-string p "null"))
+      ((number? x) (put-string p (number->json x)))
+      ((string? x) (write-json-string x p))
+      ((symbol? x) (write-json-string (symbol->string x) p))
+      ((vector? x)
+       (put-char p #\[)
+       (let ((n (vector-length x)))
+         (do ((i 0 (fx+ i 1))) ((fx= i n))
+           (when (fx> i 0) (put-char p #\,))
+           (write-json (vector-ref x i) p)))
+       (put-char p #\]))
+      ((null? x) (put-string p "{}"))
+      ((and (list? x) (pair? (car x)))            ; alist -> object
+       (put-char p #\{)
+       (let loop ((l x) (first #t))
+         (unless (null? l)
+           (unless first (put-char p #\,))
+           (let ((kv (car l)))
+             (write-json-string
+               (if (symbol? (car kv)) (symbol->string (car kv)) (car kv))
+               p)
+             (put-char p #\:)
+             (write-json (cdr kv) p))
+           (loop (cdr l) #f)))
+       (put-char p #\}))
+      ((list? x)                                   ; plain list -> array
+       (put-char p #\[)
+       (let loop ((l x) (first #t))
+         (unless (null? l)
+           (unless first (put-char p #\,))
+           (write-json (car l) p)
+           (loop (cdr l) #f)))
+       (put-char p #\]))
+      (else (put-string p "null"))))
 
-  (define-syntax json-set
-    (syntax-rules ()
-      ((_ j v1 p) (set j v1 p))
-      ((_ j v1 v2 ... p) (json-set j v1 (lambda (x) (json-set x v2 ... p))))))       
-           
-           
+  (define (json->string x)
+    (call-with-string-output-port
+      (lambda (p) (write-json x p))))
 
-  (define push
-    (lambda (x k v)
-      (if (vector? x)
-        (if (= (vector-length x) 0)
-          (vector v)
-          (list->vector  
-            (let l ((x (vector->alist x))(k k)(v v)(b #f))
-              (if (null? x)
-                (if b '() (cons v '()))
-                (if (equal? (caar x) k)
-                  (cons v (cons  (cdar x) (l (cdr x) k v #t)))
-                  (cons (cdar x) (l (cdr x) k v b)))))))
-        (cons (cons k v) x))))
+  ;; ---- path access -------------------------------------------------------
 
+  (define (ref1 x k)
+    (cond
+      ((and (vector? x) (integer? k))
+       (and (>= k 0) (< k (vector-length x)) (vector-ref x k)))
+      ((and (list? x) (or (string? k) (symbol? k)))
+       (let ((key (if (symbol? k) (symbol->string k) k)))
+         (let loop ((l x))
+           (cond
+             ((null? l) #f)
+             ((and (pair? (car l)) (equal? (caar l) key)) (cdar l))
+             (else (loop (cdr l)))))))
+      (else #f)))
 
-           
-  (define-syntax json-push
-    (syntax-rules ()
-      ((_ j k v) (push j k v))
-      ((_ j v1 k v) (json-set j v1 (lambda (x) (json-push x k v))))
-      ((_ j v1 v2 ... k v) (json-set j v1 (lambda (x) (json-push x v2 ... k v))))))  
-           
-           
-
-  (define drop
-    (lambda (x v)
-      (if (vector? x)
-        (if (> (vector-length x) 0)
-          (list->vector
-            (cond
-              ((procedure? v)
-                (let l ((x (vector->alist x))(v v))
-                  (if (null? x)
-                    '()
-                    (if (v (caar x))
-                      (l (cdr x) v)
-                      (cons (cdar x) (l (cdr x) v))))))
-              (else 
-                (let l ((x (vector->alist x))(v v))
-                  (if (null? x)
-                    '()
-                    (if (equal? (caar x) v)
-                      (l (cdr x) v)
-                      (cons (cdar x) (l (cdr x) v)))))))))
-        (cond 
-          ((procedure? v)
-            (let l ((x x)(v v))
-              (if (null? x)
-                '()
-                (if (v (caar x))
-                  (l (cdr x) v)
-                  (cons (car x) (l (cdr x) v))))))
-          (else  
-            (let l ((x x)(v v))
-              (if (null? x)
-                '()
-                (if (equal? (caar x) v)
-                  (l (cdr x) v)
-                  (cons (car x) (l (cdr x) v))))))))))
-
-           
-  (define-syntax json-drop
-    (syntax-rules ()
-      ((_ j v1) (drop j v1))
-      ((_ j v1 v2 ...) (json-set j v1 (lambda (x) (json-drop x v2 ...))))))
-           
-           
-          
-  (define reduce
-    (lambda (x v p)
-        (if (vector? x)
-          (list->vector
-            (cond 
-              ((boolean? v)
-                (if v
-                  (let l ((x (vector->alist x))(p p))
-                    (if (null? x)
-                      '()
-                      (cons (p (caar x) (cdar x)) (l (cdr x) p))))))
-              ((procedure? v)
-                (let l ((x (vector->alist x))(v v)(p p))
-                  (if (null? x)
-                    '()
-                    (if (v (caar x))
-                      (cons (p (caar x) (cdar x)) (l (cdr x) v p))
-                      (cons (cdar x) (l (cdr x) v p ))))))
-              (else
-                (let l ((x (vector->alist x))(v v)(p p))
-                  (if (null? x)
-                    '()
-                    (if (equal? (caar x) v)
-                      (cons (p (caar x) (cdar x)) (l (cdr x) v p))
-                      (cons (cdar x) (l (cdr x) v p ))))))))
-          (cond
-            ((boolean? v)
-              (if v
-                (let l ((x x)(p p))
-                  (if (null? x)
-                    '()
-                    (cons (cons (caar x) (p (caar x) (cdar x)))(l (cdr x) p))))))
-            ((procedure? v)
-              (let l ((x x)(v v)(p p))
-                (if (null? x)
-                  '()
-                  (if (v (caar x))
-                    (cons (cons (caar x) (p (caar x) (cdar x)))(l (cdr x) v p))
-                    (cons (car x) (l (cdr x) v p ))))))
-            (else
-              (let l ((x x)(v v)(p p))
-                (if (null? x)
-                  '()
-                  (if (equal? (caar x) v)
-                    (cons (cons v (p v (cdar x)))(l (cdr x) v p))
-                    (cons (car x) (l (cdr x) v p))))))))))
-
-
-  (define-syntax json-reduce
-    (syntax-rules ()
-      ((_ j v1 p) (reduce j v1 (lambda (x y)(p (cons x '()) y))))
-      ((_ j v1 v2 ... p) (json-reduce j v1 (lambda (x y) (json-reduce y v2 ... (lambda (n m)(p (cons (car x) n) m))))))))
-       
-       
-
-           
-                
+  (define (json-ref x . keys)
+    (fold-left (lambda (acc k) (and acc (ref1 acc k))) x keys))
 )
