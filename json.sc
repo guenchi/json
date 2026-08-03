@@ -21,6 +21,9 @@
   (export string->json json->string json-ref)
   (import (chezscheme))
 
+  ;; nesting cap for untrusted input (same guard as (igropyr sexpr))
+  (define max-depth 64)
+
   (define (jfail msg pos)
     (raise (vector 'json-error msg pos)))
 
@@ -36,13 +39,18 @@
         (if (and (< i n) (char=? (string-ref s i) ch))
             (+ i 1)
             (jfail (string-append "expected " (string ch)) i)))
-      (define (parse-value i)
+      ;; Untrusted input must not be able to drive unbounded recursion:
+      ;; a few MB of '[' would otherwise cost millions of live frames.
+      ;; Mirrors (igropyr sexpr)'s cap for the same threat model.
+      (define (parse-value i) (parse-value* i 0))
+      (define (parse-value* i depth)
+        (when (> depth max-depth) (jfail "nesting too deep" i))
         (let ((i (skip-ws i)))
           (when (>= i n) (jfail "unexpected end of input" i))
           (let ((ch (string-ref s i)))
             (cond
-              ((char=? ch #\{) (parse-object (+ i 1)))
-              ((char=? ch #\[) (parse-array (+ i 1)))
+              ((char=? ch #\{) (parse-object (+ i 1) (+ depth 1)))
+              ((char=? ch #\[) (parse-array (+ i 1) (+ depth 1)))
               ((char=? ch #\") (parse-string (+ i 1)))
               ((char=? ch #\t) (parse-literal i "true" #t))
               ((char=? ch #\f) (parse-literal i "false" #f))
@@ -54,7 +62,7 @@
           (if (and (<= end n) (string=? (substring s i end) word))
               (values value end)
               (jfail "bad literal" i))))
-      (define (parse-object i)
+      (define (parse-object i depth)
         (let ((i (skip-ws i)))
           (if (and (< i n) (char=? (string-ref s i) #\}))
               (values '() (+ i 1))
@@ -64,7 +72,7 @@
                     (jfail "expected object key" i))
                   (let-values (((key i) (parse-string (+ i 1))))
                     (let ((i (expect #\: (skip-ws i))))
-                      (let-values (((val i) (parse-value i)))
+                      (let-values (((val i) (parse-value* i depth)))
                         (let ((i (skip-ws i)))
                           (cond
                             ((and (< i n) (char=? (string-ref s i) #\,))
@@ -72,12 +80,12 @@
                             ((and (< i n) (char=? (string-ref s i) #\}))
                              (values (reverse (cons (cons key val) acc)) (+ i 1)))
                             (else (jfail "expected , or } in object" i))))))))))))
-      (define (parse-array i)
+      (define (parse-array i depth)
         (let ((i (skip-ws i)))
           (if (and (< i n) (char=? (string-ref s i) #\]))
               (values (vector) (+ i 1))
               (let loop ((i i) (acc '()))
-                (let-values (((val i) (parse-value i)))
+                (let-values (((val i) (parse-value* i depth)))
                   (let ((i (skip-ws i)))
                     (cond
                       ((and (< i n) (char=? (string-ref s i) #\,))
@@ -87,7 +95,20 @@
                       (else (jfail "expected , or ] in array" i)))))))))
       (define (hex4 i)
         (unless (<= (+ i 4) n) (jfail "bad \\u escape" i))
-        (let ((v (string->number (substring s i (+ i 4)) 16)))
+        (let ((v (let ((sub (substring s i (+ i 4))))
+                   ;; strictly four hex digits: string->number would also
+                   ;; accept "-abc" (negative -> integer->char raises a
+                   ;; raw assertion, escaping the json-error contract)
+                   ;; and radix/sign prefixes like "#x41" / "+041"
+                   (let scan ((k 0))
+                     (cond
+                       ((= k 4) (string->number sub 16))
+                       ((let ((c (string-ref sub k)))
+                          (or (char<=? #\0 c #\9)
+                              (char<=? #\a c #\f)
+                              (char<=? #\A c #\F)))
+                        (scan (+ k 1)))
+                       (else #f))))))
           (unless v (jfail "bad \\u escape" i))
           v))
       (define (parse-string i)   ; i points after the opening quote
@@ -138,9 +159,22 @@
                          (else (jfail "bad escape" i)))))
                     (else (write-char ch p) (loop (+ i 1))))))))
           values))
+      ;; A number token is BOUNDED. Without a limit the whole run of digits
+      ;; goes to string->number, which builds an arbitrary-precision integer:
+      ;; measured, 262144 digits takes 4.5 SECONDS, and that is one request
+      ;; freezing the single scheduler thread for every other connection.
+      ;; The default body limit allows nearly a megabyte of digits, so a
+      ;; handful of requests occupies every worker indefinitely.
+      ;;
+      ;; 64 is past any legitimate JSON number: IEEE doubles carry 17
+      ;; significant digits, and even a nanosecond timestamp needs 19.
+      (define max-number-chars 64)
+
       (define (parse-number i)
         (let scan ((j (if (char=? (string-ref s i) #\-) (+ i 1) i))
                    (float? #f))
+          (when (> (- j i) max-number-chars)
+            (jfail "number too long" i))
           (if (and (< j n)
                    (let ((c (string-ref s j)))
                      (or (char-numeric? c)
@@ -149,6 +183,14 @@
                     (or float? (memv (string-ref s j) '(#\. #\e #\E))))
               (let ((v (string->number (substring s i j) 10)))
                 (unless v (jfail "bad number" i))
+                ;; An out-of-range exponent becomes +inf.0, which is a REAL
+                ;; and therefore passes any (real? v) guard downstream. jwt's
+                ;; expiry check was exactly such a guard: a correctly signed
+                ;; token carrying exp=1e999 got a non-finite expiry and never
+                ;; expired. JSON has no infinities, so refusing here is also
+                ;; the more faithful parse.
+                (when (and (real? v) (or (nan? v) (infinite? v)))
+                  (jfail "number is not finite" i))
                 (values (if (and float? (exact? v)) (exact->inexact v) v) j)))))
       ;; top level: one value, then only whitespace
       (let-values (((v end) (parse-value 0)))
@@ -222,7 +264,19 @@
            (write-json (vector-ref x i) p)))
        (put-char p #\]))
       ((null? x) (put-string p "{}"))
-      ((and (list? x) (pair? (car x)))            ; alist -> object
+      ;; alist -> object. EVERY entry must be a pair with a string or
+      ;; symbol key: a list of lists (a nested array) also has a pair as
+      ;; its car, and treating it as an object used to crash on the
+      ;; non-string key. Note (("a" "b")) stays genuinely ambiguous --
+      ;; it is both a one-entry alist and a one-element array of
+      ;; strings -- and is still written as an object; use a vector for
+      ;; an unambiguous array.
+      ((and (list? x) (pair? (car x))
+            (let all ((l x))
+              (or (null? l)
+                  (and (pair? (car l))
+                       (let ((k (caar l))) (or (string? k) (symbol? k)))
+                       (all (cdr l))))))
        (put-char p #\{)
        (let loop ((l x) (first #t))
          (unless (null? l)
