@@ -30,17 +30,30 @@ Data model:
 | `true` / `false` | `#t` / `#f` |
 | `null` | `'null` |
 
-`json->string` writes alists as objects and vectors as arrays (a plain
-list also serializes as an array). `json-ref` takes a string or symbol
-key for objects and an integer index for arrays, following a path across
-nested values.
+`json->string` writes alists as objects and vectors as arrays; a list
+that is neither empty nor alist-shaped also serializes as an array,
+while `'()` is written as an empty object. `json-ref` takes a string or
+symbol key for objects and an integer index for arrays, following a path
+across nested values.
 
 ## Layout and use
 
-The source is `json.sc`; the library it defines is `(igropyr json)`.
-Chez resolves that name to `igropyr/json.sc` on the library path, so put
-`json.sc` in an `igropyr/` directory that is on your `CHEZSCHEMELIBDIRS`,
-and include `.sc` in the library extensions. Inside Igropyr, drop it
+The sources are `json.sc` and `json-internal.sc`, defining
+`(igropyr json)` and `(igropyr json-internal)`. Chez resolves those names
+to `igropyr/json.sc` and `igropyr/json-internal.sc` on the library path,
+so put BOTH files in an `igropyr/` directory that is on your
+`CHEZSCHEMELIBDIRS`, and include `.sc` in the library extensions.
+
+`(igropyr json)` depends on `(igropyr json-internal)`; both depend only
+on `(chezscheme)`.
+
+**`(igropyr json-internal)` IS NOT PART OF THIS LIBRARY'S API, and
+application code must not import it.** It is a separate file for one
+reason: three guards inside the number writer refuse spellings that no
+formatter output reaches, so their refusals cannot be provoked through
+`json->string`, and a test unable to call them directly would pass while
+any of them was deleted. Its names and behaviour may change in any
+release. Inside Igropyr, drop it
 alongside the other `igropyr/*.sc` sources — it is already listed in the
 build.
 
