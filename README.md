@@ -18,7 +18,8 @@ was meant will be told rather than obeyed.
 ```scheme
 (import (igropyr json))
 
-(string->json s)     ; parse; raises #(json-error msg pos) on bad input
+(string->json s)     ; parse; raises #(json-error msg pos) on bad input,
+                     ; and on an argument that is not a string
 (json->string x)     ; serialize
 (json-ref x k ... [absent])   ; path access; #f when absent, or the
                               ; value of a trailing thunk if given
@@ -40,12 +41,39 @@ Data model:
 list in a value position is refused, not written, and so is a symbol
 where a string belongs — including a symbol used as an object key.
 
-The two symbol refusals name the offending value; the one for a list
-names only the repair, and a value of a kind JSON has no room for at all
-(a char, a procedure, a record) is refused with neither. Refusing rather
-than converting is what keeps two Scheme values from reaching the same
-document — that, and not tidiness, is why these are errors and not
-conversions.
+Every refusal locates the mistake. The symbol ones name the offending
+value; the rest name its KIND and never the value itself, because a value
+that reaches a refusal may be circular or enormous, and an error path must
+not print it:
+
+```scheme
+(json->string #\a)          ; "not a JSON value: a character"
+(json->string 1+2i)         ; "not a JSON value: a complex number"
+(json->string '(1 2 3))     ; "a JSON array is a vector, not a list: use list->vector"
+(json->string '("a" . 1))   ; "not a JSON value: an improper or circular list, and an object with one member is (("k" . v))"
+```
+
+Where the writer cannot tell two intentions apart it gives both spellings
+rather than guessing at one: an improper pair is a malformed list AND the
+commonest way to write a single object member without the list around it,
+and neither reading is a guess.
+
+Refusing rather than converting is what keeps two Scheme values from
+reaching the same document — that, and not tidiness, is why these are
+errors and not conversions.
+
+`string->json` checks its argument the same way: anything that is not a
+string is refused by name, instead of failing somewhere inside the parser
+with a condition that names neither the procedure nor the problem.
+
+```scheme
+(string->json (bytevector 1))  ; "string->json takes a string, not a bytevector"
+```
+
+**The third slot says which side raised.** Reading errors carry an index
+into the input; writing errors carry `#f`, having no input to index. A
+handler can dispatch on that, which is why the argument check reports
+position `0` — nothing was consumed — rather than `#f`.
 
 A **locator** is not a stored key, and the rule for it is the opposite
 one: `json-ref` and the other path verbs accept a string, a symbol, or
