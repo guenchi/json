@@ -7,7 +7,11 @@ string — no reader tricks — so it is safe for untrusted input such as
 HTTP request bodies, with full string-escape handling including
 `\uXXXX` and surrogate pairs. It depends only on `(chezscheme)`.
 
-The data model is compatible with `guenchi/json`'s path DSL.
+The path DSL is the one from `guenchi/json`: the same verbs, and the
+same locator forms. The set of Scheme values this variant will SERIALIZE
+is narrower — see the refusals below — so a document round-trips
+identically, while a program that fed the writer a list where an array
+was meant will be told rather than obeyed.
 
 ## API
 
@@ -16,7 +20,8 @@ The data model is compatible with `guenchi/json`'s path DSL.
 
 (string->json s)     ; parse; raises #(json-error msg pos) on bad input
 (json->string x)     ; serialize
-(json-ref x k ...)   ; path access; #f when absent
+(json-ref x k ... [absent])   ; path access; #f when absent, or the
+                              ; value of a trailing thunk if given
 ```
 
 Data model:
@@ -30,11 +35,41 @@ Data model:
 | `true` / `false` | `#t` / `#f` |
 | `null` | `'null` |
 
-`json->string` writes alists as objects and vectors as arrays; a list
-that is neither empty nor alist-shaped also serializes as an array,
-while `'()` is written as an empty object. `json-ref` takes a string or
-symbol key for objects and an integer index for arrays, following a path
-across nested values.
+`json->string` writes alists as objects and vectors as arrays, and
+`'()` as an empty object. **An array is a vector and nothing else**: a
+list in a value position is refused, not written, and so is a symbol
+where a string belongs — including a symbol used as an object key.
+
+The two symbol refusals name the offending value; the one for a list
+names only the repair, and a value of a kind JSON has no room for at all
+(a char, a procedure, a record) is refused with neither. Refusing rather
+than converting is what keeps two Scheme values from reaching the same
+document — that, and not tidiness, is why these are errors and not
+conversions.
+
+A **locator** is not a stored key, and the rule for it is the opposite
+one: `json-ref` and the other path verbs accept a string, a symbol, or
+an exact non-negative index, spelling a symbol to a string for the
+lookup. Nothing symbolic is ever stored that way, so no ambiguity
+follows.
+
+Path verbs come in two layers, and here the trailing `*` means the
+**lower** layer, not an enhanced one:
+
+| starred, one locator, applicable | over a path written at the call site |
+| --- | --- |
+| `(json-ref* x k [absent])` | `(json-ref x k ... [absent])` |
+| `(json-set* x k v)` | `(json-set x k ... v)` |
+| `(json-drop* x sel)` | `(json-drop x k ... sel)` |
+| `(json-update* x sel p)` | `(json-update x k ... sel p)` |
+| `(json-push* x member)` | `(json-push x k ... member)` |
+| `(json-insert* x k member)` | `(json-insert x k ... loc member)` |
+
+The macros read down the path and rebuild on the way out; a failure
+anywhere answers `#f` for the whole expression. The container and every
+locator are evaluated exactly once. `json-object?`, `json-array?` and
+`json-null?` classify a value in this representation; they are cheap and
+non-recursive, so they are not writability checks.
 
 ## Layout and use
 
